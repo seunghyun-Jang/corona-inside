@@ -10,6 +10,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<title>Test page</title>
 		<link rel="stylesheet" href="resources/css/bootstrap.min.css">
+		<!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
 		<!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
@@ -50,10 +54,10 @@
             </div>
         </nav>
         <!-- Masthead-->
-        <header class="masthead bg-primary text-white text-center">
+        <header class="masthead bg-blue text-white text-center">
             <div class="container d-flex align-items-center flex-column">
                 <!-- Masthead Avatar Image-->
-                <img class="masthead-avatar mb-5" src="resources/assets/img/avataaars.svg" alt="" />
+                <img class="masthead-avatar mb-5" src="resources/assets/img/covid.svg" alt="" />
                 <!-- Masthead Heading-->
                 <h1 class="masthead-heading text-uppercase mb-0">Corona Inside</h1>
                 <!-- Icon Divider-->
@@ -78,9 +82,9 @@
                     <div class="divider-custom-line"></div>
                 </div>
                 <br>
-                <!-- Portfolio Grid Items-->
+                <!-- Grid Items-->
                 <div class="row justify-content-center">
-                    <!-- Portfolio Item 1-->
+                    <!-- Item 1-->
                     <button class="col-md-5 col-lg-5 mb-5" onclick="location.href='coronaCurrent'">
                         <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal1">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
@@ -89,10 +93,10 @@
                                 	<h1 class="masthead-heading mb-0">코로나<br>현황</h1>
                                 </div>
                             </div>
-                            <img class="img-fluid" src="resources/assets/img/portfolio/cabin.png" alt="" />
+                            <img class="img-fluid" src="resources/assets/img/item/covidcurrent.svg" alt="" />
                         </div>
                     </button>
-                    <!-- Portfolio Item 2-->
+                    <!-- Item 2-->
                     <button class="col-md-5 col-lg-5 mb-5" onclick="location.href='community'">
                         <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal3">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
@@ -101,11 +105,11 @@
                                 	<h1 class="masthead-heading mb-0">커뮤니티</h1>
                                 </div>
                             </div>
-                            <img class="img-fluid" src="resources/assets/img/portfolio/circus.png" alt="" />
+                            <img class="img-fluid" src="resources/assets/img/item/community.svg" alt="" />
                         </div>
                     </button>
-                    <!-- Portfolio Item 3-->
-                    <button class="col-md-6 col-lg-5 mb-5 mb-lg-0" onclick="location.href='selfcheck'">
+                    <!-- Item 3-->
+                    <button class="col-md-5 col-lg-5 mb-5 mb-lg-0" onclick="location.href='selfcheck'">
                         <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal4">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                 <div class="portfolio-item-caption-content text-center text-white">
@@ -113,11 +117,11 @@
                                 	<h1 class="masthead-heading mb-0">셀프<br>방역점수 체크</h1>
                                 </div>
                             </div>
-                            <img class="img-fluid" src="resources/assets/img/portfolio/game.png" alt="" />
+                            <img class="img-fluid" src="resources/assets/img/item/test2.svg" alt="" />
                         </div>
                     </button>
-                    <!-- Portfolio Item 4-->
-                    <button class="col-md-6 col-lg-5" onclick="location.href='faq'">
+                    <!-- Item 4-->
+                    <button class="col-md-5 col-lg-5" onclick="location.href='faq'">
                         <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal6">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                 <div class="portfolio-item-caption-content text-center text-white">
@@ -125,12 +129,54 @@
                                 	<h1 class="masthead-heading mb-0">FAQ</h1>
                                 </div>
                             </div>
-                            <img class="img-fluid" src="resources/assets/img/portfolio/submarine.png" alt="" />
+                            <img class="img-fluid" src="resources/assets/img/item/faq2.svg" alt="" />
                         </div>
                     </button>
                 </div>
             </div>
         </section>
+        
+        <!-- Footer-->
+        <footer class="footer text-center">
+            <div class="container">
+                <div class="row">
+                    <!-- Footer Location-->
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+                        <h4 class="text-uppercase mb-4">Location</h4>
+                        <p class="lead mb-0">
+                            2215 John Daniel Drive
+                            <br />
+                            Clark, MO 65243
+                        </p>
+                    </div>
+                    <!-- Footer Social Icons-->
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+                        <h4 class="text-uppercase mb-4">Around the Web</h4>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-linkedin-in"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-dribbble"></i></a>
+                    </div>
+                    <!-- Footer About Text-->
+                    <div class="col-lg-4">
+                        <h4 class="text-uppercase mb-4">About Freelancer</h4>
+                        <p class="lead mb-0">
+                            Freelance is a free to use, MIT licensed Bootstrap theme created by
+                            <a href="http://startbootstrap.com">Start Bootstrap</a>
+                            .
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Copyright Section-->
+        <div class="copyright py-4 text-center text-white">
+            <div class="container"><small>Copyright © Corona-Inside 2021</small></div>
+        </div>
+        <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
+        <div class="scroll-to-top d-lg-none position-fixed">
+            <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i class="fa fa-chevron-up"></i></a>
+        </div>
         
         <!-- Bootstrap core JS-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -144,16 +190,5 @@
         <script src="js/scripts.js"></script>
         
     </body>
-	<!-- <body>
-		<table>
-			<tr>
-				<td><button type="button" onclick="location.href='coronaCurrent'">코로나<br>현황</button></td>
-				<td><button type="button" onclick="location.href='community'">커뮤니티</button></td>
-			</tr>
-			<tr>
-				<td><button type="button" onclick="location.href='selfcheck'">셀프<br>방역점수 체크</button></td>
-				<td><button type="button" onclick="location.href='faq'">FAQ</button></td>
-			</tr>
-		</table>
-	</body> -->
+	
 </html>

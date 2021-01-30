@@ -6076,6 +6076,10 @@ a.close.disabled {
   background-color: #1abc9c !important;
 }
 
+.bg-blue {
+  background-color: #6699ff !important;
+}
+
 a.bg-primary:hover, a.bg-primary:focus,
 button.bg-primary:hover,
 button.bg-primary:focus {
@@ -10142,8 +10146,8 @@ h3 {
   cursor: pointer;
   position: relative;
   display: block;
-  max-width: 25rem;
-  border-radius: 0.5rem;
+  max-width: 20rem;
+  border-radius: 10rem;
   overflow: hidden;
 }
 .portfolio .portfolio-item .portfolio-item-caption {
@@ -10152,7 +10156,8 @@ h3 {
   left: 0;
   transition: all 0.2s ease-in-out;
   opacity: 0;
-  background-color: rgba(26, 188, 156, 0.9);
+  background-color: rgba(102, 153, 256, 0.9);
+  border-radius: 5rem;
 }
 .portfolio .portfolio-item .portfolio-item-caption:hover {
   opacity: 1;
