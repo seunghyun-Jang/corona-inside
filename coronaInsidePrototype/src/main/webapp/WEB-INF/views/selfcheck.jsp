@@ -8,19 +8,14 @@
 	<title>Corona Inside : 셀프 방역점수 체크</title>
 	<link rel="stylesheet" href="resources/css/bootstrap.min.css">
 	<!-- Favicon-->
-       <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
-       <!-- Font Awesome icons (free version)-->
-       <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
 	<!-- Google fonts-->
-       <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-       <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-       <!-- Core theme CSS (includes Bootstrap)-->
-       <link href="resources/css/styles.css" rel="stylesheet" />
-       <!-- Custom fonts for this template-->
-       <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-   	<link
-       	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-       	rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="resources/css/styles.css" rel="stylesheet" />
 </head>
 <body id="page-top">
 
