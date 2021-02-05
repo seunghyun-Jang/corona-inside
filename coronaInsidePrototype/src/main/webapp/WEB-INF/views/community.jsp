@@ -54,7 +54,7 @@
             </div>
         </div>
     </header>
-    <section class="page-section freeboard" id="freeboard">
+    <section class="page-section" id="freeboard">
     	<div class="container">
     	<h1 class="masthead-heading text-center text-secondary text-uppercase mb-0">커뮤니티</h1>
     	<table class="styled-table table-hover">
