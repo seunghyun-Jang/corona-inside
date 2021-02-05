@@ -10167,7 +10167,7 @@ h3 {
     font-size: 1.5rem;
   }
 }
-.portfolio .portfolio-item {
+.portfolio .portfolio-item .freeboard {
   cursor: pointer;
   position: relative;
   display: block;
@@ -10408,10 +10408,30 @@ form .row:first-child .floating-label-form-group {
 
 .styled-table td:first-child { width: 80%; }
 
-@media (max-width:800px) {
+@media (max-width:768px) {
 	.styled-table thead { font-size: 8px; }
 	.styled-table td:first-child { width: 80%; font-size: 12px; }
 	.styled-table td:nth-child(2),
 	.styled-table td:nth-child(3),
 	.styled-table td:nth-child(4) { font-size: 8px; }
+}
+
+.login-section {
+	padding: 1rem;
+	padding-top: 3rem;
+	padding-bottom: 5rem;
+}
+
+.login-btn {
+	margin-left:50px;
+	width:100px;
+	height:60px;
+}
+
+@media (min-width: 992px) {
+	.login-item { display: none; }
+}
+
+@media (max-width: 991px) {
+	.login-btn { display: none; }
 }
