@@ -9795,16 +9795,12 @@ button.bg-dark:focus {
   color: #7E41D9 !important;
 }
 
-a.text-violet:hover, a.text-violet:focus {
-  color: #3D0099 !important;
-}
-
 .text-selected {
 	background: #7E41D9;
 }
 
 a.text-selected:hover, a.text-selected:focus {
-  color: #A366FF !important;
+  color: #3D0099 !important;
 }
 
 .text-primary {
@@ -10374,4 +10370,48 @@ form .row:first-child .floating-label-form-group {
   margin-left: -0.75rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
+}
+
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+}
+
+.styled-table thead tr {
+    background-color: #7E41D9;
+    color: #ffffff;
+    text-align: center;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 2px solid #dddddd;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #7E41D9;
+}
+
+.styled-table tbody tr.bold {
+    font-weight: bold;
+    color: #7E41D9;
+}
+
+.styled-table td:first-child { width: 80%; }
+
+@media (max-width:800px) {
+	.styled-table thead { font-size: 8px; }
+	.styled-table td:first-child { width: 80%; font-size: 12px; }
+	.styled-table td:nth-child(2),
+	.styled-table td:nth-child(3),
+	.styled-table td:nth-child(4) { font-size: 8px; }
 }
