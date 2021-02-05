@@ -69,6 +69,12 @@ body {
   background-color: #fff;
 }
 
+html,body {
+	height: 100%;
+	margin:0;
+    padding:0;
+}
+
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
 }
@@ -9787,6 +9793,18 @@ button.bg-dark:focus {
 
 .text-violet {
   color: #7E41D9 !important;
+}
+
+a.text-violet:hover, a.text-violet:focus {
+  color: #3D0099 !important;
+}
+
+.text-selected {
+	background: #7E41D9;
+}
+
+a.text-selected:hover, a.text-selected:focus {
+  color: #A366FF !important;
 }
 
 .text-primary {
