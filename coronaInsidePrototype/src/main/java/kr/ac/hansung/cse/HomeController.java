@@ -42,6 +42,11 @@ public class HomeController {
 		return "community";
 	}
 	
+	@RequestMapping(value = "/community_post", method = RequestMethod.GET)
+	public String communityPost() {
+		return "community_post";
+	}
+	
 	@RequestMapping(value = "/selfcheck", method = RequestMethod.GET)
 	public String selfcheck() {
 		return "selfcheck";
@@ -50,6 +55,11 @@ public class HomeController {
 	@RequestMapping(value = "/faq", method = RequestMethod.GET)
 	public String faq() {
 		return "faq";
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login(){
+		return "login";
 	}
 	
 }

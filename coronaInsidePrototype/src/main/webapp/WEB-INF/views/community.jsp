@@ -56,7 +56,7 @@
     </header>
     <section class="page-section" id="freeboard">
     	<div class="container">
-    	<h1 class="masthead-heading text-center text-secondary text-uppercase mb-0">커뮤니티</h1>
+    	<h1 class="masthead-heading text-center text-secondary text-uppercase mb-0"><a class="community-a" href="community">커뮤니티</a></h1>
     	<table class="styled-table table-hover">
     		<thead>
     			<tr>
@@ -68,13 +68,13 @@
     		</thead>
     		<tbody>
     			<tr>
-    				<td>테스트1</td>
+					<td><button onClick="location.href='community_post'">테스트1</button></td>
     				<td>test123</td>
     				<td class="text-center">12</td>
     				<td class="text-center">2021.02.05</td>
     			</tr>
     			<tr>
-    				<td>테스트2</td>
+    				<td><button onClick="location.href='community_post'">테스트2</button></td>
     				<td>test321</td>
     				<td class="text-center">1</td>
     				<td class="text-center">2021.02.04</td>
