@@ -42,14 +42,14 @@ public class HomeController {
 		return "community";
 	}
 	
-	@RequestMapping(value = "/community_post", method = RequestMethod.GET)
+	@RequestMapping(value = "/communityPost", method = RequestMethod.GET)
 	public String communityPost() {
-		return "community_post";
+		return "communityPost";
 	}
 	
-	@RequestMapping(value = "/community_post_edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/communityPostMake", method = RequestMethod.GET)
 	public String editCommunityPost() {
-		return "community_post_edit";
+		return "communityPostMake";
 	}
 	
 	@RequestMapping(value = "/selfcheck", method = RequestMethod.GET)

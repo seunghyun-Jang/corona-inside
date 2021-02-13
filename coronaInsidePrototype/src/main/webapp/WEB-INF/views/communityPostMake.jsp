@@ -54,97 +54,24 @@
             </div>
         </div>
     </header>
-    <section class="page-section" id="freeboard">
-    	<div class="container">
+    
+    <section class="page-section" id="post">
     	<h1 class="masthead-heading text-center text-secondary text-uppercase mb-0"><a class="a-violet" href="community">게시판</a></h1>
-    	<table class="styled-table table-hover">
-    		<thead>
-    			<tr>
-    				<th >제목</th>
-    				<th >작성자</th>
-    				<th >추천</th>
-    				<th >날짜</th>
-    			</tr>
-    		</thead>
-    		<tbody>
-    			<tr>
-					<td><button onClick="location.href='communityPost'">테스트1</button></td>
-    				<td>test123</td>
-    				<td class="text-center">12</td>
-    				<td class="text-center">2021.02.05</td>
-    			</tr>
-    			<tr>
-    				<td><button onClick="location.href='communityPost'">테스트2</button></td>
-    				<td>test321</td>
-    				<td class="text-center">1</td>
-    				<td class="text-center">2021.02.04</td>
-    			</tr>
-    			<tr>
-    				<td>테스트3</td>
-    				<td>test56</td>
-    				<td class="text-center">16</td>
-    				<td class="text-center">2021.02.03</td>
-    			</tr>
-    			<tr>
-    				<td>테스트4</td>
-    				<td>test567</td>
-    				<td class="text-center">162</td>
-    				<td class="text-center">2021.02.03</td>
-    			</tr>
-    			<tr>
-    				<td>테스트5</td>
-    				<td>test56</td>
-    				<td class="text-center">16</td>
-    				<td class="text-center">2021.02.03</td>
-    			</tr>
-    			<tr>
-    				<td>테스트6</td>
-    				<td>test12</td>
-    				<td class="text-center">1563</td>
-    				<td class="text-center">2021.02.03</td>
-    			</tr>
-    			<tr>
-    				<td>테스트7</td>
-    				<td>test56</td>
-    				<td class="text-center">16</td>
-    				<td class="text-center">2021.02.03</td>
-    			</tr>
-    			<tr>
-    				<td>테스트8</td>
-    				<td>test56</td>
-    				<td class="text-center">716</td>
-    				<td class="text-center">2021.02.03</td>
-    			</tr>
-    			<tr>
-    				<td>테스트9</td>
-    				<td>test56</td>
-    				<td class="text-center">313</td>
-    				<td class="text-center">2021.02.03</td>
-    			</tr>
-    			<tr>
-    				<td>테스트10</td>
-    				<td>test56</td>
-    				<td class="text-center">16512</td>
-    				<td class="text-center">2021.02.03</td>
-    			</tr>
-    			<tr>
-    				<td>테스트11</td>
-    				<td>test56</td>
-    				<td class="text-center">3</td>
-    				<td class="text-center">2021.02.03</td>
-    			</tr>
-    			<tr>
-    				<td>테스트12</td>
-    				<td>test56</td>
-    				<td class="text-center">126</td>
-    				<td class="text-center">2021.02.03</td>
-    			</tr>
-    		</tbody>
-    	</table>
-    	<p align="right"> <button type="submit" class="btn btn-default bg-violet text-white" onClick="location.href='communityPostMake'">글 작성</button> </p>
-    </div>
-    </section>
-    <!-- Copyright Section-->
+    	<div class="container">
+    		<table class="styled-table">
+    			<tbody>
+    				<tr>
+				    	<td><br><h6>글 제목: &nbsp;<input type="text" style="width:93.7%" name="post_title"></h6></td>
+				    </tr>
+				    <tr>
+					    <td><br><textArea rows="20" style="width:100%;" name="post_content"></textArea><br><br>
+					    <p align="center"> <button type="submit" class="btn btn-default bg-violet text-white">완료</button> </p></td>
+				    </tr>
+				</tbody>
+		    </table>
+		</div>
+	</section>
+	<!-- Copyright Section-->
    	<div class="copyright py-4 text-center text-white">
        	<div class="container"><small>Copyright © Corona-Inside 2021</small></div>
    	</div>
