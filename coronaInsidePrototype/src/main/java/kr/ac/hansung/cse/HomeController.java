@@ -47,6 +47,11 @@ public class HomeController {
 		return "community_post";
 	}
 	
+	@RequestMapping(value = "/community_post_edit", method = RequestMethod.GET)
+	public String editCommunityPost() {
+		return "community_post_edit";
+	}
+	
 	@RequestMapping(value = "/selfcheck", method = RequestMethod.GET)
 	public String selfcheck() {
 		return "selfcheck";
