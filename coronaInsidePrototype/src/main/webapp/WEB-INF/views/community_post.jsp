@@ -56,7 +56,7 @@
     </header>
     
     <section class="page-section" id="post">
-    	<h1 class="masthead-heading text-center text-secondary text-uppercase mb-0"><a class="a-violet" href="community">커뮤니티</a></h1>
+    	<h1 class="masthead-heading text-center text-secondary text-uppercase mb-0"><a class="a-violet" href="community">게시판</a></h1>
     	<div class="container">
     		<table class="styled-table">
     			<tbody>
@@ -72,7 +72,8 @@
 					    내용 내용 내용 내용 내용 내용 내용 내용 <br>
 					    내용 내용 내용 내용 내용 내용 내용 내용 <br>
 					    내용 내용 내용 내용 내용 내용 내용 내용 <br>
-					    <br><br><br><p align="center"><button class="bg-violet like-btn rounded text-white">추천&nbsp;&nbsp;12</button>&emsp;<button class="bg-red like-btn rounded text-white">비추&nbsp;&nbsp;-1</button></p></td>
+					    <br><br><br><p align="center"><button class="bg-violet like-btn rounded text-white">추천&nbsp;&nbsp;12</button>&emsp;<button class="bg-red like-btn rounded text-white">비추&nbsp;&nbsp;-1</button></p>
+					    <p align="right"> <button type="submit" class="btn btn-default bg-violet text-white">글 수정</button> </p></td>
 				    </tr>
 				    <tr> <td>
 				    	<div class="row">
@@ -110,8 +111,8 @@
 					            </span>
 					            <span class="commenter-name">
 					              <input type="text" placeholder="Add a public reply" name="Add Comment">
-					              <button type="submit" class="btn btn-default">답글달기</button>
-					              <button type="cancel" class="btn btn-default reply-popup">Cancel</button>
+					              <button type="submit" class="btn btn-default bg-violet">답글달기</button>
+					              <button type="cancel" class="btn btn-default reply-popup">취소</button>
 					            </span>
 					          </div>
 					        </div>
