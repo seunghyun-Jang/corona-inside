@@ -42,6 +42,16 @@ public class HomeController {
 		return "community";
 	}
 	
+	@RequestMapping(value = "/communityPost", method = RequestMethod.GET)
+	public String communityPost() {
+		return "communityPost";
+	}
+	
+	@RequestMapping(value = "/communityPostMake", method = RequestMethod.GET)
+	public String editCommunityPost() {
+		return "communityPostMake";
+	}
+	
 	@RequestMapping(value = "/selfcheck", method = RequestMethod.GET)
 	public String selfcheck() {
 		return "selfcheck";
@@ -50,6 +60,11 @@ public class HomeController {
 	@RequestMapping(value = "/faq", method = RequestMethod.GET)
 	public String faq() {
 		return "faq";
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login(){
+		return "login";
 	}
 	
 }
