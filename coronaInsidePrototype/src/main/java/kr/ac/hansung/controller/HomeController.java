@@ -1,7 +1,5 @@
-package kr.ac.hansung.cse;
+package kr.ac.hansung.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class HomeController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -35,21 +31,6 @@ public class HomeController {
 	@RequestMapping(value = "/coronaCurrent", method = RequestMethod.GET)
 	public String coronaCurrent() {
 		return "coronaCurrent";
-	}
-	
-	@RequestMapping(value = "/community", method = RequestMethod.GET)
-	public String community() {
-		return "community";
-	}
-	
-	@RequestMapping(value = "/communityPost", method = RequestMethod.GET)
-	public String communityPost() {
-		return "communityPost";
-	}
-	
-	@RequestMapping(value = "/communityPostMake", method = RequestMethod.GET)
-	public String editCommunityPost() {
-		return "communityPostMake";
 	}
 	
 	@RequestMapping(value = "/selfcheck", method = RequestMethod.GET)

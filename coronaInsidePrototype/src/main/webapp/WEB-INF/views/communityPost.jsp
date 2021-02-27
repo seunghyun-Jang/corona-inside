@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Corona Inside : 커뮤니티</title>
-	<link rel="stylesheet" href="resources/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../resources/css/bootstrap.min.css">
 	<!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="resources/css/styles.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
     
 </head>
 <body id="page-top">
@@ -23,21 +23,21 @@
 	<!-- Navigation-->
     <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand js-scroll-trigger" style="padding-left: 10px;" href="home">Corona Inside</a>
+            <a class="navbar-brand js-scroll-trigger" style="padding-left: 10px;" href="${pageContext.request.contextPath}/home">Corona Inside</a>
             <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-violet text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
                 <i class="fas fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                	<li class="nav-item mx-0 mx-lg-1 login-item"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="login">로그인 하기</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="coronaCurrent">코로나 현황</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger text-selected" href="community">커뮤니티</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="selfcheck">셀프체크</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="faq">FAQ</a></li>
+                	<li class="nav-item mx-0 mx-lg-1 login-item"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="${pageContext.request.contextPath}/login">로그인 하기</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="${pageContext.request.contextPath}/coronaCurrent">코로나 현황</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger text-selected" href="${pageContext.request.contextPath}/community">커뮤니티</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="${pageContext.request.contextPath}/selfcheck">셀프체크</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="${pageContext.request.contextPath}/faq">FAQ</a></li>
                 </ul>
             </div>
-            <button class="bg-primary rounded text-white login-btn" onClick="location.href='login'">로그인</button>
+            <button class="bg-primary rounded text-white login-btn" onClick="location.href='${pageContext.request.contextPath}/login'">로그인</button>
         </div>
     </nav>
 
@@ -56,23 +56,21 @@
     </header>
     
     <section class="page-section" id="post">
-    	<h1 class="masthead-heading text-center text-secondary text-uppercase mb-0"><a class="a-violet" href="community">게시판</a></h1>
+    	<h1 class="masthead-heading text-center text-secondary text-uppercase mb-0"><a class="a-violet" href="${pageContext.request.contextPath}/community">게시판</a></h1>
     	<div class="container">
     		<table class="styled-table">
     			<tbody>
     				<tr>
-				    	<td><br><h3>테스트</h3></td>
+				    	<td><br><h3>${post.title}</h3></td>
 				    </tr>
 				    <tr>
-				    	<td>작성자 : test  &emsp; 날짜 : 2020/02/13</td>
+				    	<td>작성자 : ${post.author}  &emsp; 날짜 : ${post.date}</td>
 				    </tr>
 				    <tr>
-					    <td><br><br>내용 내용 내용 내용 내용 내용 내용 내용 <br>
-					    내용 내용 내용 내용 내용 내용 내용 내용 <br>
-					    내용 내용 내용 내용 내용 내용 내용 내용 <br>
-					    내용 내용 내용 내용 내용 내용 내용 내용 <br>
-					    내용 내용 내용 내용 내용 내용 내용 내용 <br>
-					    <br><br><br><p align="center"><button class="bg-violet like-btn rounded text-white">추천&nbsp;&nbsp;12</button>&emsp;<button class="bg-red like-btn rounded text-white">비추&nbsp;&nbsp;-1</button></p>
+					    <td><br><br>${post.content} <br>
+					    <br><br><br><p align="center">
+					    	<button class="bg-violet like-btn rounded text-white" onClick="location.href='${pageContext.request.contextPath}/post/${post.postNo}/like'">추천&nbsp;&nbsp;${post.like}</button>
+					    	&emsp;<button class="bg-red like-btn rounded text-white" onClick="location.href='${pageContext.request.contextPath}/post/${post.postNo}/unlike'">비추&nbsp;&nbsp;-${post.unlike}</button></p>
 					    <p align="right"> <button type="submit" class="btn btn-default bg-violet text-white">글 수정</button> </p></td>
 				    </tr>
 				    <tr> <td>
@@ -84,7 +82,7 @@
 					        </div>
 					        <div class="comment-box add-comment">
 					          <span class="commenter-pic">
-					            <img src="resources/assets/img/favicon.ico" class="img-fluid">
+					            <img src="${pageContext.request.contextPath}/resources/assets/img/favicon.ico" class="img-fluid">
 					          </span>
 					          <span class="commenter-name">
 					            <input type="text" placeholder="여기에 댓글을 입력하세요." name="Add Comment">
@@ -94,7 +92,7 @@
 					        </div>
 					        <div class="comment-box">
 					          <span class="commenter-pic">
-					            <img src="resources/assets/img/favicon.ico" class="img-fluid">
+					            <img src="${pageContext.request.contextPath}/resources/assets/img/favicon.ico" class="img-fluid">
 					          </span>
 					          <span class="commenter-name">
 					            <a class="a-violet" href="#">코로나맨1</a> <span class="comment-time">2시간 전</span>
@@ -107,7 +105,7 @@
 					          </div>
 					          <div class="comment-box add-comment reply-box">
 					            <span class="commenter-pic">
-					              <img src="resources/assets/img/favicon.ico" class="img-fluid">
+					              <img src="${pageContext.request.contextPath}/resources/assets/img/favicon.ico" class="img-fluid">
 					            </span>
 					            <span class="commenter-name">
 					              <input type="text" placeholder="Add a public reply" name="Add Comment">
@@ -118,7 +116,7 @@
 					        </div>
 					        <div class="comment-box">
 					          <span class="commenter-pic">
-					            <img src="resources/assets/img/favicon.ico" class="img-fluid">
+					            <img src="${pageContext.request.contextPath}/resources/assets/img/favicon.ico" class="img-fluid">
 					          </span>
 					          <span class="commenter-name">
 					            <a class="a-violet" href="#">코로나맨2</a> <span class="comment-time">2시간 전</span>
@@ -131,7 +129,7 @@
 					          </div>
 					          <div class="comment-box replied">
 					            <span class="commenter-pic">
-					              <img src="resources/assets/img/favicon.ico" class="img-fluid">
+					              <img src="${pageContext.request.contextPath}/resources/assets/img/favicon.ico" class="img-fluid">
 					            </span>
 					            <span class="commenter-name">
 					              <a class="a-violet" href="#">코로나맨1</a> <span class="comment-time">1시간 전</span>
@@ -144,7 +142,7 @@
 					            </div>
 					            <div class="comment-box replied">
 					              <span class="commenter-pic">
-					                <img src="resources/assets/img/favicon.ico" class="img-fluid">
+					                <img src="${pageContext.request.contextPath}/resources/assets/img/favicon.ico" class="img-fluid">
 					              </span>
 					              <span class="commenter-name">
 					                <a class="a-violet" href="#">코로나맨2</a> <span class="comment-time">29분 전</span>
@@ -177,7 +175,7 @@
     <!-- Third party plugin JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <!-- Core theme JS-->
-    <script src="resources/js/scripts.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script>

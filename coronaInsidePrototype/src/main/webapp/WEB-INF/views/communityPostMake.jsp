@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,7 +33,7 @@
                 <ul class="navbar-nav ml-auto">
                 	<li class="nav-item mx-0 mx-lg-1 login-item"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="login">로그인 하기</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="coronaCurrent">코로나 현황</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger text-selected" href="community">커뮤니티</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger text-selected" href="community/1">커뮤니티</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="selfcheck">셀프체크</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="faq">FAQ</a></li>
                 </ul>
@@ -58,17 +59,24 @@
     <section class="page-section" id="post">
     	<h1 class="masthead-heading text-center text-secondary text-uppercase mb-0"><a class="a-violet" href="community">게시판</a></h1>
     	<div class="container">
+    		<sf:form method="post" action="${pageContext.request.contextPath}/domakepost" modelAttribute="post" >
     		<table class="styled-table">
     			<tbody>
     				<tr>
-				    	<td><br><h6>글 제목: &nbsp;<input type="text" style="width:93.7%" name="post_title"></h6></td>
+				    	<td><br><h6>글 제목: &nbsp;</h6> 
+				    	<sf:input class="control" type="text" style="width:93.7%" path="title"/><br></br>
+						<sf:errors class="error" path="title"/></td>
 				    </tr>
 				    <tr>
-					    <td><br><textArea rows="20" style="width:100%;" name="post_content"></textArea><br><br>
+					    <td><br><sf:textarea class="control" rows="20" style="width:100%;" path="content"/><br><br>
+					    <sf:errors class="error" path="content"/>
+					    <sf:input class="control" type="hidden" path="author" value="작성테스트"/>
+						<sf:errors class="error" path="author"/>	
 					    <p align="center"> <button type="submit" class="btn btn-default bg-violet text-white">완료</button> </p></td>
 				    </tr>
 				</tbody>
 		    </table>
+		    </sf:form>
 		</div>
 	</section>
 	<!-- Copyright Section-->

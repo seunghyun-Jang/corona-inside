@@ -10436,11 +10436,15 @@ form .row:first-child .floating-label-form-group {
     color: #7E41D9;
 }
 
-.styled-table td:first-child { width: 80%; }
+.styled-table td:first-child { width: 65%; }
+.styled-table td:nth-child(3) {width : 10%;}
+.styled-table td:last-child { width: 16%; }
 
 @media (max-width:768px) {
+	.styled-table td:first-child { width: 62%; font-size: 12px; }
+	.styled-table td:nth-child(3) {width : 12%;}
+	.styled-table td:last-child { width: 18%; }
 	.styled-table thead { font-size: 8px; }
-	.styled-table td:first-child { width: 80%; font-size: 12px; }
 	.styled-table td:nth-child(2),
 	.styled-table td:nth-child(3),
 	.styled-table td:nth-child(4) { font-size: 8px; }
@@ -10473,6 +10477,17 @@ form .row:first-child .floating-label-form-group {
 }
 .a-violet:hover {
   color: #3D0099;
+}
+
+.a-violet-bold {
+  color: #3D0099;
+  font-weight: bold;
+  text-decoration: underline;
+  background-color: transparent;
+}
+
+.a-violet-bold:hover {
+  color: #A366FF;
 }
 
 .like-btn {
