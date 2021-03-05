@@ -60,7 +60,7 @@ public class PostDao {
     // Return Posts
     public List<Post> getPosts() {
     	
-    	String sqlStatement = "select * from posts";
+    	String sqlStatement = "select * from posts order by postNo desc";
     	return jdbcTemplate.query(sqlStatement,	new RowMapper<Post>() {
 
 			@Override
