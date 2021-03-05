@@ -74,8 +74,7 @@
 					    <p align="right"> <button type="submit" onClick="location.href='${pageContext.request.contextPath}/communityPostEdit/${post.postNo}'" class="btn btn-default bg-violet text-white">글 수정</button> </p></td>
 				    </tr>
 				    <tr> <td>
-				    	<div class="row">
-					    <div class="col-12">
+				    	<div class="col-12">
 					      <div class="comments">
 					        <div class="comments-details">
 					          <span class="total-comments comments-sort">117개의 댓글</span>
