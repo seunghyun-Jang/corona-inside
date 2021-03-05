@@ -71,7 +71,7 @@
 					    <br><br><br><p align="center">
 					    	<button class="bg-violet like-btn rounded text-white" onClick="location.href='${pageContext.request.contextPath}/post/${post.postNo}/like'">추천&nbsp;&nbsp;${post.like}</button>
 					    	&emsp;<button class="bg-red like-btn rounded text-white" onClick="location.href='${pageContext.request.contextPath}/post/${post.postNo}/unlike'">비추&nbsp;&nbsp;-${post.unlike}</button></p>
-					    <p align="right"> <button type="submit" class="btn btn-default bg-violet text-white">글 수정</button> </p></td>
+					    <p align="right"> <button type="submit" onClick="location.href='${pageContext.request.contextPath}/communityPostEdit/${post.postNo}'" class="btn btn-default bg-violet text-white">글 수정</button> </p></td>
 				    </tr>
 				    <tr> <td>
 				    	<div class="row">

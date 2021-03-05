@@ -23,9 +23,11 @@ public class PostService {
 	}
 
 	public void insert(Post post) {
-		
 		postDao.insert(post);
-		
+	}
+	
+	public void update(Post post) {
+		postDao.update(post);
 	}
 	
 	public void like(Post post) {

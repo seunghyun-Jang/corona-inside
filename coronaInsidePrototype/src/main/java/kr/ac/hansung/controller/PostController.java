@@ -97,6 +97,37 @@ public class PostController {
 		return "communityPost";
 	}
 	
+	@RequestMapping(value = "/communityPostEdit/*", method = RequestMethod.GET)
+	public String editPost(Model model, HttpServletRequest request) {
+		String[] url = request.getRequestURI().split("/");
+		int postNo = Integer.parseInt(url[3]);
+		
+		Post post = postService.getPost(postNo);
+		model.addAttribute("post", post);
+		
+		return "communityPostEdit";
+	}
+	
+	@RequestMapping(value = "/doeditpost/*")
+	public String doEditPost(Model model, HttpServletRequest request) {
+		String[] url = request.getRequestURI().split("/");
+		int postNo = Integer.parseInt(url[3]);
+		
+		Post post = postService.getPost(postNo);
+		
+		// utf-8로 인코딩하여 한글깨짐 문제 해결
+		try {
+			post.setContent(new String(request.getParameter("content").getBytes("8859_1"), "utf-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+		postService.update(post);
+		model.addAttribute("post", post);
+		
+		return "communityPost";
+	}
+	
 	@RequestMapping(value = "/post/*/like")
 	public String doLike(Model model, HttpServletRequest request) {
 		
