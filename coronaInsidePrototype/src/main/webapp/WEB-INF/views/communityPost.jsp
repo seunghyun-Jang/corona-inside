@@ -8,7 +8,7 @@
 	<title>Corona Inside : 커뮤니티</title>
 	<link rel="stylesheet" href="../resources/css/bootstrap.min.css">
 	<!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/favicon_covid.ico" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
 	<!-- Google fonts-->
@@ -67,11 +67,16 @@
 				    	<td>작성자 : ${post.author}  &emsp; 날짜 : ${post.date}</td>
 				    </tr>
 				    <tr>
-					    <td><br><br>${post.content} <br>
-					    <br><br><br><p align="center">
-					    	<button class="bg-violet like-btn rounded text-white" onClick="location.href='${pageContext.request.contextPath}/post/${post.postNo}/like'">추천&nbsp;&nbsp;${post.like}</button>
-					    	&emsp;<button class="bg-red like-btn rounded text-white" onClick="location.href='${pageContext.request.contextPath}/post/${post.postNo}/unlike'">비추&nbsp;&nbsp;-${post.unlike}</button></p>
-					    <p align="right"> <button type="submit" onClick="location.href='${pageContext.request.contextPath}/communityPostEdit/${post.postNo}'" class="btn btn-default bg-violet text-white">글 수정</button> </p></td>
+					    <td>
+						    <br><br>${post.content} <br><br><br><br>
+						    <p align="center">
+						    	<button class="bg-violet like-btn rounded text-white" onClick="location.href='${pageContext.request.contextPath}/post/${post.postNo}/like'">추천&nbsp;&nbsp;${post.like}</button>
+						    	&emsp;<button class="bg-red like-btn rounded text-white" onClick="location.href='${pageContext.request.contextPath}/post/${post.postNo}/unlike'">비추&nbsp;&nbsp;-${post.unlike}</button>
+						    </p>
+						    <p align="right">
+						    	<button type="submit" onClick="location.href='${pageContext.request.contextPath}/communityPostEdit/${post.postNo}'" class="btn btn-default bg-violet text-white">글 수정</button> 
+						    </p>
+						</td>
 				    </tr>
 				    <tr> <td>
 				    	<div class="col-12">

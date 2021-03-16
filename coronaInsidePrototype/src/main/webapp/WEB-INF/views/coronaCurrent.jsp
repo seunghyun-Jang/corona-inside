@@ -8,7 +8,7 @@
 	<title>Corona Inside : 코로나 현황</title>
 	<link rel="stylesheet" href="resources/css/bootstrap.min.css">
 	<!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="resources/assets/img/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/favicon_covid.ico" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
 	<!-- Google fonts-->
