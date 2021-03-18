@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import kr.ac.hansung.model.Post;
+import kr.ac.hansung.model.Reply;
 import kr.ac.hansung.service.PostService;
+import kr.ac.hansung.service.ReplyService;
 
 
 @Controller
@@ -24,6 +26,9 @@ public class PostController {
 	
 	@Autowired
 	private PostService postService;
+	
+	@Autowired
+	private ReplyService replyService;
 	
 	@RequestMapping(value = "/community", method = RequestMethod.GET)
 	public String community(Model model) {
@@ -56,6 +61,9 @@ public class PostController {
 		
 		Post post = postService.getPost(postNo);
 		model.addAttribute("post", post);
+		
+		List<Reply> replies = replyService.getCurrent(postNo);
+		model.addAttribute("replies", replies);
 		
 		return "communityPost";
 	}
