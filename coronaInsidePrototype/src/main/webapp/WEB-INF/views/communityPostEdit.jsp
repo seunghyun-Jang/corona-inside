@@ -59,24 +59,19 @@
     <section class="page-section" id="post">
     	<h1 class="masthead-heading text-center text-secondary text-uppercase mb-0"><a class="a-violet" href="${pageContext.request.contextPath}/community">게시판</a></h1>
     	<div class="container">
-    		<sf:form method="post" action="${pageContext.request.contextPath}/domakepost" modelAttribute="post" >
+    		<form method="post" action="${pageContext.request.contextPath}/doeditpost/${post.postNo}">
     		<table class="styled-table">
     			<tbody>
     				<tr>
-				    	<td><br><h6>글 제목: &nbsp;</h6> 
-				    	<sf:input class="control" type="text" style="width:93.7%" path="title"/><br></br>
-						<sf:errors class="error" path="title"/></td>
+				    	<td><br><h6>글 제목: &nbsp;${post.title}</h6> 
 				    </tr>
 				    <tr>
-					    <td><br><sf:textarea class="control" rows="20" style="width:100%;" path="content"/><br><br>
-					    <sf:errors class="error" path="content"/>
-					    <sf:input class="control" type="hidden" path="author" value="작성테스트"/>
-						<sf:errors class="error" path="author"/>	
+					    <td><br><textarea rows="20" style="width:100%;" name="content">${post.content}</textarea><br><br>
 					    <p align="center"> <button type="submit" class="btn btn-default bg-violet text-white">완료</button> </p></td>
 				    </tr>
 				</tbody>
 		    </table>
-		    </sf:form>
+		    </form>
 		</div>
 	</section>
 	<!-- Copyright Section-->
