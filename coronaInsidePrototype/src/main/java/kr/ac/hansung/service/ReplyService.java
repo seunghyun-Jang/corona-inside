@@ -15,19 +15,25 @@ public class ReplyService {
 	private ReplyDao replyDao;
 	
 	public List<Reply> getCurrent(int postNo) {
-		return replyDao.getReplies(postNo);
+		List<Reply> list = replyDao.getReplies(postNo);
+		for(Reply reply : list) {
+			if(reply.getParentId() != 0) {
+				updateParentAuthor(reply);
+			}
+		}
+		return list;
 	}
 
 	public void insert(Reply reply) {
 		replyDao.insert(reply);
 	}
 	
-	public void updateOrderNo(Reply reply) {
-		replyDao.updateOrderNo(reply);
+	public void updateParentAuthor(Reply reply) {
+		reply.setParentAuthor(replyDao.getReply(reply.getParentId()).getAuthor());
 	}
 	
-	public void updateNumOfChild(Reply reply) {
-		replyDao.updateNumOfChild(reply);
+	public void updateOrderNo(Reply reply) {
+		replyDao.updateOrderNo(reply);
 	}
 	
 	public void delete(int replyId) {

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,88 +80,46 @@
 						    </p>
 						</td>
 				    </tr>
-				    <tr> <td>
+				    <tr> <td style="padding-bottom: 50px;">
 				    	<div class="col-12">
 					      <div class="comments">
 					        <div class="comments-details">
-					          <span class="total-comments comments-sort">117개의 댓글</span>
+					          <span class="total-comments comments-sort">${fn:length(replies)}개의 댓글</span>
 					        </div>
 					        <div class="comment-box add-comment">
-					          <span class="commenter-pic">
-					            <img src="${pageContext.request.contextPath}/resources/assets/img/favicon.ico" class="img-fluid">
-					          </span>
-					          <span class="commenter-name">
+					          <span class="commenter-name p-left">
 					            <input type="text" placeholder="여기에 댓글을 입력하세요." name="Add Comment">
 					            <button type="submit" class="btn btn-default bg-violet">댓글 달기</button>
 					            <button type="cancel" class="btn btn-default">취소</button>
 					          </span>
 					        </div>
-					        <div class="comment-box">
-					          <span class="commenter-pic">
-					            <img src="${pageContext.request.contextPath}/resources/assets/img/favicon.ico" class="img-fluid">
-					          </span>
-					          <span class="commenter-name">
-					            <a class="a-violet" href="#">코로나맨1</a> <span class="comment-time">2시간 전</span>
-					          </span>       
-					          <p class="comment-txt more">1번째 댓글 테스트</p>
-					          <div class="comment-meta">
-					            <button class="comment-like"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 99</button>
-					            <button class="comment-dislike"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> 149</button> 
-					            <button class="comment-reply reply-popup"><i class="fa fa-reply-all" aria-hidden="true"></i> 답글달기</button>         
-					          </div>
-					          <div class="comment-box add-comment reply-box">
-					            <span class="commenter-pic">
-					              <img src="${pageContext.request.contextPath}/resources/assets/img/favicon.ico" class="img-fluid">
-					            </span>
-					            <span class="commenter-name">
-					              <input type="text" placeholder="Add a public reply" name="Add Comment">
-					              <button type="submit" class="btn btn-default bg-violet">답글달기</button>
-					              <button type="cancel" class="btn btn-default reply-popup">취소</button>
-					            </span>
-					          </div>
-					        </div>
-					        <div class="comment-box">
-					          <span class="commenter-pic">
-					            <img src="${pageContext.request.contextPath}/resources/assets/img/favicon.ico" class="img-fluid">
-					          </span>
-					          <span class="commenter-name">
-					            <a class="a-violet" href="#">코로나맨2</a> <span class="comment-time">2시간 전</span>
-					          </span>       
-					          <p class="comment-txt more">ABCDEFGHIJKLMNOPQRSTUVWXYZ.</p>
-					          <div class="comment-meta">
-					            <button class="comment-like"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 99</button>
-					            <button class="comment-dislike"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> 149</button> 
-					            <button class="comment-reply"><i class="fa fa-reply-all" aria-hidden="true"></i> 답글달기</button>         
-					          </div>
-					          <div class="comment-box replied">
-					            <span class="commenter-pic">
-					              <img src="${pageContext.request.contextPath}/resources/assets/img/favicon.ico" class="img-fluid">
-					            </span>
-					            <span class="commenter-name">
-					              <a class="a-violet" href="#">코로나맨1</a> <span class="comment-time">1시간 전</span>
-					            </span>       
-					            <p class="comment-txt more">테스트 TEST 테스트 TEST</p>
-					            <div class="comment-meta">
-					              <button class="comment-like"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 99</button>
-					              <button class="comment-dislike"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> 149</button> 
-					              <button class="comment-reply"><i class="fa fa-reply-all" aria-hidden="true"></i> 답글달기</button>         
-					            </div>
-					            <div class="comment-box replied">
-					              <span class="commenter-pic">
-					                <img src="${pageContext.request.contextPath}/resources/assets/img/favicon.ico" class="img-fluid">
-					              </span>
-					              <span class="commenter-name">
-					                <a class="a-violet" href="#">코로나맨2</a> <span class="comment-time">29분 전</span>
-					              </span>       
-					              <p class="comment-txt more">굿</p>
-					              <div class="comment-meta">
-					                <button class="comment-like"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 99</button>
-					                <button class="comment-dislike"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> 149</button> 
-					                <button class="comment-reply"><i class="fa fa-reply-all" aria-hidden="true"></i> 답글달기</button>         
-					              </div>
-					            </div>
-					          </div>
-					        </div>
+					        <c:forEach var="reply" items="${replies}">
+					        	<c:choose>
+				    				<c:when test="${reply.parentId == 0}"><div class="comment-box"></c:when>
+				    				<c:otherwise><div class="comment-box replied"></c:otherwise>
+				    			</c:choose>
+						          	<span class="commenter-name nametag">
+						            	<a class="a-violet" href="#">${reply.author}</a> <span class="comment-time">${reply.date}</span>
+						          	</span>       
+						          	<p class="comment-txt more">
+						          		<c:if test="${reply.parentId != 0}"><a class="a-violet a-bg-violet" href="#">@${reply.parentAuthor}</a>&nbsp; </c:if>
+						          		${reply.content}
+						          	</p>
+						          	<div class="comment-meta">
+						            	<button class="comment-like"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 99</button>
+						            	<button class="comment-dislike"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> 149</button> 
+						            	<button class="comment-reply reply-popup"><i class="fa fa-reply-all" aria-hidden="true"></i> 답글달기</button>         
+						          	</div>
+						          	<div class="comment-box add-comment reply-box">
+						            	<span class="commenter-name">
+						              		<input type="text" placeholder="여기에 답글을 입력하세요." name="Add Comment">
+						              		<button type="submit" class="btn btn-default bg-violet">답글달기</button>
+						              		<button type="cancel" class="btn btn-default reply-popup">취소</button>
+						            	</span>
+						          	</div>
+						          </div>
+					        </c:forEach>
+					        
 					      </div>
 					    </div>
 					  </td>

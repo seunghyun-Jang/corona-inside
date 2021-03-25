@@ -30,6 +30,28 @@ public class ReplyDao {
     	
     }
     
+    public Reply getReply(int replyId) {
+    	String sqlStatement = "select * from replies where reply_id=?";
+    	return jdbcTemplate.queryForObject(sqlStatement, new Object[] {replyId}, new RowMapper<Reply>() {
+    		@Override
+			public Reply mapRow(ResultSet rs, int rowNum) throws SQLException {
+				
+				Reply reply = new Reply();
+				
+				reply.setReplyId(rs.getInt("reply_id"));
+				reply.setPostNo(rs.getInt("postNo"));
+				reply.setGroupNo(rs.getInt("group_num"));
+				reply.setParentId(rs.getInt("parent_id"));
+				reply.setOrderNo(rs.getInt("order_num"));
+				reply.setAuthor(rs.getString("author"));
+				reply.setDate(rs.getString("date").toString());
+				reply.setContent(rs.getString("content"));
+				
+				return reply;
+			}
+    	});
+    }
+    
     // Return Replies
     public List<Reply> getReplies(int postNo) {
     	
@@ -45,8 +67,6 @@ public class ReplyDao {
 				reply.setPostNo(rs.getInt("postNo"));
 				reply.setGroupNo(rs.getInt("group_num"));
 				reply.setParentId(rs.getInt("parent_id"));
-				reply.setNumOfChild(rs.getInt("num_of_child"));
-				reply.setDepth(rs.getInt("depth"));
 				reply.setOrderNo(rs.getInt("order_num"));
 				reply.setAuthor(rs.getString("author"));
 				reply.setDate(rs.getString("date").toString());
@@ -65,7 +85,6 @@ public class ReplyDao {
     	int postNo = reply.getPostNo();
     	int groupNo = reply.getGroupNo();
     	int parentId = reply.getParentId();
-    	int depth = reply.getDepth();
     	int orderNo = reply.getOrderNo();
     	String author = reply.getAuthor();
     	String content = reply.getContent();
@@ -73,7 +92,7 @@ public class ReplyDao {
     	String sqlStatement = 
     			"insert into replies (postNo, group_num, parent_id, depth, order_num, author, content) values (?,?,?,?,?,?,?)";
     	
-    	return (jdbcTemplate.update(sqlStatement, new Object[] {postNo, groupNo, parentId, depth, orderNo, author, content}) == 1);
+    	return (jdbcTemplate.update(sqlStatement, new Object[] {postNo, groupNo, parentId, orderNo, author, content}) == 1);
     }
     
     // Update order_num Data
@@ -86,18 +105,6 @@ public class ReplyDao {
     			"update replies set order_num=? where reply_id=?";
     	
     	return (jdbcTemplate.update(sqlStatement, new Object[] {orderNo, replyId}) == 1);
-    }
-    
- // Update num_of_child Data
-    public boolean updateNumOfChild(Reply reply) {
-    	
-    	int replyId = reply.getReplyId();
-    	int numOfChild = reply.getNumOfChild();
-    	
-    	String sqlStatement = 
-    			"update replies set num_of_child=? where reply_id=?";
-    	
-    	return (jdbcTemplate.update(sqlStatement, new Object[] {numOfChild, replyId}) == 1);
     }
     
     // Delete Data
