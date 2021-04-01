@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.ac.hansung.dao.ReplyDao;
+import kr.ac.hansung.model.Post;
 import kr.ac.hansung.model.Reply;
 
 @Service
@@ -23,21 +24,41 @@ public class ReplyService {
 		}
 		return list;
 	}
+	
+	public Reply getReply(int replyId) {
+		return replyDao.getReply(replyId);
+	}
 
 	public void insert(Reply reply) {
 		replyDao.insert(reply);
+	}
+	
+	public void delete(int replyId) {
+		replyDao.delete(replyId);
+	}
+	
+	public void like(Reply reply) {
+		replyDao.like(reply);
+	}
+	
+	public void unlike(Reply reply) {
+		replyDao.unlike(reply);
 	}
 	
 	public void updateParentAuthor(Reply reply) {
 		reply.setParentAuthor(replyDao.getReply(reply.getParentId()).getAuthor());
 	}
 	
-	public void updateOrderNo(Reply reply) {
-		replyDao.updateOrderNo(reply);
+	public int getNextOrderNo(int postNo) {
+		return replyDao.getCurrentOrderNo(postNo)+1;
 	}
 	
-	public void delete(int replyId) {
-		replyDao.delete(replyId);
+	public int getNextOrderNo(int postNo, int groupNo) {
+		return replyDao.getCurrentOrderNo(postNo, groupNo)+1;
+	}
+	
+	public int getNextGroupNo(int postNo) {
+		return replyDao.getCurrentGroupNo(postNo)+1;
 	}
 
 }

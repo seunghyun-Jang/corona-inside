@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,11 +13,12 @@
 	<!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/favicon_covid.ico" />
     <!-- Font Awesome icons (free version)-->
-    <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/all.min.js" crossorigin="anonymous"></script>
+    <link href="${pageContext.request.contextPath}/resources/css/all.min.css" rel="stylesheet">
 	<!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-    <!-- Core theme CSS (includes Bootstrap)-->
+	<!-- Core theme CSS (includes Bootstrap)-->
     <link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
     
 </head>
@@ -71,9 +73,9 @@
 				    <tr>
 					    <td>
 						    <br><br>${post.content} <br><br><br><br>
-						    <p align="center">
-						    	<button class="bg-violet like-btn rounded text-white" onClick="location.href='${pageContext.request.contextPath}/post/${post.postNo}/like'">추천&nbsp;&nbsp;${post.like}</button>
-						    	&emsp;<button class="bg-red like-btn rounded text-white" onClick="location.href='${pageContext.request.contextPath}/post/${post.postNo}/unlike'">비추&nbsp;&nbsp;-${post.unlike}</button>
+						    <p class="p-like" align="center">
+						    	<button class="btn-like rounded text-white" onClick="doPostLike('like')">추천&nbsp;&nbsp;${post.like}</button>
+						    	&emsp;<button class="btn-unlike rounded text-white" onClick="doPostLike('unlike')">비추&nbsp;&nbsp;-${post.unlike}</button>
 						    </p>
 						    <p align="right">
 						    	<button type="submit" onClick="location.href='${pageContext.request.contextPath}/communityPostEdit/${post.postNo}'" class="btn btn-default bg-violet text-white">글 수정</button> 
@@ -88,9 +90,19 @@
 					        </div>
 					        <div class="comment-box add-comment">
 					          <span class="commenter-name p-left">
-					            <input type="text" placeholder="여기에 댓글을 입력하세요." name="Add Comment">
-					            <button type="submit" class="btn btn-default bg-violet">댓글 달기</button>
-					            <button type="cancel" class="btn btn-default">취소</button>
+					          	<sf:form method="post" action="${pageContext.request.contextPath}/doreply" modelAttribute="reply">
+					          	
+				              		<sf:input class="control" type="text" placeholder="여기에 답글을 입력하세요." name="Add Comment" path="content"/>
+				              		<sf:errors class="error" path="content"/>
+				              		<sf:input class="control" type="hidden" path="parentId" value="${0}"/>
+									<sf:errors class="error" path="parentId"/>
+									<sf:input class="control" type="hidden" path="postNo" value="${post.postNo}"/>
+									<sf:errors class="error" path="postNo"/>
+									<sf:input class="control" type="hidden" path="author" value="reply 테스트"/>
+									<sf:errors class="error" path="author"/>
+									
+				              		<button type="submit" class="btn btn-default bg-violet">답글달기</button>
+				              	</sf:form>
 					          </span>
 					        </div>
 					        <c:forEach var="reply" items="${replies}">
@@ -105,16 +117,29 @@
 						          		<c:if test="${reply.parentId != 0}"><a class="a-violet a-bg-violet" href="#">@${reply.parentAuthor}</a>&nbsp; </c:if>
 						          		${reply.content}
 						          	</p>
-						          	<div class="comment-meta">
-						            	<button class="comment-like"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 99</button>
-						            	<button class="comment-dislike"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> 149</button> 
-						            	<button class="comment-reply reply-popup"><i class="fa fa-reply-all" aria-hidden="true"></i> 답글달기</button>         
+						          	<div class="comment-meta like-${reply.replyId}">
+						            	<button class="comment-like" onClick="doReplyLike('like', '${reply.replyId}')"><i class="far fa-thumbs-up" aria-hidden="true"></i>&nbsp;${reply.like}</button>
+						            	<button class="comment-dislike" onClick="doReplyLike('unlike', '${reply.replyId}')"><i class="far fa-thumbs-down" aria-hidden="true"></i>&nbsp;${reply.unlike}</button> 
+						            	<button class="comment-reply" onClick="replyToggle('reply-${reply.replyId}')"><i class="fa fa-reply-all" aria-hidden="true"></i> 답글달기</button>         
 						          	</div>
-						          	<div class="comment-box add-comment reply-box">
+						          	
+						          	<div id="reply-${reply.replyId}" class="comment-box add-comment reply-box">
 						            	<span class="commenter-name">
-						              		<input type="text" placeholder="여기에 답글을 입력하세요." name="Add Comment">
-						              		<button type="submit" class="btn btn-default bg-violet">답글달기</button>
-						              		<button type="cancel" class="btn btn-default reply-popup">취소</button>
+							            	<sf:form method="post" action="${pageContext.request.contextPath}/doreply" modelAttribute="reply">
+							              		<sf:input class="control" type="text" placeholder="여기에 답글을 입력하세요." name="Add Comment" path="content"/>
+							              		<sf:errors class="error" path="content"/>
+							              		<sf:input class="control" type="hidden" path="parentId" value="${reply.replyId}"/>
+												<sf:errors class="error" path="parentId"/>
+												<sf:input class="control" type="hidden" path="groupNo" value="${reply.groupNo}"/>
+												<sf:errors class="error" path="groupNo"/>
+												<sf:input class="control" type="hidden" path="postNo" value="${reply.postNo}"/>
+												<sf:errors class="error" path="postNo"/>
+												<sf:input class="control" type="hidden" path="author" value="${reply.author} reply 테스트"/>
+												<sf:errors class="error" path="author"/>
+												
+							              		<button type="submit" class="btn btn-default bg-violet">답글달기</button>
+							              	</sf:form>
+							              	<button type="cancel" class="btn btn-default" onClick="replyToggle('reply-${reply.replyId}')">취소</button>
 						            	</span>
 						          	</div>
 						          </div>
@@ -143,12 +168,46 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script>
-		// Reply box popup JS
-		$(document).ready(function(){
-		  $(".reply-popup").click(function(){
-		    $(".reply-box").toggle();
-		  });
-		});
+		function replyToggle(id) {
+			obj=document.getElementById(id);
+			$(obj).slideToggle("normal");
+		}
+		
+		function doPostLike(todo) {
+			var req = new XMLHttpRequest();
+			var page = "${pageContext.request.contextPath}/post/${post.postNo}";
+			if(todo == "like") {
+				page += "/dopostlike";
+			}
+			else if(todo == "unlike") {
+				page += "/dopostunlike";
+			}
+			req.open("POST", page);
+			req.onreadystatechange = function() {
+				if (req.readyState == 4 && req.status == 200) {
+					$(".p-like").load(window.location.href + " .p-like");
+				}
+			}
+			req.send();
+		}
+		
+		function doReplyLike(todo, replyId) {
+			var req = new XMLHttpRequest();
+			var page = "${pageContext.request.contextPath}/post/" + replyId;
+			if(todo == "like") {
+				page += "/doreplylike";
+			}
+			else if(todo == "unlike") {
+				page += "/doreplyunlike";
+			}
+			req.open("POST", page);
+			req.onreadystatechange = function() {
+				if (req.readyState == 4 && req.status == 200) {
+					$(".like-"+replyId).load(window.location.href + " .like-" + replyId);
+				}
+			}
+			req.send();
+		}
 	</script>
 </body>
 </html>

@@ -6123,8 +6123,24 @@ a.close.disabled {
   background-color: #7E41D9 !important;
 }
 
-.bg-red {
+.btn-like {
+  background-color: #7E41D9 !important;
+  margin-left:50px;
+  width:100px;
+  height:60px;
+}
+.btn-like:hover {
+  background-color: #3D0099 !important;
+}
+
+.btn-unlike {
   background-color: #CC3D3D !important;
+  margin-left:50px;
+  width:100px;
+  height:60px;
+}
+.btn-unlike:hover {
+  background-color: #980000 !important;
 }
 
 a.bg-primary:hover, a.bg-primary:focus,
@@ -10495,12 +10511,6 @@ form .row:first-child .floating-label-form-group {
     border-radius: 5px;
 }
 
-.like-btn {
-	margin-left:50px;
-	width:100px;
-	height:60px;
-}
-
 /*======comment CSS=======*/
 .comments-details button.btn.dropdown-toggle,
 .comments-details .total-comments {
@@ -10606,7 +10616,6 @@ form .row:first-child .floating-label-form-group {
 .comments .comment-meta {
     font-size: 14px;
     color: #333;
-    padding: 2px 5px 0px;
     float: right;
 }
 .comments .reply-box {

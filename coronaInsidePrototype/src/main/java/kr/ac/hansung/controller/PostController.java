@@ -65,6 +65,8 @@ public class PostController {
 		List<Reply> replies = replyService.getCurrent(postNo);
 		model.addAttribute("replies", replies);
 		
+		model.addAttribute("reply", new Reply());
+		
 		return "communityPost";
 	}
 	
@@ -136,8 +138,8 @@ public class PostController {
 		return "communityPost";
 	}
 	
-	@RequestMapping(value = "/post/*/like")
-	public String doLike(Model model, HttpServletRequest request) {
+	@RequestMapping(value = "/post/*/dopostlike")
+	public String doPostLike(Model model, HttpServletRequest request) {
 		
 		String[] url = request.getRequestURI().split("/");
 		int postNo = Integer.parseInt(url[3]);
@@ -146,11 +148,16 @@ public class PostController {
 		postService.like(post);
 		model.addAttribute("post", post);
 		
+		List<Reply> replies = replyService.getCurrent(postNo);
+		model.addAttribute("replies", replies);
+		
+		model.addAttribute("reply", new Reply());
+		
 		return "communityPost";
 	}
 	
-	@RequestMapping(value = "/post/*/unlike")
-	public String doUnlike(Model model, HttpServletRequest request) {
+	@RequestMapping(value = "/post/*/dopostunlike")
+	public String doPostUnlike(Model model, HttpServletRequest request) {
 		
 		String[] url = request.getRequestURI().split("/");
 		int postNo = Integer.parseInt(url[3]);
@@ -158,6 +165,101 @@ public class PostController {
 		Post post = postService.getPost(postNo);
 		postService.unlike(post);
 		model.addAttribute("post", post);
+		
+		List<Reply> replies = replyService.getCurrent(postNo);
+		model.addAttribute("replies", replies);
+		
+		model.addAttribute("reply", new Reply());
+		
+		return "communityPost";
+	}
+	
+	@RequestMapping(value = "/doreply", method = RequestMethod.POST)
+	public String doReply(Model model, @ModelAttribute("newreply") @Valid Reply reply, BindingResult result) {
+		
+		// utf-8로 인코딩하여 한글깨짐 문제 해결
+				try {
+					reply.setContent(new String(reply.getContent().getBytes("8859_1"), "utf-8"));
+					reply.setAuthor(new String(reply.getAuthor().getBytes("8859_1"), "utf-8"));
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+				
+				if(result.hasErrors()) {
+					System.out.println("== Form data does not validated ==");
+					
+					List<ObjectError> errors = result.getAllErrors();
+					
+					for(ObjectError error : errors) {
+						System.out.println(error.getDefaultMessage());
+					}
+					
+					return "communityPost";
+				}
+				
+				Post post = postService.getPost(reply.getPostNo());
+				model.addAttribute("post", post);
+				
+				List<Reply> replies = replyService.getCurrent(reply.getPostNo());
+				
+				if(replies.isEmpty()) {
+					reply.setOrderNo(1);
+					reply.setGroupNo(1);
+				} else if(reply.getParentId() == 0) {
+					reply.setOrderNo(replyService.getNextOrderNo(reply.getPostNo()));
+					reply.setGroupNo(replyService.getNextGroupNo(reply.getPostNo()));
+				} else {
+					reply.setOrderNo(replyService.getNextOrderNo(reply.getPostNo(), reply.getGroupNo()));
+				}
+				
+				replyService.insert(reply);
+				
+				replies = replyService.getCurrent(reply.getPostNo());
+				model.addAttribute("replies", replies);
+				
+				model.addAttribute("reply", new Reply());
+				
+				return "communityPost";
+	}
+	
+	@RequestMapping(value = "/post/*/doreplylike")
+	public String doReplyLike(Model model, HttpServletRequest request) {
+		
+		String[] url = request.getRequestURI().split("/");
+		int replyId = Integer.parseInt(url[3]);
+		
+		Reply reply = replyService.getReply(replyId);
+		replyService.like(reply);
+		
+		int postNo = reply.getPostNo();
+		Post post = postService.getPost(postNo);
+		model.addAttribute("post", post);
+		
+		List<Reply> replies = replyService.getCurrent(postNo);
+		model.addAttribute("replies", replies);
+		
+		model.addAttribute("reply", new Reply());
+		
+		return "communityPost";
+	}
+	
+	@RequestMapping(value = "/post/*/doreplyunlike")
+	public String doReplyUnlike(Model model, HttpServletRequest request) {
+		
+		String[] url = request.getRequestURI().split("/");
+		int replyId = Integer.parseInt(url[3]);
+		
+		Reply reply = replyService.getReply(replyId);
+		replyService.unlike(reply);
+		
+		int postNo = reply.getPostNo();
+		Post post = postService.getPost(postNo);
+		model.addAttribute("post", post);
+		
+		List<Reply> replies = replyService.getCurrent(postNo);
+		model.addAttribute("replies", replies);
+		
+		model.addAttribute("reply", new Reply());
 		
 		return "communityPost";
 	}

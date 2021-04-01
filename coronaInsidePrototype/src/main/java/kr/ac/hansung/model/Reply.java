@@ -20,6 +20,8 @@ public class Reply {
 	private int groupNo;
 	private int parentId;
 	private int orderNo;
+	private int like;
+	private int unlike;
 	
 	private String author;
 	private String date;
