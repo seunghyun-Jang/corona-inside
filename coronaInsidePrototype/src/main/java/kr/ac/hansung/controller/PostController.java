@@ -104,7 +104,9 @@ public class PostController {
 		postService.insert(post);
 		model.addAttribute("post", post);
 		
-		return "communityPost";
+		model.addAttribute("reply", new Reply());
+		
+		return "redirect:post/" + postService.getCurrentPostNo();
 	}
 	
 	@RequestMapping(value = "/communityPostEdit/*", method = RequestMethod.GET)
@@ -135,7 +137,7 @@ public class PostController {
 		postService.update(post);
 		model.addAttribute("post", post);
 		
-		return "communityPost";
+		return "redirect:../post/"+postNo;
 	}
 	
 	@RequestMapping(value = "/post/*/dopostlike")
@@ -175,51 +177,51 @@ public class PostController {
 	}
 	
 	@RequestMapping(value = "/doreply", method = RequestMethod.POST)
-	public String doReply(Model model, @ModelAttribute("newreply") @Valid Reply reply, BindingResult result) {
+	public String doReply(Model model, @ModelAttribute("reply") @Valid Reply reply, BindingResult result) {
 		
 		// utf-8로 인코딩하여 한글깨짐 문제 해결
-				try {
-					reply.setContent(new String(reply.getContent().getBytes("8859_1"), "utf-8"));
-					reply.setAuthor(new String(reply.getAuthor().getBytes("8859_1"), "utf-8"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-				
-				if(result.hasErrors()) {
-					System.out.println("== Form data does not validated ==");
-					
-					List<ObjectError> errors = result.getAllErrors();
-					
-					for(ObjectError error : errors) {
-						System.out.println(error.getDefaultMessage());
-					}
-					
-					return "communityPost";
-				}
-				
-				Post post = postService.getPost(reply.getPostNo());
-				model.addAttribute("post", post);
-				
-				List<Reply> replies = replyService.getCurrent(reply.getPostNo());
-				
-				if(replies.isEmpty()) {
-					reply.setOrderNo(1);
-					reply.setGroupNo(1);
-				} else if(reply.getParentId() == 0) {
-					reply.setOrderNo(replyService.getNextOrderNo(reply.getPostNo()));
-					reply.setGroupNo(replyService.getNextGroupNo(reply.getPostNo()));
-				} else {
-					reply.setOrderNo(replyService.getNextOrderNo(reply.getPostNo(), reply.getGroupNo()));
-				}
-				
-				replyService.insert(reply);
-				
-				replies = replyService.getCurrent(reply.getPostNo());
-				model.addAttribute("replies", replies);
-				
-				model.addAttribute("reply", new Reply());
-				
-				return "communityPost";
+		try {
+			reply.setContent(new String(reply.getContent().getBytes("8859_1"), "utf-8"));
+			reply.setAuthor(new String(reply.getAuthor().getBytes("8859_1"), "utf-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+		if(result.hasErrors()) {
+			System.out.println("== Form data does not validated ==");
+			
+			List<ObjectError> errors = result.getAllErrors();
+			
+			for(ObjectError error : errors) {
+				System.out.println(error.getDefaultMessage());
+			}
+			
+			return "communityPost";
+		}
+		
+		Post post = postService.getPost(reply.getPostNo());
+		model.addAttribute("post", post);
+		
+		List<Reply> replies = replyService.getCurrent(reply.getPostNo());
+		
+		if(replies.isEmpty()) {
+			reply.setOrderNo(1);
+			reply.setGroupNo(1);
+		} else if(reply.getParentId() == 0) {
+			reply.setOrderNo(replyService.getNextOrderNo(reply.getPostNo()));
+			reply.setGroupNo(replyService.getNextGroupNo(reply.getPostNo()));
+		} else {
+			reply.setOrderNo(replyService.getNextOrderNo(reply.getPostNo(), reply.getGroupNo()));
+		}
+		
+		replyService.insert(reply);
+		
+		replies = replyService.getCurrent(reply.getPostNo());
+		model.addAttribute("replies", replies);
+		
+		model.addAttribute("reply", new Reply());
+		
+		return "redirect:post/"+post.getPostNo();
 	}
 	
 	@RequestMapping(value = "/post/*/doreplylike")

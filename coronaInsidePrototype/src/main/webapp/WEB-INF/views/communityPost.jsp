@@ -134,10 +134,10 @@
 												<sf:errors class="error" path="groupNo"/>
 												<sf:input class="control" type="hidden" path="postNo" value="${reply.postNo}"/>
 												<sf:errors class="error" path="postNo"/>
-												<sf:input class="control" type="hidden" path="author" value="${reply.author} reply 테스트"/>
+												<sf:input class="control" type="hidden" path="author" value="${reply.author}-reply"/>
 												<sf:errors class="error" path="author"/>
-												
-							              		<button type="submit" class="btn btn-default bg-violet">답글달기</button>
+												<button type="submit" class="btn btn-default bg-violet">답글달기</button>
+							              		
 							              	</sf:form>
 							              	<button type="cancel" class="btn btn-default" onClick="replyToggle('reply-${reply.replyId}')">취소</button>
 						            	</span>

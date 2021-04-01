@@ -37,5 +37,9 @@ public class PostService {
 	public void unlike(Post post) {
 		postDao.unlike(post);
 	}
+	
+	public int getCurrentPostNo() {
+		return postDao.getCurrentPostNo();
+	}
 
 }
