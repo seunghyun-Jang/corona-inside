@@ -49,6 +49,7 @@ public class ReplyDao {
 				reply.setContent(rs.getString("content"));
 				reply.setLike(rs.getInt("like"));
 				reply.setUnlike(rs.getInt("unlike"));
+				reply.setBest(rs.getBoolean("is_best"));
 				
 				return reply;
 			}
@@ -76,12 +77,40 @@ public class ReplyDao {
 				reply.setContent(rs.getString("content"));
 				reply.setLike(rs.getInt("like"));
 				reply.setUnlike(rs.getInt("unlike"));
+				reply.setBest(rs.getBoolean("is_best"));
 				
 				return reply;
 			}
     		
     	});
     	
+    }
+    
+    public List<Reply> getBestReplies(int postNo) {
+    	String sqlStatement = "select * from replies where post_no=? and is_best=? order by replies.like desc";
+    	return jdbcTemplate.query(sqlStatement, new Object[] {postNo, true}, new RowMapper<Reply>() {
+
+			@Override
+			public Reply mapRow(ResultSet rs, int rowNum) throws SQLException {
+				
+				Reply reply = new Reply();
+				
+				reply.setReplyId(rs.getInt("reply_id"));
+				reply.setPostNo(rs.getInt("post_no"));
+				reply.setGroupNo(rs.getInt("group_no"));
+				reply.setParentId(rs.getInt("parent_id"));
+				reply.setOrderNo(rs.getInt("order_no"));
+				reply.setAuthor(rs.getString("author"));
+				reply.setDate(rs.getString("date").toString());
+				reply.setContent(rs.getString("content"));
+				reply.setLike(rs.getInt("like"));
+				reply.setUnlike(rs.getInt("unlike"));
+				reply.setBest(rs.getBoolean("is_best"));
+				
+				return reply;
+			}
+    		
+    	});
     }
     
     // Insert Data
@@ -94,7 +123,7 @@ public class ReplyDao {
     	String author = reply.getAuthor();
     	String content = reply.getContent();
     	
-    	updateOrderNo(postNo, orderNo);
+    	updateOrderNumbers(postNo, orderNo);
     	
     	String sqlStatement = 
     			"insert into replies (post_no, group_no, parent_id, order_no, author, content) values (?,?,?,?,?,?)";
@@ -102,13 +131,42 @@ public class ReplyDao {
     	return (jdbcTemplate.update(sqlStatement, new Object[] {postNo, groupNo, parentId, orderNo, author, content}) == 1);
     }
     
+ // Insert Data
+    public boolean insertBest(Reply reply) {
+    	
+    	int postNo = reply.getPostNo();
+    	int groupNo = reply.getGroupNo();
+    	int parentId = reply.getParentId();
+    	int orderNo = reply.getOrderNo();
+    	String author = reply.getAuthor();
+    	String content = reply.getContent();
+    	int like = reply.getLike()+1;
+    	int unlike = reply.getUnlike();
+    	boolean isBest = true;
+    	
+    	updateOrderNumbers(postNo, orderNo);
+    	
+    	String sqlStatement = 
+    			"insert into replies (post_no, group_no, parent_id, order_no, author, content, replies.like, unlike, is_best) values (?,?,?,?,?,?,?,?,?)";
+    	
+    	return (jdbcTemplate.update(sqlStatement, new Object[] {postNo, groupNo, parentId, orderNo, author, content, like, unlike, isBest}) == 1);
+    }
+    
     // Update order_num Data
-    public boolean updateOrderNo(int postNo, int orderNo) {
+    public boolean updateOrderNumbers(int postNo, int orderNo) {
     	
     	String sqlStatement = 
     			"update replies set order_no=order_no+1 where post_no=? and order_no>=?";
     	
     	return (jdbcTemplate.update(sqlStatement, new Object[] {postNo, orderNo}) == 1);
+    }
+    
+    public boolean updateOrderNo(int replyId, int orderNo) {
+    	
+    	String sqlStatement = 
+    			"update replies set order_no=? where reply_id=?";
+    	
+    	return (jdbcTemplate.update(sqlStatement, new Object[] {orderNo, replyId}) == 1);
     }
     
     // Delete Data
@@ -125,10 +183,14 @@ public class ReplyDao {
     	int replyId = reply.getReplyId();
     	int like = reply.getLike()+1;
     	
-    	String sqlStatement =
-    			"update replies set replies.like=? where reply_id=?";
-    	
-    	return (jdbcTemplate.update(sqlStatement, new Object[] {like, replyId}) == 1);
+    	String sqlStatement;
+    	if(like >= 30 && !reply.isBest()) {
+    		sqlStatement = "update replies set replies.like=?, is_best=? where reply_id=?";
+    		return (jdbcTemplate.update(sqlStatement, new Object[] {like, true, replyId}) == 1);
+    	} else {
+    		sqlStatement = "update replies set replies.like=? where reply_id=?";
+    		return (jdbcTemplate.update(sqlStatement, new Object[] {like, replyId}) == 1);
+    	}
     }
     
     public boolean unlike(Reply reply) {

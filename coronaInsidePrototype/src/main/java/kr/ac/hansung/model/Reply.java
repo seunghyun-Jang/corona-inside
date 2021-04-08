@@ -30,5 +30,7 @@ public class Reply {
 	@Size(min=2, max=200, message="내용은 2자 이상, 200자 이하로 적어주세요.")
 	@NotEmpty(message="The content cannot be empty")
 	private String content;
+	
+	private boolean isBest;
 
 }

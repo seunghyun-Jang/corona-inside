@@ -10542,6 +10542,17 @@ form .row:first-child .floating-label-form-group {
     height: 100%;
     padding: 10px 10px 0px;
 }
+
+.comments .comment-box-best {
+	width: 100%;
+    float: left;
+    height: 100%;
+    padding: 10px 10px 0px;
+    background-color: #ddccff;
+    border: thick double #A366FF;
+    padding-bottom: 10px;
+}
+
 .comments .add-comment {
     background-color: transparent;
     border: none;
@@ -10888,4 +10899,8 @@ label .glyphicon {
     }
 }
 
+.best-comment {
+	color: #ff3300;
+  	text-decoration: none;
+}
 

@@ -60,8 +60,8 @@
     </header>
     
     <section class="page-section" id="post">
-    	<h1 class="masthead-heading text-center text-secondary text-uppercase mb-0"><a class="a-violet" href="${pageContext.request.contextPath}/community">게시판</a></h1>
     	<div class="container">
+    		<h2 class="masthead-heading text-secondary text-uppercase mb-4-5"><a class="a-violet" href="${pageContext.request.contextPath}/community">커뮤니티</a></h2>
     		<table class="styled-table">
     			<tbody>
     				<tr>
@@ -105,6 +105,45 @@
 				              	</sf:form>
 					          </span>
 					        </div>
+					        
+					        <c:forEach var="best_reply" items="${best_replies}">
+					        	<div class="comment-box-best">
+					        		<span class="commenter-name nametag">
+						            	<span class="best-comment">BEST <i class="far fa-star"></i></span><a class="a-violet" href="#"> ${best_reply.author}</a> <span class="comment-time">${best_reply.date}</span>
+						          	</span>       
+						          	<p class="comment-txt more">
+						          		<c:if test="${best_reply.parentId != 0}"><a class="a-violet a-bg-violet" href="#">@${best_reply.parentAuthor}</a>&nbsp; </c:if>
+						          		${best_reply.content}
+						          	</p>
+						          	<div class="comment-meta likeb-${best_reply.replyId}">
+						            	<button class="comment-like" onClick="doReplyLike('like', '${best_reply.replyId}', ' .likeb-${best_reply.replyId}')"><i class="far fa-thumbs-up" aria-hidden="true"></i>&nbsp;${best_reply.like}</button>
+						            	<button class="comment-dislike" onClick="doReplyLike('unlike', '${best_reply.replyId}', ' .likeb-${best_reply.replyId}')"><i class="far fa-thumbs-down" aria-hidden="true"></i>&nbsp;${best_reply.unlike}</button> 
+						            	<button class="comment-reply" onClick="replyToggle('reply-${best_reply.replyId}')"><i class="fa fa-reply-all" aria-hidden="true"></i> 답글달기</button>         
+						          	</div>
+						          	
+						          	<div id="reply-${best_reply.replyId}" class="comment-box add-comment reply-box">
+						            	<span class="commenter-name">
+							            	<sf:form method="post" action="${pageContext.request.contextPath}/doreply" modelAttribute="reply">
+							              		<sf:input class="control" type="text" placeholder="여기에 답글을 입력하세요." name="Add Comment" path="content"/>
+							              		<sf:errors class="error" path="content"/>
+							              		<sf:input class="control" type="hidden" path="parentId" value="${best_reply.replyId}"/>
+												<sf:errors class="error" path="parentId"/>
+												<sf:input class="control" type="hidden" path="groupNo" value="${best_reply.groupNo}"/>
+												<sf:errors class="error" path="groupNo"/>
+												<sf:input class="control" type="hidden" path="postNo" value="${best_reply.postNo}"/>
+												<sf:errors class="error" path="postNo"/>
+												<sf:input class="control" type="hidden" path="author" value="${best_reply.author}-reply"/>
+												<sf:errors class="error" path="author"/>
+												<button type="submit" class="btn btn-default bg-violet">답글달기</button>
+							              		
+							              	</sf:form>
+							              	<button type="cancel" class="btn btn-default" onClick="replyToggle('reply-${best_reply.replyId}')">취소</button>
+						            	</span>
+						          	</div>
+						        </div>
+					        </c:forEach>
+					        
+					        
 					        <c:forEach var="reply" items="${replies}">
 					        	<c:choose>
 				    				<c:when test="${reply.parentId == 0}"><div class="comment-box"></c:when>
@@ -118,8 +157,8 @@
 						          		${reply.content}
 						          	</p>
 						          	<div class="comment-meta like-${reply.replyId}">
-						            	<button class="comment-like" onClick="doReplyLike('like', '${reply.replyId}')"><i class="far fa-thumbs-up" aria-hidden="true"></i>&nbsp;${reply.like}</button>
-						            	<button class="comment-dislike" onClick="doReplyLike('unlike', '${reply.replyId}')"><i class="far fa-thumbs-down" aria-hidden="true"></i>&nbsp;${reply.unlike}</button> 
+						            	<button class="comment-like" onClick="doReplyLike('like', '${reply.replyId}', ' .like-${reply.replyId}')"><i class="far fa-thumbs-up" aria-hidden="true"></i>&nbsp;${reply.like}</button>
+						            	<button class="comment-dislike" onClick="doReplyLike('unlike', '${reply.replyId}', ' .like-${reply.replyId}')"><i class="far fa-thumbs-down" aria-hidden="true"></i>&nbsp;${reply.unlike}</button> 
 						            	<button class="comment-reply" onClick="replyToggle('reply-${reply.replyId}')"><i class="fa fa-reply-all" aria-hidden="true"></i> 답글달기</button>         
 						          	</div>
 						          	
@@ -191,7 +230,7 @@
 			req.send();
 		}
 		
-		function doReplyLike(todo, replyId) {
+		function doReplyLike(todo, replyId, id) {
 			var req = new XMLHttpRequest();
 			var page = "${pageContext.request.contextPath}/post/" + replyId;
 			if(todo == "like") {
@@ -203,7 +242,7 @@
 			req.open("POST", page);
 			req.onreadystatechange = function() {
 				if (req.readyState == 4 && req.status == 200) {
-					$(".like-"+replyId).load(window.location.href + " .like-" + replyId);
+					$(id).load(window.location.href + id);
 				}
 			}
 			req.send();

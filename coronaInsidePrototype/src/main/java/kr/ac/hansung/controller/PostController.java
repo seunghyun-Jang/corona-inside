@@ -89,6 +89,9 @@ public class PostController {
 		List<Reply> replies = replyService.getCurrent(postNo);
 		model.addAttribute("replies", replies);
 		
+		List<Reply> bestReplies = replyService.getBestReplies(postNo);
+		model.addAttribute("best_replies", bestReplies);
+		
 		model.addAttribute("reply", new Reply());
 		
 		return "communityPost";

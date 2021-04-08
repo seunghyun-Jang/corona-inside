@@ -25,6 +25,16 @@ public class ReplyService {
 		return list;
 	}
 	
+	public List<Reply> getBestReplies(int postNo) {
+		List<Reply> list = replyDao.getBestReplies(postNo);
+		for(Reply reply : list) {
+			if(reply.getParentId() != 0) {
+				updateParentAuthor(reply);
+			}
+		}
+		return list;
+	}
+	
 	public Reply getReply(int replyId) {
 		return replyDao.getReply(replyId);
 	}
