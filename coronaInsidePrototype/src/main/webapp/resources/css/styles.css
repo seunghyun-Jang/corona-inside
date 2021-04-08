@@ -7659,6 +7659,10 @@ button.bg-dark:focus {
   margin-left: 1.5rem !important;
 }
 
+.mb-4-5 {
+	margin-bottom: 45px; !important;
+}
+
 .m-5 {
   margin: 3rem !important;
 }
@@ -10057,7 +10061,8 @@ h3 {
   }
 }
 .page-section {
-  padding: 6rem 0;
+  padding-bottom: 6rem;
+  padding-top: 4rem;
 }
 .page-section .page-section-heading {
   font-size: 2.25rem;
@@ -10424,7 +10429,8 @@ form .row:first-child .floating-label-form-group {
 
 .styled-table {
     border-collapse: collapse;
-    margin: 25px 0;
+    margin-bottom: 25px;
+    margin-top: 10px;
     font-size: 0.9em;
     font-family: sans-serif;
     min-width: 400px;
@@ -10493,6 +10499,7 @@ form .row:first-child .floating-label-form-group {
 }
 .a-violet:hover {
   color: #3D0099;
+  text-decoration: none;
 }
 
 .a-violet-bold {

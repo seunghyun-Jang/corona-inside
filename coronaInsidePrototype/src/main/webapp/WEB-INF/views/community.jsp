@@ -58,7 +58,8 @@
     </header>
     <section class="page-section" id="freeboard">
     	<div class="container">
-    	<h1 class="masthead-heading text-center text-secondary text-uppercase mb-0"><a class="a-violet" href="${pageContext.request.contextPath}/community">게시판</a></h1>
+    	<h2 class="masthead-heading text-secondary text-uppercase mb-4-5"><a class="a-violet" href="${pageContext.request.contextPath}/community">커뮤니티</a></h2>
+    	<a class="a-violet" href="${pageContext.request.contextPath}/community/best"><i class="fas fa-crown"></i> 인기글</a>
     	<table class="styled-table table-hover">
     		<thead>
     			<tr>
@@ -72,7 +73,7 @@
     		<tbody>
     			<c:set var="num" value="0"/>
    				<c:forEach var="post" items="${posts}">
-   					<c:if test="${num < page*10 && num > page*10-11 }">
+   					<c:if test="${num < page*20 && num > page*20-21 }">
 		    			<tr>
 							<td><button onClick="location.href='${pageContext.request.contextPath}/post/${post.postNo}'">${post.title}</button></td>
 		    				<td class="text-center">${post.author}</td>
@@ -82,7 +83,7 @@
 	    			</c:if>
 	    			<c:set var="num" value="${num+1}"/>
     			</c:forEach>
-    			<c:set var="pages" value="${num/10}" />
+    			<c:set var="pages" value="${num/20}" />
     			<c:if test="${num%10 != 0}"> <c:set var="pages" value="${pages+1}"/> </c:if>
     		</tbody>
     	</table>

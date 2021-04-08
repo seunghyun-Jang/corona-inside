@@ -54,6 +54,30 @@ public class PostController {
 		return "community";
 	}
 	
+	@RequestMapping(value = "/community/best", method = RequestMethod.GET)
+	public String communityBest(Model model) {
+		
+		List<Post> posts = postService.getBestPosts();
+		model.addAttribute("posts", posts);
+		
+		model.addAttribute("page", 1);
+		
+		return "community";
+	}
+	
+	@RequestMapping(value = "/community/best/*", method = RequestMethod.GET)
+	public String communityBestPosts(Model model, HttpServletRequest request) {
+		
+		List<Post> posts = postService.getBestPosts();
+		model.addAttribute("posts", posts);
+		
+		String[] url = request.getRequestURI().split("/");
+		int page = Integer.parseInt(url[3]);
+		model.addAttribute("page", page);
+		
+		return "community";
+	}
+	
 	@RequestMapping(value = "/post/*", method = RequestMethod.GET)
 	public String communityPost(Model model, HttpServletRequest request) {
 		String[] url = request.getRequestURI().split("/");

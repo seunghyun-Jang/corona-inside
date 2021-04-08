@@ -83,6 +83,31 @@ public class PostDao {
     	
     }
     
+public List<Post> getBestPosts() {
+    	
+    	String sqlStatement = "select * from posts where posts.like>=? order by post_no desc";
+    	return jdbcTemplate.query(sqlStatement,	new Object[] {30},new RowMapper<Post>() {
+
+			@Override
+			public Post mapRow(ResultSet rs, int rowNum) throws SQLException {
+				
+				Post post = new Post();
+				
+				post.setPostNo(rs.getInt("post_no"));
+				post.setTitle(rs.getString("title"));
+				post.setAuthor(rs.getString("author"));
+				post.setDate(rs.getDate("date").toString());
+				post.setContent(rs.getString("content"));
+				post.setLike(rs.getInt("like"));
+				post.setUnlike(rs.getInt("unlike"));
+				
+				return post;
+			}
+    		
+    	});
+    	
+    }
+    
     // Insert Data
     public boolean insert(Post post) {
     	
