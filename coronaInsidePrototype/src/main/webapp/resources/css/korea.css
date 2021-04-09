@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+#container {
+  	display: flex;
+  	justify-content: center;
+  	align-items: center;
+   	max-width: 960px;
+    fill: #fff
+}
+#states path {
+    fill: #e84a4a;
+    stroke: #ffffff;
+    stroke-width: 1.5px;
+
+}
+
+#states path:hover {
+    fill: #6f42c1;
+}
+
+
+#states .active {
+    fill: #00b700;
+}
+
+#states .activeDetail {
+    fill: #00b700;
+}
+
+#states path {
+    cursor: pointer;
+}
+
+#states text {
+    cursor: pointer;
+    font-size: 17px;
+    fill: #000000;
+}
+
+.toolTip {
+    position: absolute;
+    border: 0 none;
+    border-radius: 4px 4px 4px 4px;
+    background-color: black;
+    padding: 5px;
+    text-align: left;
+    font-size: 12px;
+    color: white;
+    white-space: pre;
+    
+}
+
+

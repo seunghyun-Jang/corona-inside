@@ -1,14 +1,60 @@
 package kr.ac.hansung.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.TimeZone;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.json.XML;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
+import kr.ac.hansung.dao.UserDAO;
+import kr.ac.hansung.dto.UserVO;
+import kr.ac.hansung.dto.Covid19Inf.ApiDTO;
+import kr.ac.hansung.dto.Covid19Sido.ItemDTO;
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
 public class HomeController {
+
+	private static HashMap<String, String> map = new HashMap<String, String>();
+	private static kr.ac.hansung.dto.Covid19Inf.ApiDTO InfDTO = null;
+	private static kr.ac.hansung.dto.Covid19Sido.ApiDTO SidoDTO = null;
+	private static String[] strArray= new String[3];
+	
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -28,8 +74,171 @@ public class HomeController {
 		return "exhome";
 	}
 	
+
 	@RequestMapping(value = "/coronaCurrent", method = RequestMethod.GET)
-	public String coronaCurrent() {
+	public String coronaCurrent(Model model, HttpServletRequest request) throws Exception {
+			
+		
+		SimpleDateFormat format1 = new SimpleDateFormat ("yyyyMMdd");			// 오늘
+		Date today = new Date();		
+		String toDay = format1.format(today);		
+		System.out.println(toDay);
+		
+		// 1시간전
+	    Calendar cal = Calendar.getInstance();
+	    cal.setTime(today);
+	    cal.add(Calendar.HOUR, -1);
+
+	    // 포맷변경 ( 년월일 시분초)
+	    SimpleDateFormat sdformat = new SimpleDateFormat("yyyyMMdd");
+	    sdformat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+	    String beforeHour = sdformat.format(cal.getTime());
+	    System.out.println("1시간 전 : " + beforeHour);
+
+	    //하루 전
+	    Calendar day = Calendar.getInstance();
+	    day.add(Calendar.DATE , -1);
+	    String beforeDate = new java.text.SimpleDateFormat("yyyyMMdd").format(day.getTime());
+	    System.out.println(beforeDate);
+
+	    //12일 전
+	    Calendar week = Calendar.getInstance();
+	    week.add(Calendar.DATE , -13);
+	    String beforeWeek = new java.text.SimpleDateFormat("yyyyMMdd").format(week.getTime());
+	    System.out.println(beforeWeek);
+
+	    
+	    Calendar month = Calendar.getInstance();
+	    month.add(Calendar.DATE , -31);
+	    String beforeMonth = new java.text.SimpleDateFormat("yyyyMMdd").format(month.getTime());
+	    System.out.println(beforeMonth);
+	    
+
+	    //한달 전
+		/*
+		 * Calendar mon = Calendar.getInstance(); // 1달전? 아니면 30일전? 확진자수 api에는 일별로 나와있기
+		 * 때문에 단순하게 MONTH-1 을 하면 문제가 생긴다. mon.add(Calendar.MONTH, -1); String
+		 * beforeMonth = new
+		 * java.text.SimpleDateFormat("yyyyMMdd").format(mon.getTime());
+		 * System.out.println(beforeMonth);
+		 */
+		
+		
+	   
+	    
+	    
+		
+		if(InfDTO==null) {		// 싱글턴 패턴
+			System.out.println("InfDTO is null.");
+			//InfDTO = getCovid19Inf(beforeDate, beforeWeek);
+			InfDTO = getCovid19Inf(beforeHour, beforeMonth);
+			model.addAttribute("InfDTO", InfDTO.getResponse().getBody().getItems());
+			InfDTO.getResponse().getBody().getItems().getItem()[0].getDecideCnt();
+		}
+		if(SidoDTO==null) {		// 싱글턴 패턴
+			System.out.println("SidoDTO is null.");
+			SidoDTO = getCovid19Sido(beforeHour);
+			model.addAttribute("SidoDTO", SidoDTO.getResponse().getBody().getItems());
+			
+			
+			
+			
+			ItemDTO[] list = SidoDTO.getResponse().getBody().getItems().getItem();
+			
+			
+			if (list != null && list.length != 0) {
+				for (kr.ac.hansung.dto.Covid19Sido.ItemDTO item : list) {
+					if (!(item.getGubun().equals("검역") || item.getGubun().equals("합계"))) {
+						//System.out.println(item.getGubun());
+						map.put(item.getGubun(), item.getDefCnt());
+					}
+				}
+			}
+			
+			
+			
+			
+		}
+		model.addAttribute("InfDTO", InfDTO.getResponse().getBody().getItems());
+		model.addAttribute("SidoDTO", SidoDTO.getResponse().getBody().getItems());
+		model.addAttribute("map", map);
+		System.out.println("now, dto is not null.");
+		
+		
+		
+		//String korea = readJson(request);
+		//String point = readJson2(request);
+		
+		List<List<String>> codeMap= readCsv(request);
+		
+		List<List<String>> pointMap = readCsv2(request);
+					
+		//System.out.println(codeMap.get(0).get(1));
+		
+		model.addAttribute("codeMap", codeMap);
+		model.addAttribute("pointMap", pointMap);
+		//model.addAttribute("korea",korea);
+		//model.addAttribute("point",point);
+		
+		crawler();
+		crawler2();
+		
+		String[] arr = strArray[0].split("\r");
+		String[] arr2 = strArray[1].split("\r");
+		String[] arr3 = strArray[2].split("\r");
+		String[] str;
+		String[][] arr4 = new String[18][5];
+		
+		for(int i=6; i<24; i++) {
+			str = arr3[i].split(" ");
+			for(int j=0; j<5; j++) {
+			
+				arr4[i-6][j] = str[j];
+			}
+		}
+		
+		
+		
+		
+		model.addAttribute("item0",arr[0]);
+		model.addAttribute("item1",arr[1]);
+		model.addAttribute("item2",arr[2]);
+		model.addAttribute("item3",arr[3]);
+		model.addAttribute("item4",arr[4]);
+		model.addAttribute("item5",arr[5]);
+		model.addAttribute("item6",arr[6]);
+		model.addAttribute("item7",arr[7]);
+		model.addAttribute("item8",arr[8]);
+		model.addAttribute("item9",arr[9]);
+		
+		model.addAttribute("href0",arr2[0]);
+		model.addAttribute("href1",arr2[1]);
+		model.addAttribute("href2",arr2[2]);
+		model.addAttribute("href3",arr2[3]);
+		model.addAttribute("href4",arr2[4]);
+		model.addAttribute("href5",arr2[5]);
+		model.addAttribute("href6",arr2[6]);
+		model.addAttribute("href7",arr2[7]);
+		model.addAttribute("href8",arr2[8]);
+		model.addAttribute("href9",arr2[9]);
+		
+		
+		System.out.println(arr4[0][0]);
+		System.out.println(arr4[0][1]);
+		System.out.println(arr4[0][2]);
+		System.out.println(arr4[0][3]);
+		System.out.println(arr4[0][4]);
+		
+		model.addAttribute("vaccineCurrent",arr4);
+		
+		
+		
+		
+		
+		
+		//System.out.println(dto.getResponse().getBody().getItems().getItem()[0].getExamCnt()+", "+dto.getResponse().getBody().getItems().getItem()[1].getExamCnt()+", "+dto.getResponse().getBody().getItems().getItem()[2].getExamCnt());
+		
 		return "coronaCurrent";
 	}
 	
@@ -46,6 +255,482 @@ public class HomeController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(){
 		return "login";
+	}
+	
+	@RequestMapping(value = "/signUp", method = {RequestMethod.GET,RequestMethod.POST})
+	public String signUp(){
+		return "signUp";
+	}
+	
+	@RequestMapping(value = "/insertUser", method = {RequestMethod.GET,RequestMethod.POST})
+	public String insertUser(){
+		return "insertUser";
+	}
+	
+	@RequestMapping(value = "/dbtest", method = {RequestMethod.GET,RequestMethod.POST})
+	public String dbtest() {
+		return "dbtest";
+	}
+
+	//	로그인(POST)	
+	@RequestMapping(value = "/loginSuccess", method = RequestMethod.POST)
+	public String loginSuccess(HttpSession session, UserVO vo, Model model) {
+		if(session.getAttribute("login") != null) {
+			session.removeAttribute("login");
+		}
+		UserDAO loginUser = new UserDAO();
+		
+		if(loginUser.loginCheck(vo)==1) {				//	성공
+			session.setAttribute("username",vo.getUsername());
+			logger.info("success login");
+			return "redirect:/home";
+		}		
+		else {
+		if(loginUser.loginCheck(vo)==0)//	실패
+			logger.info("비밀번호 불일치");
+		else if(loginUser.loginCheck(vo)==-1)
+			logger.info("아이디가 존재하지 않음");
+		else if(loginUser.loginCheck(vo)==-2)
+			logger.info("데이터베이스 오류");
+		//logger.info(Integer.toString((loginUser.loginCheck(vo))));
+		return "redirect:/login";
+		}
+	}
+	
+	//	로그아웃	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		UserDAO logout = new UserDAO();
+		logout.logout(session);
+		logger.info("ByeBye Logout success");
+		return "redirect:/home";
+	}
+	
+	
+	public ApiDTO getCovid19Inf(String toDay, String beforeMonth) throws Exception { // 테스트용
+
+		try {
+			String serviceKeyDecoded = URLDecoder.decode(
+					"0OhBU7ZCGIobDVKDeBJDpmDRqK3IRNF6jlf%2FJB2diFAf%2FfR2czYO9A4UTGcsOwppV6W2HVUeho%2FFPwXoL6DwqA%3D%3D",
+					"UTF-8");
+			StringBuilder urlBuilder = new StringBuilder(
+					"http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson"); /* URL */
+			// urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") +
+			// "=gdV4T70HlOTqis98q%2FvzD0cd0%2BVcdZiWpY2H86q3bPpKeUnuY7Jb4xBG%2FjoXBmtzhiXtp932xZhCC7GXi%2BF5Kg%3D%3D");
+			// /*Service Key*/
+			// urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" +
+			// URLEncoder.encode(serviceKeyDecoded, "UTF-8")); /*공공데이터포털에서 받은 인증키*/
+			urlBuilder.append(
+					"?" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /* 페이지번호 */
+			urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "="
+					+ URLEncoder.encode("10", "UTF-8")); /* 한 페이지 결과 수 */
+			urlBuilder.append("&" + URLEncoder.encode("startCreateDt", "UTF-8") + "="
+					+ URLEncoder.encode(beforeMonth, "UTF-8")); /* 검색할 생성일 범위의 시작 */
+			urlBuilder.append("&" + URLEncoder.encode("endCreateDt", "UTF-8") + "="
+					+ URLEncoder.encode(toDay, "UTF-8")); /* 검색할 생성일 범위의 종료 */
+			urlBuilder.append("&" + URLEncoder.encode("serviceKey", "UTF-8") + "="
+					+ URLEncoder.encode(serviceKeyDecoded, "UTF-8")); /* 공공데이터포털에서 받은 인증키 */
+			urlBuilder.append("&" + URLEncoder.encode("_returnType", "UTF-8") + "=" + "json");
+
+			System.out.println("today is" + toDay);
+			URL url = new URL(urlBuilder.toString());
+
+			System.out.println(url.toString());
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Content-type", "application/json");
+			System.out.println("Response code: " + conn.getResponseCode());
+			BufferedReader rd;
+			if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+				rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			} else {
+				rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+			}
+			StringBuilder sb = new StringBuilder();
+			String line;
+			while ((line = rd.readLine()) != null) {
+				sb.append(line);
+			}
+			rd.close();
+			conn.disconnect();
+			System.out.println(sb.toString());
+
+			org.json.JSONObject jObject = XML.toJSONObject(sb.toString());
+			ObjectMapper mapper = new ObjectMapper();
+			mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+			mapper.enable(SerializationFeature.INDENT_OUTPUT);
+			ApiDTO api = mapper.readValue(jObject.toString(), ApiDTO.class);
+
+			return api;
+
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	
+	
+	public kr.ac.hansung.dto.Covid19Sido.ApiDTO getCovid19Sido(String toDay) throws Exception { // 테스트용
+
+		try {
+			String serviceKeyDecoded = URLDecoder.decode(
+					"0OhBU7ZCGIobDVKDeBJDpmDRqK3IRNF6jlf%2FJB2diFAf%2FfR2czYO9A4UTGcsOwppV6W2HVUeho%2FFPwXoL6DwqA%3D%3D",
+					"UTF-8");
+			StringBuilder urlBuilder = new StringBuilder(
+					"http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson"); /* URL */
+			// urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") +
+			// "=gdV4T70HlOTqis98q%2FvzD0cd0%2BVcdZiWpY2H86q3bPpKeUnuY7Jb4xBG%2FjoXBmtzhiXtp932xZhCC7GXi%2BF5Kg%3D%3D");
+			// /*Service Key*/
+			// urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" +
+			// URLEncoder.encode(serviceKeyDecoded, "UTF-8")); /*공공데이터포털에서 받은 인증키*/
+			urlBuilder.append(
+					"?" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /* 페이지번호 */
+			urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "="
+					+ URLEncoder.encode("10", "UTF-8")); /* 한 페이지 결과 수 */
+			urlBuilder.append("&" + URLEncoder.encode("startCreateDt", "UTF-8") + "="
+					+ URLEncoder.encode(toDay, "UTF-8")); /* 검색할 생성일 범위의 시작 */
+			urlBuilder.append("&" + URLEncoder.encode("endCreateDt", "UTF-8") + "="
+					+ URLEncoder.encode(toDay, "UTF-8")); /* 검색할 생성일 범위의 종료 */
+			urlBuilder.append("&" + URLEncoder.encode("serviceKey", "UTF-8") + "="
+					+ URLEncoder.encode(serviceKeyDecoded, "UTF-8")); /* 공공데이터포털에서 받은 인증키 */
+			urlBuilder.append("&" + URLEncoder.encode("_returnType", "UTF-8") + "=" + "json");
+
+			URL url = new URL(urlBuilder.toString());
+
+			System.out.println(url.toString());
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Content-type", "application/json");
+			System.out.println("Response code: " + conn.getResponseCode());
+			BufferedReader rd;
+			if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+				rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			} else {
+				rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+			}
+			StringBuilder sb = new StringBuilder();
+			String line;
+			while ((line = rd.readLine()) != null) {
+				sb.append(line);
+			}
+			rd.close();
+			conn.disconnect();
+			System.out.println(sb.toString());
+			System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
+
+			org.json.JSONObject jObject = XML.toJSONObject(sb.toString());
+			ObjectMapper mapper = new ObjectMapper();
+			mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+			mapper.enable(SerializationFeature.INDENT_OUTPUT);
+			kr.ac.hansung.dto.Covid19Sido.ApiDTO api = mapper.readValue(jObject.toString(), kr.ac.hansung.dto.Covid19Sido.ApiDTO.class);
+
+			return api;
+
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	public List<List<String>> readCsv(HttpServletRequest request) throws Exception{
+		List<List<String>> ret = new ArrayList<List<String>>();
+		BufferedReader br = null;
+		
+		
+		String path = request.getSession().getServletContext().getRealPath("/resources/hospitallist.csv");
+		
+
+		//System.out.println(path);
+
+		//File f = new File(".\\src\\main\\webapp\\resources\\hospitallist.csv");
+		
+		//System.out.println(f.getCanonicalPath());
+		//System.out.println(f.getAbsolutePath());
+		
+		try {
+			br = Files.newBufferedReader(Paths.get(path));
+			//br = Files.newBufferedReader(Paths.get("C:\\Users\\radiuslab\\Desktop\\hospitallist.csv"));
+			//br = new BufferedReader(new FileReader(f));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// Charset.forName("UTF-8");
+		String line = "";
+
+		HashMap<String, String> map = new HashMap<String, String>();
+
+		try {
+			while ((line = br.readLine()) != null) {
+				// CSV 1행을 저장하는 리스트
+				List<String> tmpList = new ArrayList<String>();
+				String array[] = line.split(",");
+				// 배열에서 리스트 반환
+				tmpList = Arrays.asList(array);
+				//System.out.println(tmpList);
+
+				map.put("name", tmpList.get(0));
+				map.put("address", tmpList.get(1));
+				if (tmpList.size() > 2) {
+					map.put("CID", tmpList.get(2));
+
+					map.put("CityType", tmpList.get(3));
+				} else {
+					map.put("CID", "");
+					map.put("CityType", "");
+				}
+				ret.add(tmpList);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//System.out.println(ret);
+		return ret;
+
+	}
+	
+	
+	public List<List<String>> readCsv2(HttpServletRequest request) throws Exception{
+		List<List<String>> ret = new ArrayList<List<String>>();
+		BufferedReader br = null;
+
+		
+		String path = request.getSession().getServletContext().getRealPath("/resources/pointlist.csv");
+
+		//File f = new File(".\\src\\main\\webapp\\resources\\hospitallist.csv");
+		
+		//System.out.println(f.getCanonicalPath());
+		//System.out.println(f.getAbsolutePath());
+		
+		try {
+			br = Files.newBufferedReader(Paths.get(path));
+			//br = new BufferedReader(new FileReader(f));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// Charset.forName("UTF-8");
+		String line = "";
+
+		HashMap<String, String> map = new HashMap<String, String>();
+
+		try {
+			while ((line = br.readLine()) != null) {
+				// CSV 1행을 저장하는 리스트
+				List<String> tmpList = new ArrayList<String>();
+				String array[] = line.split(",");
+				// 배열에서 리스트 반환
+				tmpList = Arrays.asList(array);
+				//System.out.println(tmpList);
+
+				map.put("name", tmpList.get(0));
+				map.put("address", tmpList.get(1));
+				map.put("address", tmpList.get(2));
+				if (tmpList.size() > 2) {
+					
+				} else {
+					map.put("CID", "");
+					map.put("CityType", "");
+				}
+				ret.add(tmpList);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println(ret);
+		return ret;
+
+	}
+	
+	public String readJson(HttpServletRequest request) throws Exception{
+		BufferedReader br = null;
+	
+		String path = request.getSession().getServletContext().getRealPath("/resources/korea.json");
+			
+		try {
+			br = Files.newBufferedReader(Paths.get(path));
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		String result = "";
+		StringBuilder sb = new StringBuilder(result);
+		String line = "";
+
+		HashMap<String, String> map = new HashMap<String, String>();
+
+		try {
+			while ((line = br.readLine()) != null) {
+				sb.append(line);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//System.out.println(ret);
+		System.out.println(sb.toString());
+		return sb.toString();
+
+	}
+	
+	public String readJson2(HttpServletRequest request) throws Exception{
+		BufferedReader br = null;
+	
+		String path = request.getSession().getServletContext().getRealPath("/resources/point.json");
+			
+		try {
+			br = Files.newBufferedReader(Paths.get(path));
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		String result = "";
+		StringBuilder sb = new StringBuilder(result);
+		String line = "";
+
+		HashMap<String, String> map = new HashMap<String, String>();
+
+		try {
+			while ((line = br.readLine()) != null) {
+				sb.append(line);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//System.out.println(ret);
+		//System.out.println(sb.toString());
+		return sb.toString();
+
+	}
+	
+	public void crawler() {
+		try {
+		String URL = "https://search.naver.com/search.naver?where=news&query=%EC%BD%94%EB%A1%9C%EB%82%98&sm=tab_srt&sort=0&photo=0&field=0&reporter_article=&pd=0&ds=&de=&docid=&nso=so%3Ar%2Cp%3Aall%2Ca%3Aall&mynews=0&refresh_start=0&related=0";
+		
+		Connection conn = Jsoup.connect(URL);
+		String[] array = new String[2];
+        // 3. HTML 파싱.
+        Document html = conn.get(); // conn.post();
+        
+        Elements fileblocks = html.getElementsByClass("news_area");
+        
+        String title, href, time="";
+        
+        StringBuilder sb = new StringBuilder("");
+        StringBuilder sb2 = new StringBuilder("");
+        for( Element fileblock : fileblocks ) {
+            
+            Elements files = fileblock.getElementsByTag("a");
+            Elements files2 = fileblock.getElementsByTag("span");
+            
+            for (Element elm : files2) {
+				time = elm.text();
+				
+				//System.out.println(text);
+			}
+        
+			for (Element elm : files) {
+				title = elm.attr("title");
+				href = elm.attr("href");
+				
+
+				if (title != "") {
+					//System.out.println(title + " > " + href + " ( "+ time +" ) ");
+					String result = title + " > " + " ( "+ time +" )\r";
+					String result2 = href + "\r";
+					sb.append(result);
+					sb2.append(result2);
+				}
+			}
+				
+        }
+        
+        strArray[0] = sb.toString();
+        strArray[1] = sb2.toString();
+        //System.out.println(sb.toString());
+        
+        //System.out.println(html.toString()); 
+      
+				
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void crawler2() {
+		try {
+		String URL = "https://ncv.kdca.go.kr/mainStatus.es?mid=a11702000000";
+		
+		Connection conn = Jsoup.connect(URL);
+		String[] array = new String[2];
+        // 3. HTML 파싱.
+        Document html = conn.get(); // conn.post();
+        
+        
+        Elements fileblocks = html.getElementsByClass("data_table tbl_scrl_mini");
+        
+        String current, city="";
+        
+        StringBuilder sb = new StringBuilder("");
+        StringBuilder sb2 = new StringBuilder("");
+        for( Element fileblock : fileblocks ) {
+            
+            Elements files = fileblock.getElementsByTag("tr");
+            Elements files2 = fileblock.getElementsByTag("tr");
+            
+           //for (Element elm : files2) {
+				//city = elm.text();
+				
+				//System.out.println(text);
+			//}
+        
+			for (Element elm : files) {
+				//title = elm.attr("title");
+				//href = elm.attr("href");
+				
+				current = elm.text();
+
+				String result = current + "\r";
+					//System.out.println(title + " > " + href + " ( "+ time +" ) ");
+					
+				
+				sb.append(result);
+					//sb2.append(result2);
+				
+			
+			}
+				
+        }
+        
+        
+      
+        //System.out.println(sb.toString());
+        
+        //strArray[0] = sb.toString();
+        //strArray[1] = sb2.toString();
+        strArray[2] = sb.toString();
+        //System.out.println(sb.toString());
+        
+        //System.out.println(html.toString()); 
+      
+				
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 }
