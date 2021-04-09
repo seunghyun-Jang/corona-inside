@@ -9,10 +9,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<title>Corona Inside : Login</title>
+		<title>Corona Inside : SignUp</title>
 		<link rel="stylesheet" href="resources/css/bootstrap.min.css">
 		<!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/favicon_covid.ico" />
+        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
 		<!-- Google fonts-->
@@ -61,23 +61,22 @@
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
                     <div id="login-box" class="col-md-12">
-                        <form id="login-form" class="form" action="loginSuccess" method="post">
-                            <h1 class="text-center text-violet">로그인</h1>
+                        <form id="signUp-form" class="form" action="insertUser" method="post">
+                            <h1 class="text-center text-violet">회원가입</h1>
                             <div class="form-group">
-                                <label for="username" class="text-violet font-weight-bold">아이디:</label><br>
-                                <input type="text" name="username" id="username" class="form-control">
+                                <label for="username" class="text-violet font-weight-bold">아이디</label><br>
+                                <input type="text" name="id" id="id" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="password" class="text-violet font-weight-bold">비밀번호:</label><br>
-                                <input type="password" name="password" id="password" class="form-control">
+                                <label for="password" class="text-violet font-weight-bold">비밀번호</label><br>
+                                <input type="password" name="pw" id="pw" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="remember-me" class="text-violet"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
-                                <input type="submit" name="submit" class="btn bg-violet text-white font-weight-bold" value="로그인">
-                                <input type="button" name="signUp" class="btn bg-violet text-white font-weight-bold" value="회원가입" onclick="location.href='signUp'" >
+                                <label for="password" class="text-violet font-weight-bold">비밀번호 재확인</label><br>
+                                <input type="password" name="pwCheck" id="pwCheck" class="form-control">
                             </div>
-                            <div id="register-link" class="text-right">
-                                <a href="signUp" class="text-violet">Register here</a>
+                            <div class="form-group">
+                                <input type="submit" name="submit" class="btn bg-violet text-white font-weight-bold" value="회원가입">
                             </div>
                         </form>
                     </div>

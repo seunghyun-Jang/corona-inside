@@ -7,11 +7,11 @@ var ctx = document.getElementById("myPieChart");
 var myPieChart = new Chart(ctx, {
   type: 'doughnut',
   data: {
-    labels: ["Direct", "Referral", "Social"],
+    labels: ["치료중 환자 수", "사망자 수", "검사진행 수"],
     datasets: [{
-      data: [55, 30, 15],
-      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
-      hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+      data: [`${careCnt}`, `${deathCnt}`, `${examCnt}`],
+      backgroundColor: ['#f6c23e', '#e74a3b', '#6f42c1'],
+      hoverBackgroundColor: ['#F6B400', '#E91700', '#4B01CA'],
       hoverBorderColor: "rgba(234, 236, 244, 1)",
     }],
   },
