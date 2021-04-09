@@ -1,4 +1,4 @@
-package kr.ac.hansung.cse;
+package kr.ac.hansung.dto;
 
 public class UserVO {
 	private String username;
