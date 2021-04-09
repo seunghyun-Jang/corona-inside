@@ -12,24 +12,25 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class Post {
+public class Reply {
+	
+	private int replyId;
 	
 	private int postNo;
+	private int groupNo;
+	private int parentId;
+	private int orderNo;
+	private int like;
+	private int unlike;
 	
-	@NotEmpty(message="제목을 입력해주세요")
-	private String title;
-	
-	@Size(min=2, max=15, message="Author must be between 2 and 15 chars")
-	@NotEmpty(message="The author cannot be empty")
 	private String author;
-	
 	private String date;
+	private String parentAuthor;
 	
-	@Size(min=2, max=500, message="내용은 2자 이상, 500자 이하로 적어주세요.")
+	@Size(min=2, max=200, message="내용은 2자 이상, 200자 이하로 적어주세요.")
 	@NotEmpty(message="The content cannot be empty")
 	private String content;
 	
-	private int like;
-	private int unlike;
+	private boolean isBest;
 
 }

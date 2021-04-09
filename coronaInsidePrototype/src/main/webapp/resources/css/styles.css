@@ -6123,8 +6123,24 @@ a.close.disabled {
   background-color: #7E41D9 !important;
 }
 
-.bg-red {
+.btn-like {
+  background-color: #7E41D9 !important;
+  margin-left:50px;
+  width:100px;
+  height:60px;
+}
+.btn-like:hover {
+  background-color: #3D0099 !important;
+}
+
+.btn-unlike {
   background-color: #CC3D3D !important;
+  margin-left:50px;
+  width:100px;
+  height:60px;
+}
+.btn-unlike:hover {
+  background-color: #980000 !important;
 }
 
 a.bg-primary:hover, a.bg-primary:focus,
@@ -7641,6 +7657,10 @@ button.bg-dark:focus {
 .ml-4,
 .mx-4 {
   margin-left: 1.5rem !important;
+}
+
+.mb-4-5 {
+	margin-bottom: 45px; !important;
 }
 
 .m-5 {
@@ -10041,7 +10061,8 @@ h3 {
   }
 }
 .page-section {
-  padding: 6rem 0;
+  padding-bottom: 6rem;
+  padding-top: 4rem;
 }
 .page-section .page-section-heading {
   font-size: 2.25rem;
@@ -10408,7 +10429,8 @@ form .row:first-child .floating-label-form-group {
 
 .styled-table {
     border-collapse: collapse;
-    margin: 25px 0;
+    margin-bottom: 25px;
+    margin-top: 10px;
     font-size: 0.9em;
     font-family: sans-serif;
     min-width: 400px;
@@ -10477,6 +10499,7 @@ form .row:first-child .floating-label-form-group {
 }
 .a-violet:hover {
   color: #3D0099;
+  text-decoration: none;
 }
 
 .a-violet-bold {
@@ -10490,12 +10513,12 @@ form .row:first-child .floating-label-form-group {
   color: #A366FF;
 }
 
-.like-btn {
-	margin-left:50px;
-	width:100px;
-	height:60px;
+.a-bg-violet {
+	background-color: #F5F0FF;
+    border-radius: 5px;
 }
 
+/*======comment CSS=======*/
 .comments-details button.btn.dropdown-toggle,
 .comments-details .total-comments {
     font-size: 18px;
@@ -10517,17 +10540,24 @@ form .row:first-child .floating-label-form-group {
     width: 100%;
     float: left;
     height: 100%;
-    background-color: #FAFAFA;
-    padding: 10px 10px 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
+    padding: 10px 10px 0px;
 }
+
+.comments .comment-box-best {
+	width: 100%;
+    float: left;
+    height: 100%;
+    padding: 10px 10px 0px;
+    background-color: #ddccff;
+    border: thick double #A366FF;
+    padding-bottom: 10px;
+}
+
 .comments .add-comment {
     background-color: transparent;
     border: none;
     position: relative;
-    margin-bottom: 50px;
+    margin-bottom: 100px;
 }
 .comments .commenter-pic {
     width: 50px;
@@ -10540,10 +10570,12 @@ form .row:first-child .floating-label-form-group {
 }
 .comments .add-comment .commenter-name {
     width: 100%;
-    padding-left: 75px;
     position: absolute;
     top: 20px;
     left: 0px;
+}
+.comments .add-comment .p-left {
+	padding-left: 10px;
 }
 .comments .add-comment input {
     border-top: 0px;
@@ -10558,11 +10590,11 @@ form .row:first-child .floating-label-form-group {
     font-weight: normal;
 }
 .comments .add-comment input:focus {
-    border-color: #03a9f4;
+    border-color: #A366FF;
     border-width: 2px;
 }
 .comments .add-comment button[type=submit] {
-    background-color: #03a9f4;
+    background-color: #A366FF;
     color: #fff;
     margin-right: 0px;
 }
@@ -10580,35 +10612,38 @@ form .row:first-child .floating-label-form-group {
 }
 .comments p.comment-txt {
     font-size: 15px;
-    border-bottom: 1px solid #ddd;
-    padding: 0px 0px 15px;
+    padding: 0px 0px 0px;
 }
 .comments .commenter-name {
     display: inline-block;
     position: relative;
-    top: -20px;
-    left: 10px;
     font-size: 16px;
     font-weight: bold;
+    margin-bottom : 10px;
+}
+.comments .nametag {
+    background-color: #F5F0FF;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding-left : 10px;
+    padding-top : 5px;
+    padding-bottom : 5px;
+    margin-left : -5px;
+    width : 101%;
 }
 .comments .comment-meta {
     font-size: 14px;
     color: #333;
-    padding: 2px 5px 0px;
-    line-height: 20px;
     float: right;
 }
 .comments .reply-box {
     display: none;
 }
 .comments .replied {
-    background-color: #fff;
     width: 95%;
     float: right;
-    margin-top: 15px;
 }
 
-/*======comment CSS=======*/
 @media (max-width: 767px){
 .comments .commenter-name {
     font-size: 13px;
@@ -10864,4 +10899,8 @@ label .glyphicon {
     }
 }
 
+.best-comment {
+	color: #ff3300;
+  	text-decoration: none;
+}
 

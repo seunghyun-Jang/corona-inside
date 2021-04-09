@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,13 +11,14 @@
 	<title>Corona Inside : 커뮤니티</title>
 	<link rel="stylesheet" href="../resources/css/bootstrap.min.css">
 	<!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/favicon_covid.ico" />
     <!-- Font Awesome icons (free version)-->
-    <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/all.min.js" crossorigin="anonymous"></script>
+    <link href="${pageContext.request.contextPath}/resources/css/all.min.css" rel="stylesheet">
 	<!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-    <!-- Core theme CSS (includes Bootstrap)-->
+	<!-- Core theme CSS (includes Bootstrap)-->
     <link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
     
 </head>
@@ -56,8 +60,8 @@
     </header>
     
     <section class="page-section" id="post">
-    	<h1 class="masthead-heading text-center text-secondary text-uppercase mb-0"><a class="a-violet" href="${pageContext.request.contextPath}/community">게시판</a></h1>
     	<div class="container">
+    		<h2 class="masthead-heading text-secondary text-uppercase mb-4-5"><a class="a-violet" href="${pageContext.request.contextPath}/community">커뮤니티</a></h2>
     		<table class="styled-table">
     			<tbody>
     				<tr>
@@ -67,94 +71,119 @@
 				    	<td>작성자 : ${post.author}  &emsp; 날짜 : ${post.date}</td>
 				    </tr>
 				    <tr>
-					    <td><br><br>${post.content} <br>
-					    <br><br><br><p align="center">
-					    	<button class="bg-violet like-btn rounded text-white" onClick="location.href='${pageContext.request.contextPath}/post/${post.postNo}/like'">추천&nbsp;&nbsp;${post.like}</button>
-					    	&emsp;<button class="bg-red like-btn rounded text-white" onClick="location.href='${pageContext.request.contextPath}/post/${post.postNo}/unlike'">비추&nbsp;&nbsp;-${post.unlike}</button></p>
-					    <p align="right"> <button type="submit" onClick="location.href='${pageContext.request.contextPath}/communityPostEdit/${post.postNo}'" class="btn btn-default bg-violet text-white">글 수정</button> </p></td>
+					    <td>
+						    <br><br>${post.content} <br><br><br><br>
+						    <p class="p-like" align="center">
+						    	<button class="btn-like rounded text-white" onClick="doPostLike('like')">추천&nbsp;&nbsp;${post.like}</button>
+						    	&emsp;<button class="btn-unlike rounded text-white" onClick="doPostLike('unlike')">비추&nbsp;&nbsp;-${post.unlike}</button>
+						    </p>
+						    <p align="right">
+						    	<button type="submit" onClick="location.href='${pageContext.request.contextPath}/communityPostEdit/${post.postNo}'" class="btn btn-default bg-violet text-white">글 수정</button> 
+						    </p>
+						</td>
 				    </tr>
-				    <tr> <td>
+				    <tr> <td style="padding-bottom: 50px;">
 				    	<div class="col-12">
 					      <div class="comments">
 					        <div class="comments-details">
-					          <span class="total-comments comments-sort">117개의 댓글</span>
+					          <span class="total-comments comments-sort">${fn:length(replies)}개의 댓글</span>
 					        </div>
 					        <div class="comment-box add-comment">
-					          <span class="commenter-pic">
-					            <img src="${pageContext.request.contextPath}/resources/assets/img/favicon.ico" class="img-fluid">
-					          </span>
-					          <span class="commenter-name">
-					            <input type="text" placeholder="여기에 댓글을 입력하세요." name="Add Comment">
-					            <button type="submit" class="btn btn-default bg-violet">댓글 달기</button>
-					            <button type="cancel" class="btn btn-default">취소</button>
+					          <span class="commenter-name p-left">
+					          	<sf:form method="post" action="${pageContext.request.contextPath}/doreply" modelAttribute="reply">
+					          	
+				              		<sf:input class="control" type="text" placeholder="여기에 답글을 입력하세요." name="Add Comment" path="content"/>
+				              		<sf:errors class="error" path="content"/>
+				              		<sf:input class="control" type="hidden" path="parentId" value="${0}"/>
+									<sf:errors class="error" path="parentId"/>
+									<sf:input class="control" type="hidden" path="postNo" value="${post.postNo}"/>
+									<sf:errors class="error" path="postNo"/>
+									<sf:input class="control" type="hidden" path="author" value="reply 테스트"/>
+									<sf:errors class="error" path="author"/>
+									
+				              		<button type="submit" class="btn btn-default bg-violet">답글달기</button>
+				              	</sf:form>
 					          </span>
 					        </div>
-					        <div class="comment-box">
-					          <span class="commenter-pic">
-					            <img src="${pageContext.request.contextPath}/resources/assets/img/favicon.ico" class="img-fluid">
-					          </span>
-					          <span class="commenter-name">
-					            <a class="a-violet" href="#">코로나맨1</a> <span class="comment-time">2시간 전</span>
-					          </span>       
-					          <p class="comment-txt more">1번째 댓글 테스트</p>
-					          <div class="comment-meta">
-					            <button class="comment-like"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 99</button>
-					            <button class="comment-dislike"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> 149</button> 
-					            <button class="comment-reply reply-popup"><i class="fa fa-reply-all" aria-hidden="true"></i> 답글달기</button>         
-					          </div>
-					          <div class="comment-box add-comment reply-box">
-					            <span class="commenter-pic">
-					              <img src="${pageContext.request.contextPath}/resources/assets/img/favicon.ico" class="img-fluid">
-					            </span>
-					            <span class="commenter-name">
-					              <input type="text" placeholder="Add a public reply" name="Add Comment">
-					              <button type="submit" class="btn btn-default bg-violet">답글달기</button>
-					              <button type="cancel" class="btn btn-default reply-popup">취소</button>
-					            </span>
-					          </div>
-					        </div>
-					        <div class="comment-box">
-					          <span class="commenter-pic">
-					            <img src="${pageContext.request.contextPath}/resources/assets/img/favicon.ico" class="img-fluid">
-					          </span>
-					          <span class="commenter-name">
-					            <a class="a-violet" href="#">코로나맨2</a> <span class="comment-time">2시간 전</span>
-					          </span>       
-					          <p class="comment-txt more">ABCDEFGHIJKLMNOPQRSTUVWXYZ.</p>
-					          <div class="comment-meta">
-					            <button class="comment-like"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 99</button>
-					            <button class="comment-dislike"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> 149</button> 
-					            <button class="comment-reply"><i class="fa fa-reply-all" aria-hidden="true"></i> 답글달기</button>         
-					          </div>
-					          <div class="comment-box replied">
-					            <span class="commenter-pic">
-					              <img src="${pageContext.request.contextPath}/resources/assets/img/favicon.ico" class="img-fluid">
-					            </span>
-					            <span class="commenter-name">
-					              <a class="a-violet" href="#">코로나맨1</a> <span class="comment-time">1시간 전</span>
-					            </span>       
-					            <p class="comment-txt more">테스트 TEST 테스트 TEST</p>
-					            <div class="comment-meta">
-					              <button class="comment-like"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 99</button>
-					              <button class="comment-dislike"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> 149</button> 
-					              <button class="comment-reply"><i class="fa fa-reply-all" aria-hidden="true"></i> 답글달기</button>         
-					            </div>
-					            <div class="comment-box replied">
-					              <span class="commenter-pic">
-					                <img src="${pageContext.request.contextPath}/resources/assets/img/favicon.ico" class="img-fluid">
-					              </span>
-					              <span class="commenter-name">
-					                <a class="a-violet" href="#">코로나맨2</a> <span class="comment-time">29분 전</span>
-					              </span>       
-					              <p class="comment-txt more">굿</p>
-					              <div class="comment-meta">
-					                <button class="comment-like"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 99</button>
-					                <button class="comment-dislike"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> 149</button> 
-					                <button class="comment-reply"><i class="fa fa-reply-all" aria-hidden="true"></i> 답글달기</button>         
-					              </div>
-					            </div>
-					          </div>
-					        </div>
+					        
+					        <c:forEach var="best_reply" items="${best_replies}">
+					        	<div class="comment-box-best">
+					        		<span class="commenter-name nametag">
+						            	<span class="best-comment">BEST <i class="far fa-star"></i></span><a class="a-violet" href="#"> ${best_reply.author}</a> <span class="comment-time">${best_reply.date}</span>
+						          	</span>       
+						          	<p class="comment-txt more">
+						          		<c:if test="${best_reply.parentId != 0}"><a class="a-violet a-bg-violet" href="#">@${best_reply.parentAuthor}</a>&nbsp; </c:if>
+						          		${best_reply.content}
+						          	</p>
+						          	<div class="comment-meta likeb-${best_reply.replyId}">
+						            	<button class="comment-like" onClick="doReplyLike('like', '${best_reply.replyId}', ' .likeb-${best_reply.replyId}')"><i class="far fa-thumbs-up" aria-hidden="true"></i>&nbsp;${best_reply.like}</button>
+						            	<button class="comment-dislike" onClick="doReplyLike('unlike', '${best_reply.replyId}', ' .likeb-${best_reply.replyId}')"><i class="far fa-thumbs-down" aria-hidden="true"></i>&nbsp;${best_reply.unlike}</button> 
+						            	<button class="comment-reply" onClick="replyToggle('reply-${best_reply.replyId}')"><i class="fa fa-reply-all" aria-hidden="true"></i> 답글달기</button>         
+						          	</div>
+						          	
+						          	<div id="reply-${best_reply.replyId}" class="comment-box add-comment reply-box">
+						            	<span class="commenter-name">
+							            	<sf:form method="post" action="${pageContext.request.contextPath}/doreply" modelAttribute="reply">
+							              		<sf:input class="control" type="text" placeholder="여기에 답글을 입력하세요." name="Add Comment" path="content"/>
+							              		<sf:errors class="error" path="content"/>
+							              		<sf:input class="control" type="hidden" path="parentId" value="${best_reply.replyId}"/>
+												<sf:errors class="error" path="parentId"/>
+												<sf:input class="control" type="hidden" path="groupNo" value="${best_reply.groupNo}"/>
+												<sf:errors class="error" path="groupNo"/>
+												<sf:input class="control" type="hidden" path="postNo" value="${best_reply.postNo}"/>
+												<sf:errors class="error" path="postNo"/>
+												<sf:input class="control" type="hidden" path="author" value="${best_reply.author}-reply"/>
+												<sf:errors class="error" path="author"/>
+												<button type="submit" class="btn btn-default bg-violet">답글달기</button>
+							              		
+							              	</sf:form>
+							              	<button type="cancel" class="btn btn-default" onClick="replyToggle('reply-${best_reply.replyId}')">취소</button>
+						            	</span>
+						          	</div>
+						        </div>
+					        </c:forEach>
+					        
+					        
+					        <c:forEach var="reply" items="${replies}">
+					        	<c:choose>
+				    				<c:when test="${reply.parentId == 0}"><div class="comment-box"></c:when>
+				    				<c:otherwise><div class="comment-box replied"></c:otherwise>
+				    			</c:choose>
+						          	<span class="commenter-name nametag">
+						            	<a class="a-violet" href="#">${reply.author}</a> <span class="comment-time">${reply.date}</span>
+						          	</span>       
+						          	<p class="comment-txt more">
+						          		<c:if test="${reply.parentId != 0}"><a class="a-violet a-bg-violet" href="#">@${reply.parentAuthor}</a>&nbsp; </c:if>
+						          		${reply.content}
+						          	</p>
+						          	<div class="comment-meta like-${reply.replyId}">
+						            	<button class="comment-like" onClick="doReplyLike('like', '${reply.replyId}', ' .like-${reply.replyId}')"><i class="far fa-thumbs-up" aria-hidden="true"></i>&nbsp;${reply.like}</button>
+						            	<button class="comment-dislike" onClick="doReplyLike('unlike', '${reply.replyId}', ' .like-${reply.replyId}')"><i class="far fa-thumbs-down" aria-hidden="true"></i>&nbsp;${reply.unlike}</button> 
+						            	<button class="comment-reply" onClick="replyToggle('reply-${reply.replyId}')"><i class="fa fa-reply-all" aria-hidden="true"></i> 답글달기</button>         
+						          	</div>
+						          	
+						          	<div id="reply-${reply.replyId}" class="comment-box add-comment reply-box">
+						            	<span class="commenter-name">
+							            	<sf:form method="post" action="${pageContext.request.contextPath}/doreply" modelAttribute="reply">
+							              		<sf:input class="control" type="text" placeholder="여기에 답글을 입력하세요." name="Add Comment" path="content"/>
+							              		<sf:errors class="error" path="content"/>
+							              		<sf:input class="control" type="hidden" path="parentId" value="${reply.replyId}"/>
+												<sf:errors class="error" path="parentId"/>
+												<sf:input class="control" type="hidden" path="groupNo" value="${reply.groupNo}"/>
+												<sf:errors class="error" path="groupNo"/>
+												<sf:input class="control" type="hidden" path="postNo" value="${reply.postNo}"/>
+												<sf:errors class="error" path="postNo"/>
+												<sf:input class="control" type="hidden" path="author" value="${reply.author}-reply"/>
+												<sf:errors class="error" path="author"/>
+												<button type="submit" class="btn btn-default bg-violet">답글달기</button>
+							              		
+							              	</sf:form>
+							              	<button type="cancel" class="btn btn-default" onClick="replyToggle('reply-${reply.replyId}')">취소</button>
+						            	</span>
+						          	</div>
+						          </div>
+					        </c:forEach>
+					        
 					      </div>
 					    </div>
 					  </td>
@@ -178,12 +207,46 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script>
-		// Reply box popup JS
-		$(document).ready(function(){
-		  $(".reply-popup").click(function(){
-		    $(".reply-box").toggle();
-		  });
-		});
+		function replyToggle(id) {
+			obj=document.getElementById(id);
+			$(obj).slideToggle("normal");
+		}
+		
+		function doPostLike(todo) {
+			var req = new XMLHttpRequest();
+			var page = "${pageContext.request.contextPath}/post/${post.postNo}";
+			if(todo == "like") {
+				page += "/dopostlike";
+			}
+			else if(todo == "unlike") {
+				page += "/dopostunlike";
+			}
+			req.open("POST", page);
+			req.onreadystatechange = function() {
+				if (req.readyState == 4 && req.status == 200) {
+					$(".p-like").load(window.location.href + " .p-like");
+				}
+			}
+			req.send();
+		}
+		
+		function doReplyLike(todo, replyId, id) {
+			var req = new XMLHttpRequest();
+			var page = "${pageContext.request.contextPath}/post/" + replyId;
+			if(todo == "like") {
+				page += "/doreplylike";
+			}
+			else if(todo == "unlike") {
+				page += "/doreplyunlike";
+			}
+			req.open("POST", page);
+			req.onreadystatechange = function() {
+				if (req.readyState == 4 && req.status == 200) {
+					$(id).load(window.location.href + id);
+				}
+			}
+			req.send();
+		}
 	</script>
 </body>
 </html>

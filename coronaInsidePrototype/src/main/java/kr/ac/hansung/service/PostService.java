@@ -18,6 +18,10 @@ public class PostService {
 		return postDao.getPosts();
 	}
 	
+	public List<Post> getBestPosts() {
+		return postDao.getBestPosts();
+	}
+	
 	public Post getPost(int postNo) {
 		return postDao.getPost(postNo);
 	}
@@ -36,6 +40,10 @@ public class PostService {
 	
 	public void unlike(Post post) {
 		postDao.unlike(post);
+	}
+	
+	public int getCurrentPostNo() {
+		return postDao.getCurrentPostNo();
 	}
 
 }
