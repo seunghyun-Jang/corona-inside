@@ -6093,6 +6093,14 @@ a.close.disabled {
   background-color: #7E41D9 !important;
 }
 
+a.bg-violet:hover, a.bg-violet:focus,
+button.bg-violet:hover,
+button.bg-violet:focus {
+  background-color: #6A0888 !important;
+}
+
+
+
 .bg-red {
   background-color: #CC3D3D !important;
 }
