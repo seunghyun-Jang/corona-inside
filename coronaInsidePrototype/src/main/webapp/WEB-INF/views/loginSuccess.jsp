@@ -2,13 +2,14 @@
 
     pageEncoding="UTF-8"%>
 
-<%@ page import ="kr.ac.hansung.cse.*" %>
+<%@ page import ="kr.ac.hansung.dto.*" %>
+<%@ page import ="kr.ac.hansung.dao.*" %>
 
 <%@ page import="java.io.PrintWriter" %> <!-- 자바스크립트 만들어주기위해 -->
 
 <% request.setCharacterEncoding("UTF-8"); %> <!-- 건너오는 데이터를 UTF-8받기위해 -->
 
-<jsp:useBean id="User" class="kr.ac.hansung.cse.UserVO" scope="page" /> <!-- scope는 현페이지에서만 빈즈가 사용되어지도록 제한 -->
+<jsp:useBean id="User" class="kr.ac.hansung.dto.UserVO" scope="page" /> <!-- scope는 현페이지에서만 빈즈가 사용되어지도록 제한 -->
 
 <jsp:setProperty name="User" property="username" /> 
 
