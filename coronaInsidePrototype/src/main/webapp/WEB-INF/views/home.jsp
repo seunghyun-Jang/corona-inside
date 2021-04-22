@@ -91,7 +91,7 @@
                     <div class="divider-custom-line"></div>
                 </div>
                 <!-- Masthead Subheading-->
-                <p class="masthead-subheading font-weight-light mb-0">Hong.C.H - Jang.S.H - DdoSol</p>
+                <!-- <p class="masthead-subheading font-weight-light mb-0">Hong.C.H - Jang.S.H - DdoSol</p> -->
             </div>
         </header>
         <!-- Menu Section-->
@@ -122,19 +122,6 @@
                         <h2 class="masthead-heading text-center text-secondary mb-0">코로나 현황</h2>
                     </button>
                     <!-- Item 2-->
-                    <button class="col-md-4 col-lg-4 mb-5" onclick="location.href='community'">
-                        <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal3">
-                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="portfolio-item-caption-content text-center text-white">
-                                	<h1 class="masthead-heading mb-0">커뮤니티</h1>
-                                </div>
-                            </div>
-                            <img class="img-fluid" src="resources/assets/img/item/community.svg" alt="" />
-                        </div>
-                        <br>
-                        <h2 class="masthead-heading text-center text-secondary mb-0">커뮤니티</h2>
-                    </button>
-                    <!-- Item 3-->
                     <button class="col-md-4 col-lg-4 mb-5" onclick="location.href='vaccine'">
                         <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal4">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
@@ -147,7 +134,19 @@
                         <br>
                         <h2 class="masthead-heading text-center text-secondary mb-0">백신 현황</h2>
                     </button>
-                    
+                    <!-- Item 3-->
+                    <button class="col-md-4 col-lg-4 mb-5" onclick="location.href='community'">
+                        <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal3">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white">
+                                	<h1 class="masthead-heading mb-0">커뮤니티</h1>
+                                </div>
+                            </div>
+                            <img class="img-fluid" src="resources/assets/img/item/community.svg" alt="" />
+                        </div>
+                        <br>
+                        <h2 class="masthead-heading text-center text-secondary mb-0">커뮤니티</h2>
+                    </button>
                 </div>
             </div>
         </section>
