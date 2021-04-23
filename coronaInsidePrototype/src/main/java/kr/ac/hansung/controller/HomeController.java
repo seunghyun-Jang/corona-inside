@@ -70,7 +70,7 @@ public class HomeController {
 	}
 	
 
-	@RequestMapping(value = "/coronaCurrent", method = RequestMethod.GET)
+	@RequestMapping(value = "/corona", method = RequestMethod.GET)
 	public String coronaCurrent(Model model, HttpServletRequest request) throws Exception {
 			
 		
@@ -238,7 +238,7 @@ public class HomeController {
 		
 		//System.out.println(dto.getResponse().getBody().getItems().getItem()[0].getExamCnt()+", "+dto.getResponse().getBody().getItems().getItem()[1].getExamCnt()+", "+dto.getResponse().getBody().getItems().getItem()[2].getExamCnt());
 		
-		return "coronaCurrent";
+		return "corona";
 	}
 	
 	@RequestMapping(value = "/vaccine", method = RequestMethod.GET)
