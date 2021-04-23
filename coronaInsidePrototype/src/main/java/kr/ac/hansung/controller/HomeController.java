@@ -256,23 +256,18 @@ public class HomeController {
 		return "login";
 	}
 	
-	@RequestMapping(value = "/signUp", method = {RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value = "/signup", method = {RequestMethod.GET,RequestMethod.POST})
 	public String signUp(){
-		return "signUp";
+		return "signup";
 	}
 	
-	@RequestMapping(value = "/insertUser", method = {RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value = "/insert-user", method = {RequestMethod.GET,RequestMethod.POST})
 	public String insertUser(){
-		return "insertUser";
-	}
-	
-	@RequestMapping(value = "/dbtest", method = {RequestMethod.GET,RequestMethod.POST})
-	public String dbtest() {
-		return "dbtest";
+		return "insert-user";
 	}
 
 	//	�α���(POST)	
-	@RequestMapping(value = "/loginSuccess", method = RequestMethod.POST)
+	@RequestMapping(value = "/login-success", method = RequestMethod.POST)
 	public String loginSuccess(HttpSession session, UserVO vo, Model model) {
 		if(session.getAttribute("login") != null) {
 			session.removeAttribute("login");

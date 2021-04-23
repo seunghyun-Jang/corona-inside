@@ -61,7 +61,7 @@
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
                     <div id="login-box" class="col-md-12">
-                        <form id="login-form" class="form" action="loginSuccess" method="post">
+                        <form id="login-form" class="form" action="login-success" method="post">
                             <h1 class="text-center text-violet">로그인</h1>
                             <div class="form-group">
                                 <label for="username" class="text-violet font-weight-bold">아이디:</label><br>
@@ -74,10 +74,10 @@
                             <div class="form-group">
                                 <label for="remember-me" class="text-violet"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
                                 <input type="submit" name="submit" class="btn bg-violet text-white font-weight-bold" value="로그인">
-                                <input type="button" name="signUp" class="btn bg-violet text-white font-weight-bold" value="회원가입" onclick="location.href='signUp'" >
+                                <input type="button" name="signup" class="btn bg-violet text-white font-weight-bold" value="회원가입" onclick="location.href='signup'" >
                             </div>
                             <div id="register-link" class="text-right">
-                                <a href="signUp" class="text-violet">Register here</a>
+                                <a href="signup" class="text-violet">Register here</a>
                             </div>
                         </form>
                     </div>

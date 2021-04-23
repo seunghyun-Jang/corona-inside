@@ -61,7 +61,7 @@
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
                     <div id="login-box" class="col-md-12">
-                        <form id="signUp-form" class="form" action="insertUser" method="post">
+                        <form id="signUp-form" class="form" action="insert-user" method="post">
                             <h1 class="text-center text-violet">회원가입</h1>
                             <div class="form-group">
                                 <label for="username" class="text-violet font-weight-bold">아이디</label><br>
