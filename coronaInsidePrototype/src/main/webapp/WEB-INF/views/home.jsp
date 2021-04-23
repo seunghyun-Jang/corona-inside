@@ -90,6 +90,7 @@
                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                     <div class="divider-custom-line"></div>
                 </div>
+                
                 <!-- Masthead Subheading-->
                 <!-- <p class="masthead-subheading font-weight-light mb-0">Hong.C.H - Jang.S.H - DdoSol</p> -->
             </div>
@@ -109,7 +110,7 @@
                 <!-- Grid Items-->
                 <div class="row justify-content-center">
                     <!-- Item 1-->
-                    <button class="col-md-4 col-lg-4 mb-5" onclick="location.href='coronaCurrent'">
+                    <button class="col-md-4 col-lg-4 mb-5" onclick="location.href='corona'">
                         <div class="portfolio-item mx-auto">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                 <div class="portfolio-item-caption-content text-center text-white">
