@@ -33,7 +33,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                 	<li class="nav-item mx-0 mx-lg-1 login-item"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="login">로그인 하기</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="coronaCurrent">코로나 현황</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="corona">코로나 현황</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="community">커뮤니티</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="selfcheck">셀프체크</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="faq">FAQ</a></li>
@@ -61,7 +61,7 @@
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
                     <div id="login-box" class="col-md-12">
-                        <form id="login-form" class="form" action="loginSuccess" method="post">
+                        <form id="login-form" class="form" action="login-success" method="post">
                             <h1 class="text-center text-violet">로그인</h1>
                             <div class="form-group">
                                 <label for="username" class="text-violet font-weight-bold">아이디:</label><br>
@@ -74,10 +74,10 @@
                             <div class="form-group">
                                 <label for="remember-me" class="text-violet"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
                                 <input type="submit" name="submit" class="btn bg-violet text-white font-weight-bold" value="로그인">
-                                <input type="button" name="signUp" class="btn bg-violet text-white font-weight-bold" value="회원가입" onclick="location.href='signUp'" >
+                                <input type="button" name="signup" class="btn bg-violet text-white font-weight-bold" value="회원가입" onclick="location.href='signup'" >
                             </div>
                             <div id="register-link" class="text-right">
-                                <a href="signUp" class="text-violet">Register here</a>
+                                <a href="signup" class="text-violet">Register here</a>
                             </div>
                         </form>
                     </div>

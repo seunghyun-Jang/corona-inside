@@ -69,13 +69,8 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping(value = "/ex", method = RequestMethod.GET)
-	public String exhome() {
-		return "exhome";
-	}
-	
 
-	@RequestMapping(value = "/coronaCurrent", method = RequestMethod.GET)
+	@RequestMapping(value = "/corona", method = RequestMethod.GET)
 	public String coronaCurrent(Model model, HttpServletRequest request) throws Exception {
 			
 		
@@ -87,7 +82,7 @@ public class HomeController {
 		Calendar cal = Calendar.getInstance();
 	    cal.setTime(today);
 	    cal.add(Calendar.HOUR, -1);
-
+	    
 	    SimpleDateFormat sdformat = new SimpleDateFormat("yyyyMMdd");
 	    sdformat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
@@ -104,19 +99,19 @@ public class HomeController {
 	    String beforeWeek = new java.text.SimpleDateFormat("yyyyMMdd").format(week.getTime());
 	    System.out.println(beforeWeek);
 
-	    
 	    Calendar month = Calendar.getInstance();
 	    month.add(Calendar.DATE , -31);
 	    String beforeMonth = new java.text.SimpleDateFormat("yyyyMMdd").format(month.getTime());
 	    System.out.println(beforeMonth);
-	    	
-		if(InfDTO==null) {		
+
+	    if(InfDTO==null) {		
 			System.out.println("InfDTO is null.");
 			//InfDTO = getCovid19Inf(beforeDate, beforeWeek);
 			InfDTO = getCovid19Inf(beforeHour, beforeMonth);
 			model.addAttribute("InfDTO", InfDTO.getResponse().getBody().getItems());
 			InfDTO.getResponse().getBody().getItems().getItem()[0].getDecideCnt();
 		}
+
 		if(SidoDTO==null) {		
 			System.out.println("SidoDTO is null.");
 			SidoDTO = getCovid19Sido(beforeHour);
@@ -243,12 +238,12 @@ public class HomeController {
 		
 		//System.out.println(dto.getResponse().getBody().getItems().getItem()[0].getExamCnt()+", "+dto.getResponse().getBody().getItems().getItem()[1].getExamCnt()+", "+dto.getResponse().getBody().getItems().getItem()[2].getExamCnt());
 		
-		return "coronaCurrent";
+		return "corona";
 	}
 	
-	@RequestMapping(value = "/selfcheck", method = RequestMethod.GET)
-	public String selfcheck() {
-		return "selfcheck";
+	@RequestMapping(value = "/vaccine", method = RequestMethod.GET)
+	public String vaccine() {
+		return "vaccine";
 	}
 	
 	@RequestMapping(value = "/faq", method = RequestMethod.GET)
@@ -261,23 +256,18 @@ public class HomeController {
 		return "login";
 	}
 	
-	@RequestMapping(value = "/signUp", method = {RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value = "/signup", method = {RequestMethod.GET,RequestMethod.POST})
 	public String signUp(){
-		return "signUp";
+		return "signup";
 	}
 	
-	@RequestMapping(value = "/insertUser", method = {RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value = "/insert-user", method = {RequestMethod.GET,RequestMethod.POST})
 	public String insertUser(){
-		return "insertUser";
-	}
-	
-	@RequestMapping(value = "/dbtest", method = {RequestMethod.GET,RequestMethod.POST})
-	public String dbtest() {
-		return "dbtest";
+		return "insert-user";
 	}
 
 	//	�α���(POST)	
-	@RequestMapping(value = "/loginSuccess", method = RequestMethod.POST)
+	@RequestMapping(value = "/login-success", method = RequestMethod.POST)
 	public String loginSuccess(HttpSession session, UserVO vo, Model model) {
 		if(session.getAttribute("login") != null) {
 			session.removeAttribute("login");

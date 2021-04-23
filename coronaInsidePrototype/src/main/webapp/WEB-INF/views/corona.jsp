@@ -44,40 +44,48 @@
 	</div>
 
 	<!-- Navigation-->
-	<nav
-		class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top"
-		id="mainNav">
+	<nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
 		<div class="container">
-			<a class="navbar-brand js-scroll-trigger" style="padding-left: 10px;"
-				href="home">Corona Inside</a>
-			<button
-				class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-violet text-white rounded"
+			<a class="navbar-brand js-scroll-trigger" style="padding-left: 10px;" href="home">Corona Inside</a>
+			<button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-violet text-white rounded"
 				type="button" data-toggle="collapse" data-target="#navbarResponsive"
 				aria-controls="navbarResponsive" aria-expanded="false"
-				aria-label="Toggle navigation">
-				Menu <i class="fas fa-bars"></i>
+				aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item mx-0 mx-lg-1 login-item"><a
-						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-						href="login">로그인 하기</a></li>
+					<%
+					if(session.getAttribute("username")==null){%>
+						<li class="nav-item mx-0 mx-lg-1 login-item"><a
+							class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+							href="login">로그인 하기</a></li>
+					<%} else if(session.getAttribute("username")!=null){%>
+						<li class="nav-item mx-0 mx-lg-1"><a
+							class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"><%=session.getAttribute("username")%>님
+								환영합니다.</a></li>
+					<%} %>
 					<li class="nav-item mx-0 mx-lg-1"><a
 						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger text-selected"
-						href="coronaCurrent">코로나 현황</a></li>
+						href="corona">코로나 현황</a></li>
+					<li class="nav-item mx-0 mx-lg-1"><a
+						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+						href="vaccine">백신현황</a></li>
 					<li class="nav-item mx-0 mx-lg-1"><a
 						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
 						href="community">커뮤니티</a></li>
-					<li class="nav-item mx-0 mx-lg-1"><a
-						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-						href="selfcheck">셀프체크</a></li>
-					<li class="nav-item mx-0 mx-lg-1"><a
-						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-						href="faq">FAQ</a></li>
 				</ul>
+				
 			</div>
+			<%
+			if(session.getAttribute("username") == null){%>
 			<button class="bg-primary rounded text-white login-btn"
-				onClick="location.href='login'">로그인</button>
+				id="login-btn" onClick="location.href='login'">로그인</button>
+			<% }%>
+			<%
+			if(session.getAttribute("username")!=null){%>
+			<button class="bg-primary rounded text-white login-btn"
+				id="login-btn" onClick="location.href='logout'">로그아웃</button>
+			<%}%>
 		</div>
 	</nav>
 
