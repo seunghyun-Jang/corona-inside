@@ -120,7 +120,7 @@
     			</c:choose>
     		</c:forEach>
     	</p>
-    	<p align="right"> <button type="submit" align="right" class="btn btn-default bg-violet text-white" onClick="location.href='${pageContext.request.contextPath}/communityPostMake'">글 작성</button> </p>
+    	<p align="right"> <button type="submit" align="right" class="btn btn-default bg-violet text-white" onClick="location.href='${pageContext.request.contextPath}/community-post-make'">글 작성</button> </p>
     </div>
     </section>
     <!-- Copyright Section-->

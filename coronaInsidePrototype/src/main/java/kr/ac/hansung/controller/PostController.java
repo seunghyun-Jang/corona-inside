@@ -94,14 +94,14 @@ public class PostController {
 		
 		model.addAttribute("reply", new Reply());
 		
-		return "communityPost";
+		return "community-post";
 	}
 	
-	@RequestMapping(value = "/communityPostMake", method = RequestMethod.GET)
+	@RequestMapping(value = "/community-post-make", method = RequestMethod.GET)
 	public String makePost(Model model) {
 		model.addAttribute("post", new Post());
 		
-		return "communityPostMake";
+		return "community-post-make";
 	}
 	
 	@RequestMapping(value = "/domakepost")
@@ -125,7 +125,7 @@ public class PostController {
 				System.out.println(error.getDefaultMessage());
 			}
 			
-			return "communityPostMake";
+			return "community-post-make";
 		}
 		
 		postService.insert(post);
@@ -136,7 +136,7 @@ public class PostController {
 		return "redirect:post/" + postService.getCurrentPostNo();
 	}
 	
-	@RequestMapping(value = "/communityPostEdit/*", method = RequestMethod.GET)
+	@RequestMapping(value = "/community-post-edit/*", method = RequestMethod.GET)
 	public String editPost(Model model, HttpServletRequest request) {
 		String[] url = request.getRequestURI().split("/");
 		int postNo = Integer.parseInt(url[3]);
@@ -144,7 +144,7 @@ public class PostController {
 		Post post = postService.getPost(postNo);
 		model.addAttribute("post", post);
 		
-		return "communityPostEdit";
+		return "community-post-edit";
 	}
 	
 	@RequestMapping(value = "/doeditpost/*")
@@ -182,7 +182,7 @@ public class PostController {
 		
 		model.addAttribute("reply", new Reply());
 		
-		return "communityPost";
+		return "community-post";
 	}
 	
 	@RequestMapping(value = "/post/*/dopostunlike")
@@ -200,7 +200,7 @@ public class PostController {
 		
 		model.addAttribute("reply", new Reply());
 		
-		return "communityPost";
+		return "community-post";
 	}
 	
 	@RequestMapping(value = "/doreply", method = RequestMethod.POST)
@@ -223,7 +223,7 @@ public class PostController {
 				System.out.println(error.getDefaultMessage());
 			}
 			
-			return "communityPost";
+			return "community-post";
 		}
 		
 		Post post = postService.getPost(reply.getPostNo());
@@ -269,7 +269,7 @@ public class PostController {
 		
 		model.addAttribute("reply", new Reply());
 		
-		return "communityPost";
+		return "community-post";
 	}
 	
 	@RequestMapping(value = "/post/*/doreplyunlike")
@@ -290,6 +290,6 @@ public class PostController {
 		
 		model.addAttribute("reply", new Reply());
 		
-		return "communityPost";
+		return "community-post";
 	}
 }

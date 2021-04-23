@@ -103,7 +103,7 @@
 						    	&emsp;<button class="btn-unlike rounded text-white" onClick="doPostLike('unlike')">비추&nbsp;&nbsp;-${post.unlike}</button>
 						    </p>
 						    <p align="right">
-						    	<button type="submit" onClick="location.href='${pageContext.request.contextPath}/communityPostEdit/${post.postNo}'" class="btn btn-default bg-violet text-white">글 수정</button> 
+						    	<button type="submit" onClick="location.href='${pageContext.request.contextPath}/community-post-edit/${post.postNo}'" class="btn btn-default bg-violet text-white">글 수정</button> 
 						    </p>
 						</td>
 				    </tr>
