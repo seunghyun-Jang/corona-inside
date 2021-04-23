@@ -51,3 +51,53 @@
 }
 
 
+#container2 {
+  	display: flex;
+  	justify-content: center;
+  	align-items: center;
+   	max-width: 960px;
+    fill: #fff
+}
+#states2 path {
+    fill: #e84a4a;
+    stroke: #ffffff;
+    stroke-width: 1.5px;
+
+}
+
+#states2 path:hover {
+    fill: #6f42c1;
+}
+
+
+#states2 .active {
+    fill: #00b700;
+}
+
+#states2 .activeDetail {
+    fill: #00b700;
+}
+
+#states2 path {
+    cursor: pointer;
+}
+
+#states2 text {
+    cursor: pointer;
+    font-size: 20px;
+    fill: #000000;
+}
+
+.toolTip2 {
+    position: absolute;
+    border: 0 none;
+    border-radius: 4px 4px 4px 4px;
+    background-color: black;
+    padding: 5px;
+    text-align: center;
+    font-size: 12px;
+    color: white;
+    white-space: pre;
+ 
+}
+

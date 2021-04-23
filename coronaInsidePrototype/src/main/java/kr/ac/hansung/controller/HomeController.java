@@ -52,7 +52,7 @@ public class HomeController {
 	private static HashMap<String, String> map = new HashMap<String, String>();
 	private static kr.ac.hansung.dto.Covid19Inf.ApiDTO InfDTO = null;
 	private static kr.ac.hansung.dto.Covid19Sido.ApiDTO SidoDTO = null;
-	private static String[] strArray= new String[3];
+	private static String[] strArray= new String[4];
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -84,59 +84,40 @@ public class HomeController {
 		String toDay = format1.format(today);		
 		System.out.println(toDay);
 		
-		// 1�ð���
-	    Calendar cal = Calendar.getInstance();
+		Calendar cal = Calendar.getInstance();
 	    cal.setTime(today);
 	    cal.add(Calendar.HOUR, -1);
-
-	    // ���˺��� ( ����� �ú���)
+	    
 	    SimpleDateFormat sdformat = new SimpleDateFormat("yyyyMMdd");
 	    sdformat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
 	    String beforeHour = sdformat.format(cal.getTime());
 	    System.out.println("1�ð� �� : " + beforeHour);
 
-	    //�Ϸ� ��
 	    Calendar day = Calendar.getInstance();
 	    day.add(Calendar.DATE , -1);
 	    String beforeDate = new java.text.SimpleDateFormat("yyyyMMdd").format(day.getTime());
 	    System.out.println(beforeDate);
 
-	    //12�� ��
 	    Calendar week = Calendar.getInstance();
 	    week.add(Calendar.DATE , -13);
 	    String beforeWeek = new java.text.SimpleDateFormat("yyyyMMdd").format(week.getTime());
 	    System.out.println(beforeWeek);
 
-	    
 	    Calendar month = Calendar.getInstance();
 	    month.add(Calendar.DATE , -31);
 	    String beforeMonth = new java.text.SimpleDateFormat("yyyyMMdd").format(month.getTime());
 	    System.out.println(beforeMonth);
-	    
 
-	    //�Ѵ� ��
-		/*
-		 * Calendar mon = Calendar.getInstance(); // 1����? �ƴϸ� 30����? Ȯ���ڼ� api���� �Ϻ��� �����ֱ�
-		 * ������ �ܼ��ϰ� MONTH-1 �� �ϸ� ������ �����. mon.add(Calendar.MONTH, -1); String
-		 * beforeMonth = new
-		 * java.text.SimpleDateFormat("yyyyMMdd").format(mon.getTime());
-		 * System.out.println(beforeMonth);
-		 */
-		
-		
-	   
-	    
-	    
-		
-		if(InfDTO==null) {		// �̱��� ����
+	    if(InfDTO==null) {		
 			System.out.println("InfDTO is null.");
 			//InfDTO = getCovid19Inf(beforeDate, beforeWeek);
 			InfDTO = getCovid19Inf(beforeHour, beforeMonth);
 			model.addAttribute("InfDTO", InfDTO.getResponse().getBody().getItems());
 			InfDTO.getResponse().getBody().getItems().getItem()[0].getDecideCnt();
 		}
-		if(SidoDTO==null) {		// �̱��� ����
+
+		if(SidoDTO==null) {		
 			System.out.println("SidoDTO is null.");
 			SidoDTO = getCovid19Sido(beforeHour);
 			model.addAttribute("SidoDTO", SidoDTO.getResponse().getBody().getItems());
@@ -183,12 +164,16 @@ public class HomeController {
 		
 		crawler();
 		crawler2();
+		crawler3();
 		
 		String[] arr = strArray[0].split("\r");
 		String[] arr2 = strArray[1].split("\r");
 		String[] arr3 = strArray[2].split("\r");
 		String[] str;
 		String[][] arr4 = new String[18][5];
+		
+		
+		String[] arr5 = strArray[3].split("\r");
 		
 		for(int i=6; i<24; i++) {
 			str = arr3[i].split(" ");
@@ -223,6 +208,24 @@ public class HomeController {
 		model.addAttribute("href8",arr2[8]);
 		model.addAttribute("href9",arr2[9]);
 		
+		model.addAttribute("sd0",arr5[0]);
+		model.addAttribute("sd1",arr5[1]);
+		model.addAttribute("sd2",arr5[2]);
+		model.addAttribute("sd3",arr5[3]);
+		model.addAttribute("sd4",arr5[4]);
+		model.addAttribute("sd5",arr5[5]);
+		model.addAttribute("sd6",arr5[6]);
+		model.addAttribute("sd7",arr5[7]);
+		model.addAttribute("sd8",arr5[8]);
+		model.addAttribute("sd9",arr5[9]);
+		model.addAttribute("sd10",arr5[10]);
+		model.addAttribute("sd11",arr5[11]);
+		model.addAttribute("sd12",arr5[12]);
+		model.addAttribute("sd13",arr5[13]);
+		model.addAttribute("sd14",arr5[14]);
+		model.addAttribute("sd15",arr5[15]);
+		model.addAttribute("sd16",arr5[16]);
+		
 		
 		System.out.println(arr4[0][0]);
 		System.out.println(arr4[0][1]);
@@ -231,6 +234,7 @@ public class HomeController {
 		System.out.println(arr4[0][4]);
 		
 		model.addAttribute("vaccineCurrent",arr4);
+		
 		
 		
 		
@@ -722,6 +726,71 @@ public class HomeController {
         //strArray[0] = sb.toString();
         //strArray[1] = sb2.toString();
         strArray[2] = sb.toString();
+        //System.out.println(sb.toString());
+        
+        //System.out.println(html.toString()); 
+      
+				
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void crawler3() {
+		try {
+		String URL = "http://ncov.mohw.go.kr/regSocdisBoardView.do";
+		
+		Connection conn = Jsoup.connect(URL);
+		String[] array = new String[2];
+        // 3. HTML �Ľ�.
+        Document html = conn.get(); // conn.post();
+        
+        
+        Elements fileblocks = html.getElementsByClass("rssm_graph");
+        
+        String city;
+        
+        StringBuilder sb = new StringBuilder("");
+        StringBuilder sb2 = new StringBuilder("");
+        for( Element fileblock : fileblocks ) {
+            
+            Elements files = fileblock.getElementsByTag("span");
+           
+            
+           //for (Element elm : files2) {
+				//city = elm.text();
+				
+				//System.out.println(text);
+			//}
+            
+			for (Element elm : files) {
+				//title = elm.attr("title");
+				//href = elm.attr("href");
+				
+				String result = "";
+				city = elm.text();
+				if(city.equals("1")||city.equals("1.5")||city.equals("2")||city.equals("2.5")||city.equals("3")) {
+					result = city + "\r";
+				}
+				
+				
+				sb.append(result);
+					//sb2.append(result2);
+				
+			
+			}
+				
+        }
+        
+        System.out.println(sb.toString());
+      
+        //System.out.println(sb.toString());
+        
+        //strArray[0] = sb.toString();
+        //strArray[1] = sb2.toString();
+        //strArray[2] = sb.toString();
+        strArray[3] = sb.toString();
         //System.out.println(sb.toString());
         
         //System.out.println(html.toString()); 
