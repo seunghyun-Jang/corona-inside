@@ -69,11 +69,6 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping(value = "/ex", method = RequestMethod.GET)
-	public String exhome() {
-		return "exhome";
-	}
-	
 
 	@RequestMapping(value = "/coronaCurrent", method = RequestMethod.GET)
 	public String coronaCurrent(Model model, HttpServletRequest request) throws Exception {
