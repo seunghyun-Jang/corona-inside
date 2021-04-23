@@ -34,6 +34,7 @@
 
 	<script src="resources/js/demo/d3.js"></script>
 	<script src="resources/js/demo/mapping3.js"></script>
+	<script src="resources/js/demo/mapping4.js"></script>
 
 </head>
 <body id="page-top">
@@ -534,14 +535,19 @@
 							
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-violet">지역별 확진자</h6>
+									<h6 class="m-0 font-weight-bold text-violet">지역별 확진자
+									<button class="bg-violet rounded text-white float-right mx-3 badge-pill" onClick="buttonClick4(this)">지역별 확진자</button>
+									<button class="bg-violet rounded text-white float-right mx-0 badge-pill" onClick="buttonClick5(this)">지역별 거리두기</button>
+									</h6>
 								</div>
 								  
                                 <div class="card-body">
 									<div id="container"></div>
+									<div id="container2"></div>
 								</div>
 								
 							</div>
+												
 						</div>
 						<!-- /.container-fluid -->
 
@@ -752,6 +758,26 @@
 				var bar14 = "${map.get('대구')}";
 				var bar15 = "${map.get('부산')}";
 				var bar16 = "${map.get('서울')}";
+				
+				
+				
+				var sd0 = "${sd0}";
+				var sd1 = "${sd1}";
+				var sd2 = "${sd2}";
+				var sd3 = "${sd3}";
+				var sd4 = "${sd4}";
+				var sd5 = "${sd5}";
+				var sd6 = "${sd6}";
+				var sd7 = "${sd7}";
+				var sd8 = "${sd8}";
+				var sd9 = "${sd9}";
+				var sd10 = "${sd10}";
+				var sd11 = "${sd11}";
+				var sd12 = "${sd12}";
+				var sd13 = "${sd13}";
+				var sd14 = "${sd14}";
+				var sd15 = "${sd15}";
+				var sd16 = "${sd16}";
 
 
 				// 네이버 맵 API
@@ -832,6 +858,15 @@
 					alert(obj.getAttribute("id")); */
 					updateChartType3();
 				}
+				function buttonClick4(bt) {
+					remove();
+					drawMap('#container');
+				}
+				function buttonClick5(bt) {
+					remove();
+					drawMap2('#container2');
+				}
+				
 				function update() {
 
 					
@@ -840,6 +875,7 @@
 
 
 				drawMap('#container');
+				//drawMap2('#container2');
 	
 
 				//var KOREA_JSON_DATA_URL = "{% static 'resources/korea.json' %}",

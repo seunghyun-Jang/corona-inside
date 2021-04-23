@@ -52,7 +52,7 @@ public class HomeController {
 	private static HashMap<String, String> map = new HashMap<String, String>();
 	private static kr.ac.hansung.dto.Covid19Inf.ApiDTO InfDTO = null;
 	private static kr.ac.hansung.dto.Covid19Sido.ApiDTO SidoDTO = null;
-	private static String[] strArray= new String[3];
+	private static String[] strArray= new String[4];
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -79,30 +79,26 @@ public class HomeController {
 	public String coronaCurrent(Model model, HttpServletRequest request) throws Exception {
 			
 		
-		SimpleDateFormat format1 = new SimpleDateFormat ("yyyyMMdd");			// ¿À´Ã
+		SimpleDateFormat format1 = new SimpleDateFormat ("yyyyMMdd");			// ï¿½ï¿½ï¿½ï¿½
 		Date today = new Date();		
 		String toDay = format1.format(today);		
 		System.out.println(toDay);
 		
-		// 1½Ã°£Àü
-	    Calendar cal = Calendar.getInstance();
+		Calendar cal = Calendar.getInstance();
 	    cal.setTime(today);
 	    cal.add(Calendar.HOUR, -1);
 
-	    // Æ÷¸Ëº¯°æ ( ³â¿ùÀÏ ½ÃºÐÃÊ)
 	    SimpleDateFormat sdformat = new SimpleDateFormat("yyyyMMdd");
 	    sdformat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
 	    String beforeHour = sdformat.format(cal.getTime());
-	    System.out.println("1½Ã°£ Àü : " + beforeHour);
+	    System.out.println("1ï¿½Ã°ï¿½ ï¿½ï¿½ : " + beforeHour);
 
-	    //ÇÏ·ç Àü
 	    Calendar day = Calendar.getInstance();
 	    day.add(Calendar.DATE , -1);
 	    String beforeDate = new java.text.SimpleDateFormat("yyyyMMdd").format(day.getTime());
 	    System.out.println(beforeDate);
 
-	    //12ÀÏ Àü
 	    Calendar week = Calendar.getInstance();
 	    week.add(Calendar.DATE , -13);
 	    String beforeWeek = new java.text.SimpleDateFormat("yyyyMMdd").format(week.getTime());
@@ -113,30 +109,15 @@ public class HomeController {
 	    month.add(Calendar.DATE , -31);
 	    String beforeMonth = new java.text.SimpleDateFormat("yyyyMMdd").format(month.getTime());
 	    System.out.println(beforeMonth);
-	    
-
-	    //ÇÑ´Þ Àü
-		/*
-		 * Calendar mon = Calendar.getInstance(); // 1´ÞÀü? ¾Æ´Ï¸é 30ÀÏÀü? È®ÁøÀÚ¼ö api¿¡´Â ÀÏº°·Î ³ª¿ÍÀÖ±â
-		 * ¶§¹®¿¡ ´Ü¼øÇÏ°Ô MONTH-1 À» ÇÏ¸é ¹®Á¦°¡ »ý±ä´Ù. mon.add(Calendar.MONTH, -1); String
-		 * beforeMonth = new
-		 * java.text.SimpleDateFormat("yyyyMMdd").format(mon.getTime());
-		 * System.out.println(beforeMonth);
-		 */
-		
-		
-	   
-	    
-	    
-		
-		if(InfDTO==null) {		// ½Ì±ÛÅÏ ÆÐÅÏ
+	    	
+		if(InfDTO==null) {		
 			System.out.println("InfDTO is null.");
 			//InfDTO = getCovid19Inf(beforeDate, beforeWeek);
 			InfDTO = getCovid19Inf(beforeHour, beforeMonth);
 			model.addAttribute("InfDTO", InfDTO.getResponse().getBody().getItems());
 			InfDTO.getResponse().getBody().getItems().getItem()[0].getDecideCnt();
 		}
-		if(SidoDTO==null) {		// ½Ì±ÛÅÏ ÆÐÅÏ
+		if(SidoDTO==null) {		
 			System.out.println("SidoDTO is null.");
 			SidoDTO = getCovid19Sido(beforeHour);
 			model.addAttribute("SidoDTO", SidoDTO.getResponse().getBody().getItems());
@@ -149,7 +130,7 @@ public class HomeController {
 			
 			if (list != null && list.length != 0) {
 				for (kr.ac.hansung.dto.Covid19Sido.ItemDTO item : list) {
-					if (!(item.getGubun().equals("°Ë¿ª") || item.getGubun().equals("ÇÕ°è"))) {
+					if (!(item.getGubun().equals("ï¿½Ë¿ï¿½") || item.getGubun().equals("ï¿½Õ°ï¿½"))) {
 						//System.out.println(item.getGubun());
 						map.put(item.getGubun(), item.getDefCnt());
 					}
@@ -183,12 +164,16 @@ public class HomeController {
 		
 		crawler();
 		crawler2();
+		crawler3();
 		
 		String[] arr = strArray[0].split("\r");
 		String[] arr2 = strArray[1].split("\r");
 		String[] arr3 = strArray[2].split("\r");
 		String[] str;
 		String[][] arr4 = new String[18][5];
+		
+		
+		String[] arr5 = strArray[3].split("\r");
 		
 		for(int i=6; i<24; i++) {
 			str = arr3[i].split(" ");
@@ -223,6 +208,24 @@ public class HomeController {
 		model.addAttribute("href8",arr2[8]);
 		model.addAttribute("href9",arr2[9]);
 		
+		model.addAttribute("sd0",arr5[0]);
+		model.addAttribute("sd1",arr5[1]);
+		model.addAttribute("sd2",arr5[2]);
+		model.addAttribute("sd3",arr5[3]);
+		model.addAttribute("sd4",arr5[4]);
+		model.addAttribute("sd5",arr5[5]);
+		model.addAttribute("sd6",arr5[6]);
+		model.addAttribute("sd7",arr5[7]);
+		model.addAttribute("sd8",arr5[8]);
+		model.addAttribute("sd9",arr5[9]);
+		model.addAttribute("sd10",arr5[10]);
+		model.addAttribute("sd11",arr5[11]);
+		model.addAttribute("sd12",arr5[12]);
+		model.addAttribute("sd13",arr5[13]);
+		model.addAttribute("sd14",arr5[14]);
+		model.addAttribute("sd15",arr5[15]);
+		model.addAttribute("sd16",arr5[16]);
+		
 		
 		System.out.println(arr4[0][0]);
 		System.out.println(arr4[0][1]);
@@ -231,6 +234,7 @@ public class HomeController {
 		System.out.println(arr4[0][4]);
 		
 		model.addAttribute("vaccineCurrent",arr4);
+		
 		
 		
 		
@@ -272,7 +276,7 @@ public class HomeController {
 		return "dbtest";
 	}
 
-	//	·Î±×ÀÎ(POST)	
+	//	ï¿½Î±ï¿½ï¿½ï¿½(POST)	
 	@RequestMapping(value = "/loginSuccess", method = RequestMethod.POST)
 	public String loginSuccess(HttpSession session, UserVO vo, Model model) {
 		if(session.getAttribute("login") != null) {
@@ -280,24 +284,24 @@ public class HomeController {
 		}
 		UserDAO loginUser = new UserDAO();
 		
-		if(loginUser.loginCheck(vo)==1) {				//	¼º°ø
+		if(loginUser.loginCheck(vo)==1) {				//	ï¿½ï¿½ï¿½ï¿½
 			session.setAttribute("username",vo.getUsername());
 			logger.info("success login");
 			return "redirect:/home";
 		}		
 		else {
-		if(loginUser.loginCheck(vo)==0)//	½ÇÆÐ
-			logger.info("ºñ¹Ð¹øÈ£ ºÒÀÏÄ¡");
+		if(loginUser.loginCheck(vo)==0)//	ï¿½ï¿½ï¿½ï¿½
+			logger.info("ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½Ä¡");
 		else if(loginUser.loginCheck(vo)==-1)
-			logger.info("¾ÆÀÌµð°¡ Á¸ÀçÇÏÁö ¾ÊÀ½");
+			logger.info("ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		else if(loginUser.loginCheck(vo)==-2)
-			logger.info("µ¥ÀÌÅÍº£ÀÌ½º ¿À·ù");
+			logger.info("ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		//logger.info(Integer.toString((loginUser.loginCheck(vo))));
 		return "redirect:/login";
 		}
 	}
 	
-	//	·Î±×¾Æ¿ô	
+	//	ï¿½Î±×¾Æ¿ï¿½	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		UserDAO logout = new UserDAO();
@@ -307,7 +311,7 @@ public class HomeController {
 	}
 	
 	
-	public ApiDTO getCovid19Inf(String toDay, String beforeMonth) throws Exception { // Å×½ºÆ®¿ë
+	public ApiDTO getCovid19Inf(String toDay, String beforeMonth) throws Exception { // ï¿½×½ï¿½Æ®ï¿½ï¿½
 
 		try {
 			String serviceKeyDecoded = URLDecoder.decode(
@@ -319,17 +323,17 @@ public class HomeController {
 			// "=gdV4T70HlOTqis98q%2FvzD0cd0%2BVcdZiWpY2H86q3bPpKeUnuY7Jb4xBG%2FjoXBmtzhiXtp932xZhCC7GXi%2BF5Kg%3D%3D");
 			// /*Service Key*/
 			// urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" +
-			// URLEncoder.encode(serviceKeyDecoded, "UTF-8")); /*°ø°øµ¥ÀÌÅÍÆ÷ÅÐ¿¡¼­ ¹ÞÀº ÀÎÁõÅ°*/
+			// URLEncoder.encode(serviceKeyDecoded, "UTF-8")); /*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å°*/
 			urlBuilder.append(
-					"?" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /* ÆäÀÌÁö¹øÈ£ */
+					"?" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£ */
 			urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "="
-					+ URLEncoder.encode("10", "UTF-8")); /* ÇÑ ÆäÀÌÁö °á°ú ¼ö */
+					+ URLEncoder.encode("10", "UTF-8")); /* ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ */
 			urlBuilder.append("&" + URLEncoder.encode("startCreateDt", "UTF-8") + "="
-					+ URLEncoder.encode(beforeMonth, "UTF-8")); /* °Ë»öÇÒ »ý¼ºÀÏ ¹üÀ§ÀÇ ½ÃÀÛ */
+					+ URLEncoder.encode(beforeMonth, "UTF-8")); /* ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 			urlBuilder.append("&" + URLEncoder.encode("endCreateDt", "UTF-8") + "="
-					+ URLEncoder.encode(toDay, "UTF-8")); /* °Ë»öÇÒ »ý¼ºÀÏ ¹üÀ§ÀÇ Á¾·á */
+					+ URLEncoder.encode(toDay, "UTF-8")); /* ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 			urlBuilder.append("&" + URLEncoder.encode("serviceKey", "UTF-8") + "="
-					+ URLEncoder.encode(serviceKeyDecoded, "UTF-8")); /* °ø°øµ¥ÀÌÅÍÆ÷ÅÐ¿¡¼­ ¹ÞÀº ÀÎÁõÅ° */
+					+ URLEncoder.encode(serviceKeyDecoded, "UTF-8")); /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å° */
 			urlBuilder.append("&" + URLEncoder.encode("_returnType", "UTF-8") + "=" + "json");
 
 			System.out.println("today is" + toDay);
@@ -370,7 +374,7 @@ public class HomeController {
 	
 	
 	
-	public kr.ac.hansung.dto.Covid19Sido.ApiDTO getCovid19Sido(String toDay) throws Exception { // Å×½ºÆ®¿ë
+	public kr.ac.hansung.dto.Covid19Sido.ApiDTO getCovid19Sido(String toDay) throws Exception { // ï¿½×½ï¿½Æ®ï¿½ï¿½
 
 		try {
 			String serviceKeyDecoded = URLDecoder.decode(
@@ -382,17 +386,17 @@ public class HomeController {
 			// "=gdV4T70HlOTqis98q%2FvzD0cd0%2BVcdZiWpY2H86q3bPpKeUnuY7Jb4xBG%2FjoXBmtzhiXtp932xZhCC7GXi%2BF5Kg%3D%3D");
 			// /*Service Key*/
 			// urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" +
-			// URLEncoder.encode(serviceKeyDecoded, "UTF-8")); /*°ø°øµ¥ÀÌÅÍÆ÷ÅÐ¿¡¼­ ¹ÞÀº ÀÎÁõÅ°*/
+			// URLEncoder.encode(serviceKeyDecoded, "UTF-8")); /*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å°*/
 			urlBuilder.append(
-					"?" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /* ÆäÀÌÁö¹øÈ£ */
+					"?" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£ */
 			urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "="
-					+ URLEncoder.encode("10", "UTF-8")); /* ÇÑ ÆäÀÌÁö °á°ú ¼ö */
+					+ URLEncoder.encode("10", "UTF-8")); /* ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ */
 			urlBuilder.append("&" + URLEncoder.encode("startCreateDt", "UTF-8") + "="
-					+ URLEncoder.encode(toDay, "UTF-8")); /* °Ë»öÇÒ »ý¼ºÀÏ ¹üÀ§ÀÇ ½ÃÀÛ */
+					+ URLEncoder.encode(toDay, "UTF-8")); /* ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 			urlBuilder.append("&" + URLEncoder.encode("endCreateDt", "UTF-8") + "="
-					+ URLEncoder.encode(toDay, "UTF-8")); /* °Ë»öÇÒ »ý¼ºÀÏ ¹üÀ§ÀÇ Á¾·á */
+					+ URLEncoder.encode(toDay, "UTF-8")); /* ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 			urlBuilder.append("&" + URLEncoder.encode("serviceKey", "UTF-8") + "="
-					+ URLEncoder.encode(serviceKeyDecoded, "UTF-8")); /* °ø°øµ¥ÀÌÅÍÆ÷ÅÐ¿¡¼­ ¹ÞÀº ÀÎÁõÅ° */
+					+ URLEncoder.encode(serviceKeyDecoded, "UTF-8")); /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å° */
 			urlBuilder.append("&" + URLEncoder.encode("_returnType", "UTF-8") + "=" + "json");
 
 			URL url = new URL(urlBuilder.toString());
@@ -416,7 +420,7 @@ public class HomeController {
 			rd.close();
 			conn.disconnect();
 			System.out.println(sb.toString());
-			System.out.println("¤·¤·¤·¤·¤·¤·¤·¤·¤·¤·¤·¤·");
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 
 			org.json.JSONObject jObject = XML.toJSONObject(sb.toString());
 			ObjectMapper mapper = new ObjectMapper();
@@ -461,10 +465,10 @@ public class HomeController {
 
 		try {
 			while ((line = br.readLine()) != null) {
-				// CSV 1ÇàÀ» ÀúÀåÇÏ´Â ¸®½ºÆ®
+				// CSV 1ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 				List<String> tmpList = new ArrayList<String>();
 				String array[] = line.split(",");
-				// ¹è¿­¿¡¼­ ¸®½ºÆ® ¹ÝÈ¯
+				// ï¿½è¿­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È¯
 				tmpList = Arrays.asList(array);
 				//System.out.println(tmpList);
 
@@ -517,10 +521,10 @@ public class HomeController {
 
 		try {
 			while ((line = br.readLine()) != null) {
-				// CSV 1ÇàÀ» ÀúÀåÇÏ´Â ¸®½ºÆ®
+				// CSV 1ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 				List<String> tmpList = new ArrayList<String>();
 				String array[] = line.split(",");
-				// ¹è¿­¿¡¼­ ¸®½ºÆ® ¹ÝÈ¯
+				// ï¿½è¿­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È¯
 				tmpList = Arrays.asList(array);
 				//System.out.println(tmpList);
 
@@ -621,7 +625,7 @@ public class HomeController {
 		
 		Connection conn = Jsoup.connect(URL);
 		String[] array = new String[2];
-        // 3. HTML ÆÄ½Ì.
+        // 3. HTML ï¿½Ä½ï¿½.
         Document html = conn.get(); // conn.post();
         
         Elements fileblocks = html.getElementsByClass("news_area");
@@ -676,7 +680,7 @@ public class HomeController {
 		
 		Connection conn = Jsoup.connect(URL);
 		String[] array = new String[2];
-        // 3. HTML ÆÄ½Ì.
+        // 3. HTML ï¿½Ä½ï¿½.
         Document html = conn.get(); // conn.post();
         
         
@@ -722,6 +726,71 @@ public class HomeController {
         //strArray[0] = sb.toString();
         //strArray[1] = sb2.toString();
         strArray[2] = sb.toString();
+        //System.out.println(sb.toString());
+        
+        //System.out.println(html.toString()); 
+      
+				
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void crawler3() {
+		try {
+		String URL = "http://ncov.mohw.go.kr/regSocdisBoardView.do";
+		
+		Connection conn = Jsoup.connect(URL);
+		String[] array = new String[2];
+        // 3. HTML ï¿½Ä½ï¿½.
+        Document html = conn.get(); // conn.post();
+        
+        
+        Elements fileblocks = html.getElementsByClass("rssm_graph");
+        
+        String city;
+        
+        StringBuilder sb = new StringBuilder("");
+        StringBuilder sb2 = new StringBuilder("");
+        for( Element fileblock : fileblocks ) {
+            
+            Elements files = fileblock.getElementsByTag("span");
+           
+            
+           //for (Element elm : files2) {
+				//city = elm.text();
+				
+				//System.out.println(text);
+			//}
+            
+			for (Element elm : files) {
+				//title = elm.attr("title");
+				//href = elm.attr("href");
+				
+				String result = "";
+				city = elm.text();
+				if(city.equals("1")||city.equals("1.5")||city.equals("2")||city.equals("2.5")||city.equals("3")) {
+					result = city + "\r";
+				}
+				
+				
+				sb.append(result);
+					//sb2.append(result2);
+				
+			
+			}
+				
+        }
+        
+        System.out.println(sb.toString());
+      
+        //System.out.println(sb.toString());
+        
+        //strArray[0] = sb.toString();
+        //strArray[1] = sb2.toString();
+        //strArray[2] = sb.toString();
+        strArray[3] = sb.toString();
         //System.out.println(sb.toString());
         
         //System.out.println(html.toString()); 

@@ -40,6 +40,7 @@ function drawMap(target) {
 		.attr('class', 'background')
 		.attr('width', width + 'px')
 		.attr('height', height + 'px')
+		
 
 	//geoJson데이터를 파싱하여 지도그리기
 	d3.json('resources/json/korea.json', function(json) {
@@ -219,4 +220,9 @@ function drawMap(target) {
 	var tooltip = d3.select("body").append("div")
 		.attr("class", "toolTip")
 		.style("display", "none");
+		
+	
+}
+function remove() {
+		d3.selectAll('svg').remove();
 }
