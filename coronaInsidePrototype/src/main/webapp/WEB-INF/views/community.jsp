@@ -33,16 +33,18 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<%
-					if(session.getAttribute("username")==null){%>
-						<li class="nav-item mx-0 mx-lg-1 login-item"><a
-							class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-							href="login">로그인 하기</a></li>
-					<%} else if(session.getAttribute("username")!=null){%>
-						<li class="nav-item mx-0 mx-lg-1"><a
-							class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"><%=session.getAttribute("username")%>님
-								환영합니다.</a></li>
-					<%} %>
+					<c:choose>
+						<c:when test="${session.getAttribute('username') == null}">
+							<li class="nav-item mx-0 mx-lg-1 login-item"><a
+								class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+								href="login">로그인 하기</a></li>
+						</c:when>
+						<c:when test="${session.getAttribute('username') != null}">
+							<li class="nav-item mx-0 mx-lg-1"><a
+								class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">
+									<%=session.getAttribute("username")%>님 환영합니다.</a></li>
+						</c:when>
+					</c:choose>
 					<li class="nav-item mx-0 mx-lg-1"><a
 						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
 						href="corona">코로나 현황</a></li>
@@ -55,16 +57,16 @@
 				</ul>
 				
 			</div>
-			<%
-			if(session.getAttribute("username") == null){%>
-			<button class="bg-primary rounded text-white login-btn"
-				id="login-btn" onClick="location.href='login'">로그인</button>
-			<% }%>
-			<%
-			if(session.getAttribute("username")!=null){%>
-			<button class="bg-primary rounded text-white login-btn"
-				id="login-btn" onClick="location.href='logout'">로그아웃</button>
-			<%}%>
+			<c:choose>
+				<c:when test="${session.getAttribute('username') == null}">
+					<button class="bg-primary rounded text-white login-btn"
+						id="login-btn" onClick="location.href='login'">로그인</button>
+				</c:when>
+				<c:when test="${session.getAttribute('username') != null}">
+					<button class="bg-primary rounded text-white login-btn"
+						id="login-btn" onClick="location.href='logout'">로그아웃</button>
+				</c:when>
+			</c:choose>
 		</div>
 	</nav>
 
@@ -120,7 +122,12 @@
     			</c:choose>
     		</c:forEach>
     	</p>
-    	<p align="right"> <button type="submit" align="right" class="btn btn-default bg-violet text-white" onClick="location.href='${pageContext.request.contextPath}/community-post-make'">글 작성</button> </p>
+    	<p align="right">
+    		<c:if test="${session.getAttribute('username') != null }" >
+	    		<button type="submit" align="right" class="btn btn-default bg-violet text-white" 
+	    			onClick="location.href='${pageContext.request.contextPath}/community-post-make'">글 작성</button>
+    		</c:if>
+    	</p>
     </div>
     </section>
     <!-- Copyright Section-->
