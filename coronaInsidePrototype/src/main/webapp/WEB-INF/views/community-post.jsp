@@ -106,8 +106,10 @@
 						    </p>
 						    <p align="right">
 						    	<c:if test="${session.getAttriube('username').equals(post.author) }">
-						    	<button type="submit" class="btn btn-default bg-violet text-white"
+						    	<button type="submit" class="btn btn-default bg-blue text-white"
 						    		onClick="location.href='${pageContext.request.contextPath}/community-post-edit/${post.postNo}'">글 수정</button>
+						    	<button type="submit" class="btn btn-default bg-gray text-white"
+						    		onClick="location.href='${pageContext.request.contextPath}/community-post-delete/${post.postNo}'">글 삭제</button>
 						    	</c:if> 
 						    </p>
 						</td>

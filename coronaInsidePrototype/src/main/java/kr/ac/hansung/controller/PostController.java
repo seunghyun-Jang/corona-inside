@@ -136,7 +136,7 @@ public class PostController {
 		return "redirect:post/" + postService.getCurrentPostNo();
 	}
 	
-	@RequestMapping(value = "/community-post-edit/*", method = RequestMethod.GET)
+	@RequestMapping(value = "/community-post-edit/*", method = RequestMethod.POST)
 	public String editPost(Model model, HttpServletRequest request) {
 		String[] url = request.getRequestURI().split("/");
 		int postNo = Integer.parseInt(url[3]);
@@ -165,6 +165,26 @@ public class PostController {
 		model.addAttribute("post", post);
 		
 		return "redirect:../post/"+postNo;
+	}
+	
+	@RequestMapping(value = "/check-deletepost/*")
+	public String checkDeletePost(Model model, HttpServletRequest request) {
+		String[] url = request.getRequestURI().split("/");
+		int postNo = Integer.parseInt(url[3]);
+		
+		model.addAttribute("postNo", postNo);
+		
+		return "check-delete-post";
+	}
+	
+	@RequestMapping(value = "/do-deletepost/*")
+	public String doDeletePost(Model model, HttpServletRequest request) {
+		String[] url = request.getRequestURI().split("/");
+		int postNo = Integer.parseInt(url[3]);
+		
+		postService.delete(postNo);
+		
+		return "redirect:community";
 	}
 	
 	@RequestMapping(value = "/post/*/dopostlike")
