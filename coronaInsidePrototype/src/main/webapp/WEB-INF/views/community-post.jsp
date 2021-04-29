@@ -199,7 +199,7 @@
 						          	
 						          	<div id="reply-${reply.replyId}" class="comment-box add-comment reply-box">
 						            	<span class="commenter-name">
-							            	<sf:form method="post" action="${pageContext.request.contextPath}/doreply" modelAttribute="reply">
+							            	<sf:form method="post" action="${pageContext.request.contextPath}/do-reply" modelAttribute="reply">
 							              		<sf:input class="control" type="text" placeholder="여기에 답글을 입력하세요." name="Add Comment" path="content"/>
 							              		<sf:errors class="error" path="content"/>
 							              		<sf:input class="control" type="hidden" path="parentId" value="${reply.replyId}"/>
@@ -251,10 +251,10 @@
 			var req = new XMLHttpRequest();
 			var page = "${pageContext.request.contextPath}/post/${post.postNo}";
 			if(todo == "like") {
-				page += "/dopostlike";
+				page += "/do-postlike";
 			}
 			else if(todo == "unlike") {
-				page += "/dopostunlike";
+				page += "/do-postunlike";
 			}
 			req.open("POST", page);
 			req.onreadystatechange = function() {
@@ -269,10 +269,10 @@
 			var req = new XMLHttpRequest();
 			var page = "${pageContext.request.contextPath}/post/" + replyId;
 			if(todo == "like") {
-				page += "/doreplylike";
+				page += "/do-replylike";
 			}
 			else if(todo == "unlike") {
-				page += "/doreplyunlike";
+				page += "/do-replyunlike";
 			}
 			req.open("POST", page);
 			req.onreadystatechange = function() {

@@ -68,7 +68,7 @@
     <section class="page-section" id="post">
     	<h1 class="masthead-heading text-center text-secondary text-uppercase mb-0"><a class="a-violet" href="${pageContext.request.contextPath}/community">게시판</a></h1>
     	<div class="container">
-    		<sf:form method="post" action="${pageContext.request.contextPath}/domakepost" modelAttribute="post" >
+    		<sf:form method="post" action="${pageContext.request.contextPath}/do-makepost" modelAttribute="post" >
     		<table class="styled-table">
     			<tbody>
     				<tr>

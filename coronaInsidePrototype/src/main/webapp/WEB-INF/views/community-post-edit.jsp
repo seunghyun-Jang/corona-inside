@@ -66,9 +66,9 @@
     </header>
     
     <section class="page-section" id="post">
-    	<h1 class="masthead-heading text-center text-secondary text-uppercase mb-0"><a class="a-violet" href="${pageContext.request.contextPath}/community">게시판</a></h1>
+    	<h2 class="masthead-heading text-secondary text-uppercase mb-4-5"><a class="a-violet" href="${pageContext.request.contextPath}/community">커뮤니티</a></h2>
     	<div class="container">
-    		<form method="post" action="${pageContext.request.contextPath}/doeditpost/${post.postNo}">
+    		<form method="post" action="${pageContext.request.contextPath}/do-editpost/${post.postNo}">
     		<table class="styled-table">
     			<tbody>
     				<tr>
