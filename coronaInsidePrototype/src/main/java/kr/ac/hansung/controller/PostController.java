@@ -173,6 +173,8 @@ public class PostController {
 		int postNo = Integer.parseInt(url[3]);
 		
 		model.addAttribute("postNo", postNo);
+		String author = postService.getPost(postNo).getAuthor();
+		model.addAttribute("author", author);
 		
 		return "check-delete-post";
 	}

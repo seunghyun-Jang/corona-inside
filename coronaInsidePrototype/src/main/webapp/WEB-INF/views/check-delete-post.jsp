@@ -6,6 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <script>
+	if(!session.getAttribute("username").equals(author)) {
+		alert("작성자가 아니면 글을 삭제하실 수 없습니다!")
+		window.location.href = 'post/' + postNo;
+	}
 	var password = prompt("비밀번호를 입력하세요");
 	
 	if(password.equals(session.getAttribute("password"))) {
