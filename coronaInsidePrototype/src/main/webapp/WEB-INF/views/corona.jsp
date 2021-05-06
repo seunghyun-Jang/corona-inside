@@ -29,7 +29,7 @@
 	
 	
 	<link rel="stylesheet" href="resources/css/korea.css" />
-
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="http://d3js.org/d3.v4.min.js"></script>
 
 	<script src="resources/js/demo/d3.js"></script>
@@ -155,11 +155,11 @@
 									</div>
 									<div class="mt-4 text-center small">
 										<span class="mr-2"> <i
-											class="fas fa-circle text-violet"></i> 검사진행 수
+											class="fa fa-circle text-violet"></i> 검사진행 수
 										</span> <span class="mr-2"> <i
-											class="fas fa-circle text-warning"></i> 치료중 환자 수
+											class="fa fa-circle text-warning"></i> 치료중 환자 수
 										</span> <span class="mr-2"> <i
-											class="fas fa-circle text-danger"></i> 사망자 수
+											class="fa fa-circle text-danger"></i> 사망자 수
 										</span>
 									</div>
 								</div>
@@ -543,9 +543,9 @@
 							
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-violet">지역별 확진자
-									<button class="bg-violet rounded text-white float-right mx-3 badge-pill" onClick="buttonClick4(this)">지역별 확진자</button>
-									<button class="bg-violet rounded text-white float-right mx-0 badge-pill" onClick="buttonClick5(this)">지역별 거리두기</button>
+									<h6 class="m-0 font-weight-bold text-violet">지역별 데이터
+									<button id="btn1" class="bg-violet rounded text-white float-right mx-3 badge-pill" onClick="buttonClick4(this)">누적 확진자수</button>
+									<button id="btn2" class="bg-violet rounded text-white float-right mx-0 badge-pill" onClick="buttonClick5(this)">거리두기 단계</button>
 									</h6>
 								</div>
 								  
@@ -596,6 +596,9 @@
 			<!-- Page level custom scripts -->
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.js"></script>
 			<script>
+			
+				var btnCount = 0;
+				
 				function strAddSlash(str) {
 					var len = str.length;
 					var rtnStr = "";
@@ -869,10 +872,17 @@
 				function buttonClick4(bt) {
 					remove();
 					drawMap('#container');
+					setColor2();
+					
+					
 				}
 				function buttonClick5(bt) {
 					remove();
 					drawMap2('#container2');
+	
+					setColor1();
+					
+					
 				}
 				
 				function update() {
