@@ -11,11 +11,11 @@ import kr.ac.hansung.dto.UserVO;
 
 public class UserDAO {
 
-	private Connection conn; // µ¥ÀÌÅÍº£ÀÌ½º¿¡ Á¢±ÙÇÏ°Ô ÇØÁÖ´Â °´Ã¼
+	private Connection conn; // ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½Ã¼
 
 	private PreparedStatement pstmt;
 
-	private ResultSet rs; // Á¤º¸¸¦ ´ãÀ» ¼ö ÀÖ´Â °´Ã¼
+	private ResultSet rs; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½Ã¼
 
 	public UserDAO() {
 
@@ -52,19 +52,19 @@ public class UserDAO {
 
 				if (rs.getString(1).equals(vo.getPassword())) {
 
-					return 1; // ·Î±×ÀÎ ¼º°ø
+					return 1; // ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 				} else
 
-					return 0; // ºñ¹Ð¹øÈ£ ºÒÀÏÄ¡
+					return 0; // ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½Ä¡
 
 			}
-			return -1; // ¾ÆÀÌµð°¡ ¾øÀ½
+			return -1; // ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return -2; // µ¥ÀÌÅÍº£ÀÌ½º ¿À·ù
+		return -2; // ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	}
 	public void logout(HttpSession session) {
 		session.invalidate();
