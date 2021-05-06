@@ -10648,6 +10648,21 @@ form .row:first-child .floating-label-form-group {
     float: right;
 }
 
+.best-post {
+	background-image: linear-gradient(rgba(255, 51, 0, 0.2) 100%, transparent 0);
+	background-position: 0 0em;
+	background-repeat: repeat-x;
+	background-size: 1px 2em;
+	
+	border: 3px solid #ff5526;
+	border-radius: 5px;
+}
+
+.best-comment {
+	color: #ff5526;
+  	text-decoration: none;
+}
+
 @media (max-width: 767px){
 .comments .commenter-name {
     font-size: 13px;
@@ -10665,8 +10680,4 @@ form .row:first-child .floating-label-form-group {
   margin-left: 0px;
 }
 
-.best-comment {
-	color: #ff3300;
-  	text-decoration: none;
-}
 }

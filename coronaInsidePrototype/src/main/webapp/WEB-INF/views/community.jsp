@@ -86,7 +86,15 @@
     <section class="page-section" id="freeboard">
     	<div class="container">
     	<h2 class="masthead-heading text-secondary text-uppercase mb-4-5"><a class="a-violet" href="${pageContext.request.contextPath}/community">커뮤니티</a></h2>
-    	<a class="a-violet" href="${pageContext.request.contextPath}/community/best"><i class="fas fa-crown"></i> 인기글</a>
+    	<c:choose>
+    		<c:when test="${isbest != 1}">
+    			<a class="a-violet" href="${pageContext.request.contextPath}/community/best"><i class="fas fa-crown"></i> 인기글</a>
+    		</c:when>
+    		<c:otherwise>
+    			<a class="a-violet best-post" href="${pageContext.request.contextPath}/community/best"><i class="fas fa-crown"></i> 인기글</a>
+    		</c:otherwise>
+    	</c:choose>
+    	
     	<table class="styled-table table-hover">
     		<thead>
     			<tr>

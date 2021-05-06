@@ -38,6 +38,8 @@ public class PostController {
 		
 		model.addAttribute("page", 1);
 		
+		model.addAttribute("isbest", 0);
+		
 		return "community";
 	}
 	
@@ -51,6 +53,8 @@ public class PostController {
 		int page = Integer.parseInt(url[3]);
 		model.addAttribute("page", page);
 		
+		model.addAttribute("isbest", 0);
+		
 		return "community";
 	}
 	
@@ -61,6 +65,8 @@ public class PostController {
 		model.addAttribute("posts", posts);
 		
 		model.addAttribute("page", 1);
+		
+		model.addAttribute("isbest", 1);
 		
 		return "community";
 	}
@@ -74,6 +80,8 @@ public class PostController {
 		String[] url = request.getRequestURI().split("/");
 		int page = Integer.parseInt(url[3]);
 		model.addAttribute("page", page);
+		
+		model.addAttribute("isbest", 1);
 		
 		return "community";
 	}
