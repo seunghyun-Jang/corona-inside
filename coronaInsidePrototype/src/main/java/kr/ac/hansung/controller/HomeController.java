@@ -69,8 +69,4 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping(value = "/vaccine", method = RequestMethod.GET)
-	public String vaccine() {
-		return "vaccine";
-	}
 }

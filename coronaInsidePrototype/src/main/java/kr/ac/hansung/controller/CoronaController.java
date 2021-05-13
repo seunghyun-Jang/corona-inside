@@ -76,11 +76,22 @@ public class CoronaController {
 	    cal.setTime(today);
 	    cal.add(Calendar.HOUR, -1);
 	    
-	    SimpleDateFormat sdformat = new SimpleDateFormat("yyyyMMdd");
+	    SimpleDateFormat sdformat = new SimpleDateFormat("yyyy/MM/dd");
+	    sdformat.setTimeZone(TimeZone.getTimeZone("UTC"));
+	    
+	    String BeforeHour = sdformat.format(cal.getTime());
+	    
+	    model.addAttribute("beforeHour",BeforeHour);
+	   
+	    
+	    sdformat = new SimpleDateFormat("yyyyMMdd");
 	    sdformat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
 	    String beforeHour = sdformat.format(cal.getTime());
 	    System.out.println("1�ð� �� : " + beforeHour);
+	    
+	
+	    
 
 	    Calendar day = Calendar.getInstance();
 	    day.add(Calendar.DATE , -1);

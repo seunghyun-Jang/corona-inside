@@ -13,13 +13,15 @@ function drawMap(target) {
 		.scale(initialScale)
 		.translate([initialX, initialY]);
 	var path = d3.geo.path().projection(projection);
+	
+	/*
 	var zoom = d3.behavior
 		.zoom()
 		.translate(projection.translate())
 		.scale(projection.scale())
 		.scaleExtent([height, 800 * height])
 		.on('zoom', zoom);
-
+	*/
 	var svg = d3
 		.select(target)
 		.append('svg')
@@ -32,8 +34,8 @@ function drawMap(target) {
 
 	var states = svg
 		.append('g')
-		.attr('id', 'states')
-		.call(zoom);
+		.attr('id', 'states');
+		//.call(zoom);
 
 	states
 		.append('rect')
@@ -60,57 +62,57 @@ function drawMap(target) {
 				tooltip.style("top", (d3.event.pageY - 10) + "px");
 
 				if (d.properties.code == 39) {
-					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar0}`+"명");
+					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar0}`+" 명");
 				}
 				else if (d.properties.code == 38) {
-					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar1}`+"명");
+					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar1}`+" 명");
 				}
 
 				else if (d.properties.code == 37) {
-					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar2}`+"명");
+					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar2}`+" 명");
 				}
 
 				else if (d.properties.code == 36) {
-					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar3}`+"명");
+					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar3}`+" 명");
 				}
 				else if (d.properties.code == 35) {
-					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar4}`+"명");
+					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar4}`+" 명");
 				}
 				else if (d.properties.code == 34) {
-					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar5}`+"명");
+					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar5}`+" 명");
 				}
 				else if (d.properties.code == 33) {
-					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar6}`+"명");
+					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar6}`+" 명");
 				}
 				else if (d.properties.code == 32) {
-					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar7}`+"명");
+					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar7}`+" 명");
 				}
 				else if (d.properties.code == 31) {
-					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar8}`+"명");
+					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar8}`+" 명");
 				}
 				else if (d.properties.code == 29) {
-					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar9}`+"명");
+					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar9}`+" 명");
 				}
 				else if (d.properties.code == 26) {
-					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar10}`+"명");
+					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar10}`+" 명");
 				}
 				else if (d.properties.code == 25) {
-					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar11}`+"명");
+					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar11}`+" 명");
 				}
 				else if (d.properties.code == 24) {
-					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar12}`+"명");
+					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar12}`+" 명");
 				}
 				else if (d.properties.code == 23) {
-					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar13}`+"명");
+					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar13}`+" 명");
 				}
 				else if (d.properties.code == 22) {
-					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar14}`+"명");
+					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar14}`+" 명");
 				}
 				else if (d.properties.code == 21) {
-					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar15}`+"명");
+					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar15}`+" 명");
 				}
 				else if (d.properties.code == 11) {
-					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar16}`+"명");
+					tooltip.text(d.properties.name+"\n\n누적확진자 수: "+`${bar16}`+" 명");
 				}
 
 				return d.properties.name;
@@ -210,12 +212,12 @@ function drawMap(target) {
 		}
 		return 'translate(' + arr + ')';
 	}
-
+	/*
 	function zoom() {
 		projection.translate(d3.event.translate).scale(d3.event.scale);
 		states.selectAll('path').attr('d', path);
 		labels.attr('transform', translateTolabel);
-	}
+	}*/
 
 	var tooltip = d3.select("body").append("div")
 		.attr("class", "toolTip")
