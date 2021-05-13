@@ -9,7 +9,7 @@
 }
 #states path {
     fill: #e84a4a;
-    stroke: #ffffff;
+    stroke: black;
     stroke-width: 1.5px;
 
 }
@@ -44,7 +44,7 @@
     background-color: black;
     padding: 5px;
     text-align: left;
-    font-size: 12px;
+    font-size: 15px;
     color: white;
     white-space: pre;
     
@@ -60,7 +60,7 @@
 }
 #states2 path {
     fill: #e84a4a;
-    stroke: #ffffff;
+    stroke: black;
     stroke-width: 1.5px;
 
 }
@@ -95,7 +95,7 @@
     background-color: black;
     padding: 5px;
     text-align: center;
-    font-size: 12px;
+    font-size: 15px;
     color: white;
     white-space: pre;
  

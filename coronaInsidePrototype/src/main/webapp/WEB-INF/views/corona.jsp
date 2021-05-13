@@ -35,6 +35,12 @@
 	<script src="resources/js/demo/d3.js"></script>
 	<script src="resources/js/demo/mapping3.js"></script>
 	<script src="resources/js/demo/mapping4.js"></script>
+	
+	<style>
+		#bt1 {background:#7E41D9;}/*전구 켜기 버튼 css속성*/
+		#bt2 {background:#7E41D9;}/*전구 끄기 버튼 css속성*/
+
+	</style>
 
 </head>
 <body id="page-top">
@@ -54,16 +60,19 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<%
-					if(session.getAttribute("username")==null){%>
-						<li class="nav-item mx-0 mx-lg-1 login-item"><a
-							class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-							href="login">로그인 하기</a></li>
-					<%} else if(session.getAttribute("username")!=null){%>
-						<li class="nav-item mx-0 mx-lg-1"><a
-							class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"><%=session.getAttribute("username")%>님
-								환영합니다.</a></li>
-					<%} %>
+					<c:choose>
+						<c:when test="${session.getAttribute('username') == null}">
+							<li class="nav-item mx-0 mx-lg-1 login-item"><a
+								class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+								href="login">로그인 하기</a></li>
+						</c:when>
+						<c:when test="${session.getAttribute('username') != null}">
+							<li class="nav-item mx-0 mx-lg-1"><a
+								class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">
+									<%=session.getAttribute("username")%>님 환영합니다.
+							</a></li>
+						</c:when>
+					</c:choose>
 					<li class="nav-item mx-0 mx-lg-1"><a
 						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger text-selected"
 						href="corona">코로나 현황</a></li>
@@ -76,16 +85,16 @@
 				</ul>
 				
 			</div>
-			<%
-			if(session.getAttribute("username") == null){%>
-			<button class="bg-primary rounded text-white login-btn"
-				id="login-btn" onClick="location.href='login'">로그인</button>
-			<% }%>
-			<%
-			if(session.getAttribute("username")!=null){%>
-			<button class="bg-primary rounded text-white login-btn"
-				id="login-btn" onClick="location.href='logout'">로그아웃</button>
-			<%}%>
+			<c:choose>
+				<c:when test="${session.getAttribute('username') == null}">
+					<button class="bg-primary rounded text-white login-btn"
+						id="login-btn" onClick="location.href='login'">로그인</button>
+				</c:when>
+				<c:when test="${session.getAttribute('username') != null}">
+					<button class="bg-primary rounded text-white login-btn"
+						id="login-btn" onClick="location.href='logout'">로그아웃</button>
+				</c:when>
+			</c:choose>
 		</div>
 	</nav>
 
@@ -123,9 +132,15 @@
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
 									<h6 class="m-0 font-weight-bold text-violet">일별 신규 확진자 수
-									<button class="bg-violet rounded text-white float-right badge-pill" onClick="buttonClick3(this)">1달</button>			
+									<!-- <button class="bg-violet rounded text-white float-right badge-pill" onClick="buttonClick3(this)">1달</button>			
 									<button class="bg-violet rounded text-white float-right mx-3 badge-pill" onClick="buttonClick2(this)">2주</button>
-									<button class="bg-violet rounded text-white float-right mx-0 badge-pill" onClick="buttonClick1(this)">1주</button>
+									<button class="bg-violet rounded text-white float-right mx-0 badge-pill" onClick="buttonClick1(this)">1주</button> -->
+									
+									<div class="btn-group" role="group" aria-label="Basic example" style="float: right;">
+												<button type="button" class="btn btn-violet" onClick="buttonClick1(this)">1주</button>
+  												<button type="button" class="btn btn-violet" onClick="buttonClick2(this)">2주</button>
+  												<button type="button" class="btn btn-violet" onClick="buttonClick3(this)">1달</button>
+									</div>
 
 									</h6>
 									
@@ -136,6 +151,8 @@
 											<canvas id="myBarChart2"></canvas>
 										</div>
 									</div>
+									<br><span class="badge badge-secondary">국내현황 ${beforeHour} 00:00 집계 기준.</span>
+									
 									
 								</div>
 							</div>
@@ -162,6 +179,7 @@
 											class="fa fa-circle text-danger"></i> 사망자 수
 										</span>
 									</div>
+									<br><span class="badge badge-secondary">국내현황 ${beforeHour} 00:00 집계 기준.</span>
 								</div>
 							</div>
 						</div>
@@ -179,6 +197,8 @@
 									<div class="chart-area">
 										<canvas id="myAreaChart"></canvas>
 									</div>
+									
+									<br><span class="badge badge-secondary">국내현황 ${beforeHour} 00:00 집계 기준.</span>
 								</div>
 							</div>
 						</div>
@@ -199,126 +219,11 @@
 									<div class="chart-bar">
 										<canvas id="myBarChart"></canvas>
 									</div>
+									
+									<br><span class="badge badge-secondary">국내현황 ${beforeHour} 00:00 집계 기준.</span>
 								</div>
 
 							</div>
-
-							<div class="row">
-								<div class="col-lg-6 mb-4">
-									<div class="card bg-primary text-white shadow">
-										<div class="card-body">
-											Primary
-											<div class="text-white-50 small">#4e73df</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-6 mb-4">
-									<div class="card bg-success text-white shadow">
-										<div class="card-body">
-											Success
-											<div class="text-white-50 small">#1cc88a</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-6 mb-4">
-									<div class="card bg-info text-white shadow">
-										<div class="card-body">
-											Info
-											<div class="text-white-50 small">#36b9cc</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-6 mb-4">
-									<div class="card bg-warning text-white shadow">
-										<div class="card-body">
-											Warning
-											<div class="text-white-50 small">#f6c23e</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-6 mb-4">
-									<div class="card bg-danger text-white shadow">
-										<div class="card-body">
-											Danger
-											<div class="text-white-50 small">#e74a3b</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-6 mb-4">
-									<div class="card bg-secondary text-white shadow">
-										<div class="card-body">
-											Secondary
-											<div class="text-white-50 small">#858796</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-6 mb-4">
-									<div class="card bg-light text-black shadow">
-										<div class="card-body">
-											Light
-											<div class="text-black-50 small">#f8f9fc</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-6 mb-4">
-									<div class="card bg-dark text-white shadow">
-										<div class="card-body">
-											Dark
-											<div class="text-white-50 small">#5a5c69</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<!-- Project Card Example -->
-							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-violet">아무것도 없으면</h6>
-								</div>
-								<div class="card-body">
-									<h4 class="small font-weight-bold">
-										Server Migration <span class="float-right">20%</span>
-									</h4>
-									<div class="progress mb-4">
-										<div class="progress-bar bg-danger" role="progressbar"
-											style="width: 20%" aria-valuenow="20" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-									<h4 class="small font-weight-bold">
-										Sales Tracking <span class="float-right">40%</span>
-									</h4>
-									<div class="progress mb-4">
-										<div class="progress-bar bg-warning" role="progressbar"
-											style="width: 40%" aria-valuenow="40" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-									<h4 class="small font-weight-bold">
-										Customer Database <span class="float-right">60%</span>
-									</h4>
-									<div class="progress mb-4">
-										<div class="progress-bar" role="progressbar"
-											style="width: 60%" aria-valuenow="60" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-									<h4 class="small font-weight-bold">
-										Payout Details <span class="float-right">80%</span>
-									</h4>
-									<div class="progress mb-4">
-										<div class="progress-bar bg-info" role="progressbar"
-											style="width: 80%" aria-valuenow="80" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-									<h4 class="small font-weight-bold">
-										Account Setup <span class="float-right">Complete!</span>
-									</h4>
-									<div class="progress">
-										<div class="progress-bar bg-success" role="progressbar"
-											style="width: 100%" aria-valuenow="100" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-								</div>
-							</div>
-							<!-- Color System -->
 							
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
@@ -339,162 +244,6 @@
 									</ul>
 								</div>
 							</div>
-							
-							
-							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-violet">백신 접종 현황</h6>
-								</div>
-								<div class="card-body">
-									<table class="table">
-										
-										<thead class="text-center thead-light">
-											<tr>
-												<th scope="col" rowspan="2">구분</th>
-                								<th scope="col" colspan="2">1회차 접종</th>
-                								<th scope="col" colspan="2">2회차 접종</th>
-											</tr>
-											<tr>	
-												<th scope="col">당일 실적</th>
-												<th scope="col">당일 누계</th>
-												<th scope="col">당일 실적</th>
-												<th scope="col">당일 누계</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr class="bg-violet text-white">
-												<th scope="row">${vaccineCurrent[0][0]}</th>
-												<td>${vaccineCurrent[0][1]}</td>
-												<td>${vaccineCurrent[0][2]}</td>
-												<td>${vaccineCurrent[0][3]}</td>
-												<td>${vaccineCurrent[0][4]}</td>		
-											</tr>
-											<tr>
-												<th scope="row">${vaccineCurrent[1][0]}</th>
-												<td>${vaccineCurrent[1][1]}</td>
-												<td>${vaccineCurrent[1][2]}</td>
-												<td>${vaccineCurrent[1][3]}</td>
-												<td>${vaccineCurrent[1][4]}</td>		
-											</tr>
-											<tr>
-												<th scope="row">${vaccineCurrent[2][0]}</th>
-												<td>${vaccineCurrent[2][1]}</td>
-												<td>${vaccineCurrent[2][2]}</td>
-												<td>${vaccineCurrent[2][3]}</td>
-												<td>${vaccineCurrent[2][4]}</td>		
-											</tr>
-											<tr>
-												<th scope="row">${vaccineCurrent[3][0]}</th>
-												<td>${vaccineCurrent[3][1]}</td>
-												<td>${vaccineCurrent[3][2]}</td>
-												<td>${vaccineCurrent[3][3]}</td>
-												<td>${vaccineCurrent[3][4]}</td>		
-											</tr>
-											<tr>
-												<th scope="row">${vaccineCurrent[4][0]}</th>
-												<td>${vaccineCurrent[4][1]}</td>
-												<td>${vaccineCurrent[4][2]}</td>
-												<td>${vaccineCurrent[4][3]}</td>
-												<td>${vaccineCurrent[4][4]}</td>		
-											</tr>
-											<tr>
-												<th scope="row">${vaccineCurrent[5][0]}</th>
-												<td>${vaccineCurrent[5][1]}</td>
-												<td>${vaccineCurrent[5][2]}</td>
-												<td>${vaccineCurrent[5][3]}</td>
-												<td>${vaccineCurrent[5][4]}</td>		
-											</tr>
-											<tr>
-												<th scope="row">${vaccineCurrent[6][0]}</th>
-												<td>${vaccineCurrent[6][1]}</td>
-												<td>${vaccineCurrent[6][2]}</td>
-												<td>${vaccineCurrent[6][3]}</td>
-												<td>${vaccineCurrent[6][4]}</td>		
-											</tr>
-											<tr>
-												<th scope="row">${vaccineCurrent[7][0]}</th>
-												<td>${vaccineCurrent[7][1]}</td>
-												<td>${vaccineCurrent[7][2]}</td>
-												<td>${vaccineCurrent[7][3]}</td>
-												<td>${vaccineCurrent[7][4]}</td>		
-											</tr>
-											<tr>
-												<th scope="row">${vaccineCurrent[8][0]}</th>
-												<td>${vaccineCurrent[8][1]}</td>
-												<td>${vaccineCurrent[8][2]}</td>
-												<td>${vaccineCurrent[8][3]}</td>
-												<td>${vaccineCurrent[8][4]}</td>		
-											</tr>
-											<tr>
-												<th scope="row">${vaccineCurrent[9][0]}</th>
-												<td>${vaccineCurrent[9][1]}</td>
-												<td>${vaccineCurrent[9][2]}</td>
-												<td>${vaccineCurrent[9][3]}</td>
-												<td>${vaccineCurrent[9][4]}</td>		
-											</tr>
-											<tr>
-												<th scope="row">${vaccineCurrent[10][0]}</th>
-												<td>${vaccineCurrent[10][1]}</td>
-												<td>${vaccineCurrent[10][2]}</td>
-												<td>${vaccineCurrent[10][3]}</td>
-												<td>${vaccineCurrent[10][4]}</td>		
-											</tr>
-											<tr>
-												<th scope="row">${vaccineCurrent[11][0]}</th>
-												<td>${vaccineCurrent[11][1]}</td>
-												<td>${vaccineCurrent[11][2]}</td>
-												<td>${vaccineCurrent[11][3]}</td>
-												<td>${vaccineCurrent[11][4]}</td>		
-											</tr>
-											<tr>
-												<th scope="row">${vaccineCurrent[12][0]}</th>
-												<td>${vaccineCurrent[12][1]}</td>
-												<td>${vaccineCurrent[12][2]}</td>
-												<td>${vaccineCurrent[12][3]}</td>
-												<td>${vaccineCurrent[12][4]}</td>		
-											</tr>
-											<tr>
-												<th scope="row">${vaccineCurrent[13][0]}</th>
-												<td>${vaccineCurrent[13][1]}</td>
-												<td>${vaccineCurrent[13][2]}</td>
-												<td>${vaccineCurrent[13][3]}</td>
-												<td>${vaccineCurrent[13][4]}</td>		
-											</tr>
-											<tr>
-												<th scope="row">${vaccineCurrent[14][0]}</th>
-												<td>${vaccineCurrent[14][1]}</td>
-												<td>${vaccineCurrent[14][2]}</td>
-												<td>${vaccineCurrent[14][3]}</td>
-												<td>${vaccineCurrent[14][4]}</td>		
-											</tr>
-											<tr>
-												<th scope="row">${vaccineCurrent[15][0]}</th>
-												<td>${vaccineCurrent[15][1]}</td>
-												<td>${vaccineCurrent[15][2]}</td>
-												<td>${vaccineCurrent[15][3]}</td>
-												<td>${vaccineCurrent[15][4]}</td>		
-											</tr>
-											<tr>
-												<th scope="row">${vaccineCurrent[16][0]}</th>
-												<td>${vaccineCurrent[16][1]}</td>
-												<td>${vaccineCurrent[16][2]}</td>
-												<td>${vaccineCurrent[16][3]}</td>
-												<td>${vaccineCurrent[16][4]}</td>		
-											</tr>
-											<tr>
-												<th scope="row">${vaccineCurrent[17][0]}</th>
-												<td>${vaccineCurrent[17][1]}</td>
-												<td>${vaccineCurrent[17][2]}</td>
-												<td>${vaccineCurrent[17][3]}</td>
-												<td>${vaccineCurrent[17][4]}</td>		
-											</tr>
-											
-											
-										</tbody>
-									</table>
-								</div>
-							</div>
-
 						</div>
 
 						<div class="col-lg-6 mb-4">
@@ -518,7 +267,7 @@
 							</div>
 
 							<!-- Illustrations -->
-							<div class="card shadow mb-4">
+							<!--  <div class="card shadow mb-4">
 								<div class="card-header py-3">
 									<h6 class="m-0 font-weight-bold text-violet">허전해서</h6>
 								</div>
@@ -538,20 +287,27 @@
 										Illustrations on unDraw &rarr;</a>
 								</div>
 							
-							</div>
+							</div> -->
 					
 							
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
 									<h6 class="m-0 font-weight-bold text-violet">지역별 데이터
-									<button id="btn1" class="bg-violet rounded text-white float-right mx-3 badge-pill" onClick="buttonClick4(this)">누적 확진자수</button>
-									<button id="btn2" class="bg-violet rounded text-white float-right mx-0 badge-pill" onClick="buttonClick5(this)">거리두기 단계</button>
+									<!-- <button id="bt1" class="rounded text-white float-right mx-3 badge-pill" onClick="buttonClick4(this)">누적 확진자수</button>
+									<button id="bt2" class="rounded text-white float-right mx-0 badge-pill" onClick="buttonClick5(this)">거리두기 단계</button> -->
+									
+									<div class="btn-group" role="group" aria-label="Basic example" style="float: right;">
+												<button type="button" class="btn btn-violet" onClick="buttonClick5(this)">거리두기 단계</button>
+  												<button type="button" class="btn btn-violet" onClick="buttonClick4(this)">누적 확진자수</button>
+									</div>
 									</h6>
 								</div>
 								  
                                 <div class="card-body">
 									<div id="container"></div>
 									<div id="container2"></div>
+									
+									<br><span class="badge badge-secondary">국내현황 2021/05/04 00:00 집계 기준 (거리두기 단계)</span>
 								</div>
 								
 							</div>
@@ -872,15 +628,25 @@
 				function buttonClick4(bt) {
 					remove();
 					drawMap('#container');
-					setColor2();
+								
+					var bt1 = document.getElementById("bt1");
+					bt1.style.background="#343a40";
+			
+					var bt2 = document.getElementById("bt2");//전구끄기 버튼 색변경
+					bt2.style.background="#7E41D9";	
 					
 					
 				}
 				function buttonClick5(bt) {
 					remove();
 					drawMap2('#container2');
-	
-					setColor1();
+		
+					var bt2 = document.getElementById("bt2");
+					bt2.style.background="#343a40";
+				
+			
+					var bt1 = document.getElementById("bt1");//전구끄기 버튼 색변경
+					bt1.style.background="#7E41D9";	
 					
 					
 				}
