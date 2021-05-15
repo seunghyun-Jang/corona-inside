@@ -112,7 +112,7 @@
 		    			<tr>
 							<td><button onClick="location.href='${pageContext.request.contextPath}/post/${post.postNo}'">${post.title}</button></td>
 		    				<td class="text-center">${post.author}</td>
-		    				<td class="text-center">${post.like}</td>
+		    				<td class="text-center">${post.likeCount}</td>
 		    				<td class="text-center">${post.date}</td>
 		    			</tr>
 	    			</c:if>

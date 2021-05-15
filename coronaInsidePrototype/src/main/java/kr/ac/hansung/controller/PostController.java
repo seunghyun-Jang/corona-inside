@@ -191,8 +191,9 @@ public class PostController {
 	public String doDeletePost(Model model, HttpServletRequest request) {
 		String[] url = request.getRequestURI().split("/");
 		int postNo = Integer.parseInt(url[3]);
+		Post post = postService.getPost(postNo);
 		
-		postService.delete(postNo);
+		postService.delete(post);
 		
 		return "redirect:community";
 	}

@@ -34,8 +34,8 @@ public class PostService {
 		postDao.update(post);
 	}
 	
-	public void delete(int postNo) {
-		postDao.delete(postNo);
+	public void delete(Post post) {
+		postDao.delete(post);
 	}
 	
 	public void like(Post post) {

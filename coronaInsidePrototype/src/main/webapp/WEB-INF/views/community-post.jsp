@@ -101,8 +101,8 @@
 					    <td>
 						    <br><br>${post.content} <br><br><br><br>
 						    <p class="p-like" align="center">
-						    	<button class="btn-like rounded text-white" onClick="doPostLike('like')">추천&nbsp;&nbsp;${post.like}</button>
-						    	&emsp;<button class="btn-unlike rounded text-white" onClick="doPostLike('unlike')">비추&nbsp;&nbsp;-${post.unlike}</button>
+						    	<button class="btn-like rounded text-white" onClick="doPostLike('like')">추천&nbsp;&nbsp;${post.likeCount}</button>
+						    	&emsp;<button class="btn-unlike rounded text-white" onClick="doPostLike('unlike')">비추&nbsp;&nbsp;-${post.unlikeCount}</button>
 						    </p>
 						    <p align="right">
 						    	<c:if test="${session.getAttriube('username').equals(post.author) }">
