@@ -148,8 +148,8 @@
 						          		${best_reply.content}
 						          	</p>
 						          	<div class="comment-meta likeb-${best_reply.replyId}">
-						            	<button class="comment-like" onClick="doReplyLike('like', '${best_reply.replyId}', ' .likeb-${best_reply.replyId}')"><i class="far fa-thumbs-up" aria-hidden="true"></i>&nbsp;${best_reply.like}</button>
-						            	<button class="comment-dislike" onClick="doReplyLike('unlike', '${best_reply.replyId}', ' .likeb-${best_reply.replyId}')"><i class="far fa-thumbs-down" aria-hidden="true"></i>&nbsp;${best_reply.unlike}</button> 
+						            	<button class="comment-like" onClick="doReplyLike('like', '${best_reply.replyId}', ' .likeb-${best_reply.replyId}')"><i class="far fa-thumbs-up" aria-hidden="true"></i>&nbsp;${best_reply.likeCount}</button>
+						            	<button class="comment-dislike" onClick="doReplyLike('unlike', '${best_reply.replyId}', ' .likeb-${best_reply.replyId}')"><i class="far fa-thumbs-down" aria-hidden="true"></i>&nbsp;${best_reply.unlikeCount}</button> 
 						            	<button class="comment-reply" onClick="replyToggle('reply-${best_reply.replyId}')"><i class="fa fa-reply-all" aria-hidden="true"></i> 답글달기</button>         
 						          	</div>
 						          	
@@ -190,9 +190,9 @@
 						          	</p>
 						          	<div class="comment-meta like-${reply.replyId}">
 						            	<button class="comment-like" onClick="doReplyLike('like', '${reply.replyId}', ' .like-${reply.replyId}')">
-						            		<i class="far fa-thumbs-up" aria-hidden="true"></i>&nbsp;${reply.like}</button>
+						            		<i class="far fa-thumbs-up" aria-hidden="true"></i>&nbsp;${reply.likeCount}</button>
 						            	<button class="comment-dislike" onClick="doReplyLike('unlike', '${reply.replyId}', ' .like-${reply.replyId}')">
-						            		<i class="far fa-thumbs-down" aria-hidden="true"></i>&nbsp;${reply.unlike}</button> 
+						            		<i class="far fa-thumbs-down" aria-hidden="true"></i>&nbsp;${reply.unlikeCount}</button> 
 						            	<button class="comment-reply" onClick="replyToggle('reply-${reply.replyId}')">
 						            		<i class="fa fa-reply-all" aria-hidden="true"></i> 답글달기</button>         
 						          	</div>
