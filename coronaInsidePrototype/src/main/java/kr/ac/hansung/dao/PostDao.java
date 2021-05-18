@@ -70,7 +70,7 @@ public class PostDao {
 	public List<Post> getPosts() {
 		
 		Session session = sessionFactory.getCurrentSession();
-		String hql = "from Post post order by post desc";
+		String hql = "from Post posts order by posts desc";
 		
 		Query<Post> query = session.createQuery(hql, Post.class);
 		List<Post> posts = query.getResultList();
@@ -107,7 +107,7 @@ public class PostDao {
 	
 	public List<Post> getBestPosts() {
 		Session session = sessionFactory.getCurrentSession();
-		String hql = "from Post post where post.like>=:count order by post.postNo desc";
+		String hql = "from Post post where post.likeCount>=:count order by post.postNo desc";
 		
 		
 		Query<Post> query = session.createQuery(hql, Post.class);
