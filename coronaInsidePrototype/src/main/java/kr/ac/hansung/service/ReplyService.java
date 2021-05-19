@@ -1,12 +1,12 @@
 package kr.ac.hansung.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.ac.hansung.dao.ReplyDao;
-import kr.ac.hansung.model.Post;
 import kr.ac.hansung.model.Reply;
 
 @Service
@@ -43,12 +43,31 @@ public class ReplyService {
 		replyDao.insert(reply);
 	}
 	
-	public void delete(int replyId) {
-		replyDao.delete(replyId);
+	public void delete(Reply reply) {
+		replyDao.delete(reply);
+	}
+	
+	public void refreshBestReplies(int postNo) {
+		List<Reply> descList = replyDao.getLikeDescReplies(postNo);
+		for(int i=0; i<descList.size(); i++) {
+			if(i<3) {
+				Reply reply = descList.get(i);
+				if(reply.getLikeCount() >= 10)
+					reply.setBest(true);
+				replyDao.update(reply);
+			} else {
+				Reply reply = descList.get(i);
+				if(reply.isBest()) {
+					reply.setBest(false);
+					replyDao.update(reply);
+				}
+			}
+		}
 	}
 	
 	public void like(Reply reply) {
 		replyDao.like(reply);
+		refreshBestReplies(reply.getPostNo());
 	}
 	
 	public void unlike(Reply reply) {

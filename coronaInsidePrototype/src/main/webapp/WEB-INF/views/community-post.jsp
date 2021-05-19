@@ -35,16 +35,18 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<%
-					if(session.getAttribute("username")==null){%>
-						<li class="nav-item mx-0 mx-lg-1 login-item"><a
-							class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-							href="login">로그인 하기</a></li>
-					<%} else if(session.getAttribute("username")!=null){%>
-						<li class="nav-item mx-0 mx-lg-1"><a
-							class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"><%=session.getAttribute("username")%>님
-								환영합니다.</a></li>
-					<%} %>
+					<c:choose>
+						<c:when test="${session.getAttribute('username') == null}">
+							<li class="nav-item mx-0 mx-lg-1 login-item"><a
+								class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+								href="login">로그인 하기</a></li>
+						</c:when>
+						<c:when test="${session.getAttribute('username') != null}">
+							<li class="nav-item mx-0 mx-lg-1"><a
+								class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">
+									<%=session.getAttribute("username")%>님 환영합니다.</a></li>
+						</c:when>
+					</c:choose>
 					<li class="nav-item mx-0 mx-lg-1"><a
 						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
 						href="corona">코로나 현황</a></li>
@@ -57,16 +59,16 @@
 				</ul>
 				
 			</div>
-			<%
-			if(session.getAttribute("username") == null){%>
-			<button class="bg-primary rounded text-white login-btn"
-				id="login-btn" onClick="location.href='login'">로그인</button>
-			<% }%>
-			<%
-			if(session.getAttribute("username")!=null){%>
-			<button class="bg-primary rounded text-white login-btn"
-				id="login-btn" onClick="location.href='logout'">로그아웃</button>
-			<%}%>
+			<c:choose>
+				<c:when test="${session.getAttribute('username') == null}">
+					<button class="bg-primary rounded text-white login-btn"
+						id="login-btn" onClick="location.href='login'">로그인</button>
+				</c:when>
+				<c:when test="${session.getAttribute('username') != null}">
+					<button class="bg-primary rounded text-white login-btn"
+						id="login-btn" onClick="location.href='logout'">로그아웃</button>
+				</c:when>
+			</c:choose>
 		</div>
 	</nav>
 
@@ -99,11 +101,16 @@
 					    <td>
 						    <br><br>${post.content} <br><br><br><br>
 						    <p class="p-like" align="center">
-						    	<button class="btn-like rounded text-white" onClick="doPostLike('like')">추천&nbsp;&nbsp;${post.like}</button>
-						    	&emsp;<button class="btn-unlike rounded text-white" onClick="doPostLike('unlike')">비추&nbsp;&nbsp;-${post.unlike}</button>
+						    	<button class="btn-like rounded text-white" onClick="doPostLike('like')">추천&nbsp;&nbsp;${post.likeCount}</button>
+						    	&emsp;<button class="btn-unlike rounded text-white" onClick="doPostLike('unlike')">비추&nbsp;&nbsp;-${post.unlikeCount}</button>
 						    </p>
 						    <p align="right">
-						    	<button type="submit" onClick="location.href='${pageContext.request.contextPath}/community-post-edit/${post.postNo}'" class="btn btn-default bg-violet text-white">글 수정</button> 
+						    	<c:if test="${session.getAttriube('username').equals(post.author) }">
+						    	<button type="submit" class="btn btn-default bg-blue text-white"
+						    		onClick="location.href='${pageContext.request.contextPath}/community-post-edit/${post.postNo}'">글 수정</button>
+						    	<button type="submit" class="btn btn-default bg-gray text-white"
+						    		onClick="location.href='${pageContext.request.contextPath}/community-post-delete/${post.postNo}'">글 삭제</button>
+						    	</c:if> 
 						    </p>
 						</td>
 				    </tr>
@@ -141,8 +148,8 @@
 						          		${best_reply.content}
 						          	</p>
 						          	<div class="comment-meta likeb-${best_reply.replyId}">
-						            	<button class="comment-like" onClick="doReplyLike('like', '${best_reply.replyId}', ' .likeb-${best_reply.replyId}')"><i class="far fa-thumbs-up" aria-hidden="true"></i>&nbsp;${best_reply.like}</button>
-						            	<button class="comment-dislike" onClick="doReplyLike('unlike', '${best_reply.replyId}', ' .likeb-${best_reply.replyId}')"><i class="far fa-thumbs-down" aria-hidden="true"></i>&nbsp;${best_reply.unlike}</button> 
+						            	<button class="comment-like" onClick="doReplyLike('like', '${best_reply.replyId}', ' .likeb-${best_reply.replyId}')"><i class="far fa-thumbs-up" aria-hidden="true"></i>&nbsp;${best_reply.likeCount}</button>
+						            	<button class="comment-dislike" onClick="doReplyLike('unlike', '${best_reply.replyId}', ' .likeb-${best_reply.replyId}')"><i class="far fa-thumbs-down" aria-hidden="true"></i>&nbsp;${best_reply.unlikeCount}</button> 
 						            	<button class="comment-reply" onClick="replyToggle('reply-${best_reply.replyId}')"><i class="fa fa-reply-all" aria-hidden="true"></i> 답글달기</button>         
 						          	</div>
 						          	
@@ -182,14 +189,17 @@
 						          		${reply.content}
 						          	</p>
 						          	<div class="comment-meta like-${reply.replyId}">
-						            	<button class="comment-like" onClick="doReplyLike('like', '${reply.replyId}', ' .like-${reply.replyId}')"><i class="far fa-thumbs-up" aria-hidden="true"></i>&nbsp;${reply.like}</button>
-						            	<button class="comment-dislike" onClick="doReplyLike('unlike', '${reply.replyId}', ' .like-${reply.replyId}')"><i class="far fa-thumbs-down" aria-hidden="true"></i>&nbsp;${reply.unlike}</button> 
-						            	<button class="comment-reply" onClick="replyToggle('reply-${reply.replyId}')"><i class="fa fa-reply-all" aria-hidden="true"></i> 답글달기</button>         
+						            	<button class="comment-like" onClick="doReplyLike('like', '${reply.replyId}', ' .like-${reply.replyId}')">
+						            		<i class="far fa-thumbs-up" aria-hidden="true"></i>&nbsp;${reply.likeCount}</button>
+						            	<button class="comment-dislike" onClick="doReplyLike('unlike', '${reply.replyId}', ' .like-${reply.replyId}')">
+						            		<i class="far fa-thumbs-down" aria-hidden="true"></i>&nbsp;${reply.unlikeCount}</button> 
+						            	<button class="comment-reply" onClick="replyToggle('reply-${reply.replyId}')">
+						            		<i class="fa fa-reply-all" aria-hidden="true"></i> 답글달기</button>         
 						          	</div>
 						          	
 						          	<div id="reply-${reply.replyId}" class="comment-box add-comment reply-box">
 						            	<span class="commenter-name">
-							            	<sf:form method="post" action="${pageContext.request.contextPath}/doreply" modelAttribute="reply">
+							            	<sf:form method="post" action="${pageContext.request.contextPath}/do-reply" modelAttribute="reply">
 							              		<sf:input class="control" type="text" placeholder="여기에 답글을 입력하세요." name="Add Comment" path="content"/>
 							              		<sf:errors class="error" path="content"/>
 							              		<sf:input class="control" type="hidden" path="parentId" value="${reply.replyId}"/>
@@ -198,7 +208,7 @@
 												<sf:errors class="error" path="groupNo"/>
 												<sf:input class="control" type="hidden" path="postNo" value="${reply.postNo}"/>
 												<sf:errors class="error" path="postNo"/>
-												<sf:input class="control" type="hidden" path="author" value="${reply.author}-reply"/>
+												<sf:input class="control" type="hidden" path="author" value="${session.getAttribute('username')}"/>
 												<sf:errors class="error" path="author"/>
 												<button type="submit" class="btn btn-default bg-violet">답글달기</button>
 							              		
@@ -241,10 +251,10 @@
 			var req = new XMLHttpRequest();
 			var page = "${pageContext.request.contextPath}/post/${post.postNo}";
 			if(todo == "like") {
-				page += "/dopostlike";
+				page += "/do-postlike";
 			}
 			else if(todo == "unlike") {
-				page += "/dopostunlike";
+				page += "/do-postunlike";
 			}
 			req.open("POST", page);
 			req.onreadystatechange = function() {
@@ -259,10 +269,10 @@
 			var req = new XMLHttpRequest();
 			var page = "${pageContext.request.contextPath}/post/" + replyId;
 			if(todo == "like") {
-				page += "/doreplylike";
+				page += "/do-replylike";
 			}
 			else if(todo == "unlike") {
-				page += "/doreplyunlike";
+				page += "/do-replyunlike";
 			}
 			req.open("POST", page);
 			req.onreadystatechange = function() {

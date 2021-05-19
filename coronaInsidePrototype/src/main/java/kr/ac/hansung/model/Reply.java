@@ -1,5 +1,11 @@
 package kr.ac.hansung.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -12,16 +18,28 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
+
+@Entity
+@Table(name="replies")
 public class Reply {
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="reply_id")
 	private int replyId;
 	
+	@Column(name="post_no")
 	private int postNo;
+	@Column(name="group_no")
 	private int groupNo;
+	@Column(name="parent_id")
 	private int parentId;
+	@Column(name="order_no")
 	private int orderNo;
-	private int like;
-	private int unlike;
+	@Column(name="like_count")
+	private int likeCount;
+	@Column(name="unlike_count")
+	private int unlikeCount;
 	
 	private String author;
 	private String date;
@@ -31,6 +49,7 @@ public class Reply {
 	@NotEmpty(message="The content cannot be empty")
 	private String content;
 	
+	@Column(name="is_best")
 	private boolean isBest;
 
 }

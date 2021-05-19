@@ -38,6 +38,8 @@ public class PostController {
 		
 		model.addAttribute("page", 1);
 		
+		model.addAttribute("isbest", 0);
+		
 		return "community";
 	}
 	
@@ -51,6 +53,8 @@ public class PostController {
 		int page = Integer.parseInt(url[3]);
 		model.addAttribute("page", page);
 		
+		model.addAttribute("isbest", 0);
+		
 		return "community";
 	}
 	
@@ -61,6 +65,8 @@ public class PostController {
 		model.addAttribute("posts", posts);
 		
 		model.addAttribute("page", 1);
+		
+		model.addAttribute("isbest", 1);
 		
 		return "community";
 	}
@@ -74,6 +80,8 @@ public class PostController {
 		String[] url = request.getRequestURI().split("/");
 		int page = Integer.parseInt(url[3]);
 		model.addAttribute("page", page);
+		
+		model.addAttribute("isbest", 1);
 		
 		return "community";
 	}
@@ -104,7 +112,7 @@ public class PostController {
 		return "community-post-make";
 	}
 	
-	@RequestMapping(value = "/domakepost")
+	@RequestMapping(value = "/do-makepost")
 	public String doMakePost(Model model, @ModelAttribute("post") @Valid Post post, BindingResult result) {
 		
 		// utf-8로 인코딩하여 한글깨짐 문제 해결
@@ -136,7 +144,7 @@ public class PostController {
 		return "redirect:post/" + postService.getCurrentPostNo();
 	}
 	
-	@RequestMapping(value = "/community-post-edit/*", method = RequestMethod.GET)
+	@RequestMapping(value = "/community-post-edit/*", method = RequestMethod.POST)
 	public String editPost(Model model, HttpServletRequest request) {
 		String[] url = request.getRequestURI().split("/");
 		int postNo = Integer.parseInt(url[3]);
@@ -147,7 +155,7 @@ public class PostController {
 		return "community-post-edit";
 	}
 	
-	@RequestMapping(value = "/doeditpost/*")
+	@RequestMapping(value = "/do-editpost/*")
 	public String doEditPost(Model model, HttpServletRequest request) {
 		String[] url = request.getRequestURI().split("/");
 		int postNo = Integer.parseInt(url[3]);
@@ -167,7 +175,30 @@ public class PostController {
 		return "redirect:../post/"+postNo;
 	}
 	
-	@RequestMapping(value = "/post/*/dopostlike")
+	@RequestMapping(value = "/check-deletepost/*")
+	public String checkDeletePost(Model model, HttpServletRequest request) {
+		String[] url = request.getRequestURI().split("/");
+		int postNo = Integer.parseInt(url[3]);
+		
+		model.addAttribute("postNo", postNo);
+		String author = postService.getPost(postNo).getAuthor();
+		model.addAttribute("author", author);
+		
+		return "check-delete-post";
+	}
+	
+	@RequestMapping(value = "/do-deletepost/*")
+	public String doDeletePost(Model model, HttpServletRequest request) {
+		String[] url = request.getRequestURI().split("/");
+		int postNo = Integer.parseInt(url[3]);
+		Post post = postService.getPost(postNo);
+		
+		postService.delete(post);
+		
+		return "redirect:community";
+	}
+	
+	@RequestMapping(value = "/post/*/do-postlike")
 	public String doPostLike(Model model, HttpServletRequest request) {
 		
 		String[] url = request.getRequestURI().split("/");
@@ -185,7 +216,7 @@ public class PostController {
 		return "community-post";
 	}
 	
-	@RequestMapping(value = "/post/*/dopostunlike")
+	@RequestMapping(value = "/post/*/do-postunlike")
 	public String doPostUnlike(Model model, HttpServletRequest request) {
 		
 		String[] url = request.getRequestURI().split("/");
@@ -203,7 +234,7 @@ public class PostController {
 		return "community-post";
 	}
 	
-	@RequestMapping(value = "/doreply", method = RequestMethod.POST)
+	@RequestMapping(value = "/do-reply", method = RequestMethod.POST)
 	public String doReply(Model model, @ModelAttribute("reply") @Valid Reply reply, BindingResult result) {
 		
 		// utf-8로 인코딩하여 한글깨짐 문제 해결
@@ -251,7 +282,7 @@ public class PostController {
 		return "redirect:post/"+post.getPostNo();
 	}
 	
-	@RequestMapping(value = "/post/*/doreplylike")
+	@RequestMapping(value = "/post/*/do-replylike")
 	public String doReplyLike(Model model, HttpServletRequest request) {
 		
 		String[] url = request.getRequestURI().split("/");
@@ -272,7 +303,7 @@ public class PostController {
 		return "community-post";
 	}
 	
-	@RequestMapping(value = "/post/*/doreplyunlike")
+	@RequestMapping(value = "/post/*/do-replyunlike")
 	public String doReplyUnlike(Model model, HttpServletRequest request) {
 		
 		String[] url = request.getRequestURI().split("/");

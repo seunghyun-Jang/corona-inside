@@ -1,5 +1,11 @@
 package kr.ac.hansung.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -12,8 +18,14 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
+
+@Entity
+@Table(name="posts")
 public class Post {
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="post_no")
 	private int postNo;
 	
 	@NotEmpty(message="제목을 입력해주세요")
@@ -29,7 +41,9 @@ public class Post {
 	@NotEmpty(message="The content cannot be empty")
 	private String content;
 	
-	private int like;
-	private int unlike;
+	@Column(name="like_count")
+	private int likeCount;
+	@Column(name="unlike_count")
+	private int unlikeCount;
 
 }

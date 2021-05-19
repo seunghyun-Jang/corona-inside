@@ -34,6 +34,10 @@ public class PostService {
 		postDao.update(post);
 	}
 	
+	public void delete(Post post) {
+		postDao.delete(post);
+	}
+	
 	public void like(Post post) {
 		postDao.like(post);
 	}
