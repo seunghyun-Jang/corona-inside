@@ -1,71 +1,49 @@
 package kr.ac.hansung.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
 import javax.servlet.http.HttpSession;
 
-import kr.ac.hansung.dto.UserVO;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.springframework.stereotype.Repository;
 
+import kr.ac.hansung.dto.UserVO;
+import kr.ac.hansung.model.User;
+
+
+@Repository
 public class UserDAO {
 
-	private Connection conn; // �����ͺ��̽��� �����ϰ� ���ִ� ��ü
+	private static SessionFactory sessionFactory;
+	
 
-	private PreparedStatement pstmt;
-
-	private ResultSet rs; // ������ ���� �� �ִ� ��ü
-
-	public UserDAO() {
-
-		try {
-
-			String jdbcURL = "jdbc:mysql://localhost:3306/coronainside?serverTimezone=UTC";
-			String dbID = "root";
-			String dbPW = "a1786511!";
-
-			Class.forName("com.mysql.jdbc.Driver");
-
-			conn = DriverManager.getConnection(jdbcURL, dbID, dbPW);
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
+	public void signUp(User user){
+		
+		sessionFactory = new Configuration().configure().buildSessionFactory();
+		
+		User user1 = new User();
+		user1.setUser_id(user.getUser_id());
+		user1.setUser_pw(user.getUser_pw());
+		user1.setUsername(user.getUsername());
+		
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		session.save(user);
+		
+		tx.commit();
+		
+		session.close();
+		sessionFactory.close();
+		
+		
+	}
+	
+	public void loginCheck(UserVO vo) {
 
 	}
-
-	public int loginCheck(UserVO vo) {
-
-		String SQL = "Select pw From user where id = ?";
-
-		try {
-
-			pstmt = conn.prepareStatement(SQL);
-
-			pstmt.setString(1, vo.getUsername());
-
-			rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-
-				if (rs.getString(1).equals(vo.getPassword())) {
-
-					return 1; // �α��� ����
-
-				} else
-
-					return 0; // ��й�ȣ ����ġ
-
-			}
-			return -1; // ���̵� ����
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return -2; // �����ͺ��̽� ����
-	}
+	
 	public void logout(HttpSession session) {
 		session.invalidate();
 	}

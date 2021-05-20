@@ -1,70 +1,65 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-
     pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*"%>
 
-<%@ page import ="kr.ac.hansung.dto.*" %>
-<%@ page import ="kr.ac.hansung.dao.*" %>
+<%@ page import ="kr.ac.hansung.model.*" %>
 
-<%@ page import="java.io.PrintWriter" %> <!-- 자바스크립트 만들어주기위해 -->
+<jsp:useBean id="User" class="kr.ac.hansung.model.User" scope="page" /> 
 
-<% request.setCharacterEncoding("UTF-8"); %> <!-- 건너오는 데이터를 UTF-8받기위해 -->
+<jsp:setProperty name="User" property="user_id" /> 
 
-<jsp:useBean id="User" class="kr.ac.hansung.dto.UserVO" scope="page" /> <!-- scope는 현페이지에서만 빈즈가 사용되어지도록 제한 -->
+<jsp:setProperty name="User" property="user_pw" />
 
-<jsp:setProperty name="User" property="username" /> 
+<jsp:setProperty name="User" property="username" />
 
-<jsp:setProperty name="User" property="password" /> <!-- 로그인 페이지에서 받은 userID PW -->
+<% request.setCharacterEncoding("utf-8");%>
 
-<!DOCTYPE html>
+<% 
+   String id = request.getParameter("id");
+   String pw= request.getParameter("pw");
+   String username = request.getParameter("username");
+   Timestamp register=new Timestamp(System.currentTimeMillis());
+   
+	User user = new User();
+	user.setUser_id(id);
+	user.setUser_pw(pw);
+	user.setUsername(username);
+	
 
-<html>
-
-<head>
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-<title></title>
-
-</head>
-
-<body>
-
-    <%
-
-    UserDAO userDAO = new UserDAO();
-   // UserVO vo = new UserVO();
-    int result = userDAO.loginCheck(User);
-    if(result == 1){
-        PrintWriter pout = response.getWriter();
-        session.setAttribute("username",User.getUsername());
-        pout.println("<script>");
-        pout.println("location.href='home.jsp'");
-        pout.println("</script>");
-    }
-    else if(result == 0){
-        PrintWriter pout = response.getWriter();
-        pout.println("<script>");
-        pout.println("alert('가입되지 않은 아이디입니다.')");
-        pout.println("history.back()");
-        pout.println("</script>");
-    }
-    else if(result == -1){
-        PrintWriter pout = response.getWriter();
-        pout.println("<script>");
-        pout.println("alert('비밀번호가 일치하지 않습니다.')");
-        pout.println("history.back()");
-        pout.println("</script>");
-    }
-    else if(result == -2){
-        PrintWriter pout = response.getWriter();
-        pout.println("<script>");
-        pout.println("alert('데이터베이스 오류가 발생했습니다. 잠시 후에 다시 시도해주세요.')");
-        pout.println("history.back()");
-        pout.println("</script>");
-    }
-    %>
-
-
-</body>
-
-</html>
+   /* Connection conn=null;
+   PreparedStatement pstmt=null;
+   String str="";
+   try{
+	   String jdbcUrl = "jdbc:mysql://localhost:3306/coronainside?serverTimezone=UTC";
+	   String dbId = "root";
+	   String dbPass = "a1786511!";
+ 	 
+ 	 Class.forName("com.mysql.jdbc.Driver");
+ 	 conn=DriverManager.getConnection(jdbcUrl,dbId ,dbPass );
+ 	
+ 	 String sql= "insert into user values (?,?,?)";
+ 	 pstmt=conn.prepareStatement(sql);
+ 	 pstmt.setString(1,id);
+     pstmt.setString(2,pw);
+     pstmt.setString(3,username);
+ 	 pstmt.executeUpdate();
+ 	 
+ 	 
+ 	 
+ 	 System.out.println("member 테이블에 새로운 레코드를 추가했습니다.");
+ 	 out.println("<script>alert('회원가입되었습니다');");
+ 	 out.println("window.location.href='login'</script>");
+ 	 
+ 	 //response.sendRedirect("login");
+	 
+ 	 
+ 	}catch(Exception e){ 
+ 		e.printStackTrace();
+ 		System.out.println("member 테이블에 새로운 레코드를 추가에 실패했습니다");
+ 	}finally{
+ 		if(pstmt != null) 
+ 			try{pstmt.close();}catch(SQLException sqle){}
+ 		if(conn != null) 
+ 			try{conn.close();}catch(SQLException sqle){}
+ 	} */
+ %>
