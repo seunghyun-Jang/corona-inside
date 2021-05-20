@@ -19,7 +19,7 @@ import kr.ac.hansung.model.User;
 
 
 @Controller
-public class LoginController {
+public class LoginController { //login & signup
 
 	@Autowired
 	private UserDAO userdao;
