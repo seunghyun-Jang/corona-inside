@@ -42,6 +42,7 @@ import kr.ac.hansung.dao.UserDAO;
 import kr.ac.hansung.dto.UserVO;
 import kr.ac.hansung.dto.Covid19Inf.ApiDTO;
 import kr.ac.hansung.dto.Covid19Sido.ItemDTO;
+import kr.ac.hansung.controller.*;
 
 /**
  * Handles requests for the application home page.
@@ -49,9 +50,7 @@ import kr.ac.hansung.dto.Covid19Sido.ItemDTO;
 @Controller
 public class HomeController {
 
-	private static HashMap<String, String> map = new HashMap<String, String>();
 	private static kr.ac.hansung.dto.Covid19Inf.ApiDTO InfDTO = null;
-	private static kr.ac.hansung.dto.Covid19Sido.ApiDTO SidoDTO = null;
 	private static String[] strArray= new String[4];
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -60,13 +59,94 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home() {
+	public String home(Model model) {
+		setup(model);
+		
 		return "home";
 	}
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String home2() {
+	public String home2(Model model) {
+		setup(model);
+		
 		return "home";
 	}
+	
+	public void setup(Model model) {
+		SimpleDateFormat format1 = new SimpleDateFormat ("yyyyMMdd");			
+		Date today = new Date();		
+		String toDay = format1.format(today);		
+		System.out.println(toDay);
+		
+		Calendar cal = Calendar.getInstance();
+	    cal.setTime(today);
+	    cal.add(Calendar.HOUR, -1);
+	    
+	    SimpleDateFormat sdformat = new SimpleDateFormat("yyyy/MM/dd");
+	    sdformat.setTimeZone(TimeZone.getTimeZone("UTC"));
+	    
+	    String BeforeHour = sdformat.format(cal.getTime());
+	    
+	    model.addAttribute("beforeHour",BeforeHour);
+	   
+	    
+	    sdformat = new SimpleDateFormat("yyyyMMdd");
+	    sdformat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+	    String beforeHour = sdformat.format(cal.getTime());
+	      
+
+	    Calendar day = Calendar.getInstance();
+	    day.add(Calendar.DATE , -1);
+	    String beforeDate = new java.text.SimpleDateFormat("yyyyMMdd").format(day.getTime());
+	    System.out.println(beforeDate);
+
+	    Calendar week = Calendar.getInstance();
+	    week.add(Calendar.DATE , -13);
+	    String beforeWeek = new java.text.SimpleDateFormat("yyyyMMdd").format(week.getTime());
+	    System.out.println(beforeWeek);
+
+	    Calendar month = Calendar.getInstance();
+	    month.add(Calendar.DATE , -31);
+	    String beforeMonth = new java.text.SimpleDateFormat("yyyyMMdd").format(month.getTime());
+	    System.out.println(beforeMonth);
+
+	    if(InfDTO==null) {		
+			System.out.println("InfDTO is null.");
+			//InfDTO = getCovid19Inf(beforeDate, beforeWeek);
+			try {
+				InfDTO = CoronaController.getCovid19Inf(beforeHour, beforeMonth);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			model.addAttribute("InfDTO", InfDTO.getResponse().getBody().getItems());
+			InfDTO.getResponse().getBody().getItems().getItem()[0].getDecideCnt();
+		}
+	    model.addAttribute("InfDTO", InfDTO.getResponse().getBody().getItems());
+	    
+	    
+	    
+	    strArray = CoronaController.crawler();
+	    
+	    String[] arr = strArray[0].split("\r");
+		String[] arr2 = strArray[1].split("\r");
+		
+		model.addAttribute("item0",arr[0]);
+		model.addAttribute("item1",arr[1]);
+		model.addAttribute("item2",arr[2]);
+		
+		model.addAttribute("href0",arr2[0]);
+		model.addAttribute("href1",arr2[1]);
+		model.addAttribute("href2",arr2[2]);
+		
+
+	}
+	
+	
+	
+	
+	
+	
 	
 }

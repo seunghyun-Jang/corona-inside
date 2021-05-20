@@ -92,55 +92,55 @@ function drawMap2(target) {
 				tooltip.style("top", (d3.event.pageY - 10) + "px");
 
 				if (d.properties.code == 39) {
-					tooltip.text(d.properties.name + "\n\n" + `${sd16}`);
+					tooltip.text(d.properties.name + "\n\n" + `${sd16}`+" 단계");
 				}
 				else if (d.properties.code == 38) {
-					tooltip.text(d.properties.name + "\n\n" + `${sd15}`);
+					tooltip.text(d.properties.name + "\n\n" + `${sd15}`+" 단계");
 				}
 				else if (d.properties.code == 37) {
-					tooltip.text(d.properties.name + "\n\n" + `${sd14}`);
+					tooltip.text(d.properties.name + "\n\n" + `${sd14}`+" 단계");
 				}
 				else if (d.properties.code == 36) {
-					tooltip.text(d.properties.name + "\n\n" + `${sd13}`);
+					tooltip.text(d.properties.name + "\n\n" + `${sd13}`+" 단계");
 				}
 				else if (d.properties.code == 35) {
-					tooltip.text(d.properties.name + "\n\n" + `${sd12}`);
+					tooltip.text(d.properties.name + "\n\n" + `${sd12}`+" 단계");
 				}
 				else if (d.properties.code == 34) {
-					tooltip.text(d.properties.name + "\n\n" + `${sd11}`);
+					tooltip.text(d.properties.name + "\n\n" + `${sd11}`+" 단계");
 				}
 				else if (d.properties.code == 33) {
-					tooltip.text(d.properties.name + "\n\n" + `${sd10}`);
+					tooltip.text(d.properties.name + "\n\n" + `${sd10}`+" 단계");
 				}
 				else if (d.properties.code == 32) {
-					tooltip.text(d.properties.name + "\n\n" + `${sd9}`);
+					tooltip.text(d.properties.name + "\n\n" + `${sd9}`+" 단계");
 				}
 				else if (d.properties.code == 31) {
-					tooltip.text(d.properties.name + "\n\n" + `${sd8}`);
+					tooltip.text(d.properties.name + "\n\n" + `${sd8}`+" 단계");
 				}
 				else if (d.properties.code == 29) {
-					tooltip.text(d.properties.name + "\n\n" + `${sd7}`);
+					tooltip.text(d.properties.name + "\n\n" + `${sd7}`+" 단계");
 				}
 				else if (d.properties.code == 26) {
-					tooltip.text(d.properties.name + "\n\n" + `${sd6}`);
+					tooltip.text(d.properties.name + "\n\n" + `${sd6}`+" 단계");
 				}
 				else if (d.properties.code == 25) {
-					tooltip.text(d.properties.name + "\n\n" + `${sd5}`);
+					tooltip.text(d.properties.name + "\n\n" + `${sd5}`+" 단계");
 				}
 				else if (d.properties.code == 24) {
-					tooltip.text(d.properties.name + "\n\n" + `${sd4}`);
+					tooltip.text(d.properties.name + "\n\n" + `${sd4}`+" 단계");
 				}
 				else if (d.properties.code == 23) {
-					tooltip.text(d.properties.name + "\n\n" + `${sd3}`);
+					tooltip.text(d.properties.name + "\n\n" + `${sd3}`+" 단계");
 				}
 				else if (d.properties.code == 22) {
-					tooltip.text(d.properties.name + "\n\n" + `${sd2}`);
+					tooltip.text(d.properties.name + "\n\n" + `${sd2}`+" 단계");
 				}
 				else if (d.properties.code == 21) {
-					tooltip.text(d.properties.name + "\n\n" + `${sd1}`);
+					tooltip.text(d.properties.name + "\n\n" + `${sd1}`+" 단계");
 				}
 				else if (d.properties.code == 11) {
-					tooltip.text(d.properties.name + "\n\n" + `${sd0}`);
+					tooltip.text(d.properties.name + "\n\n" + `${sd0}`+"단계");
 				}
 
 				return d.properties.name;
