@@ -31,6 +31,9 @@
 		.table tbody th {
   			vertical-align: middle;
 		}
+		
+
+		
 </style>
 
 </head>
@@ -124,7 +127,7 @@
 						<!-- Content Row -->
 						<div class="row">
 							<!-- Content Column -->
-							<div class="col-lg-12 mb-12">
+							<div class="col-xs-6 col-lg-12 mb-3">
 								<!-- Color System -->
 
 								<div class="card shadow mb-4">
@@ -290,7 +293,7 @@
 
 						</div>
 						<div class="row">
-							<div class="col-xl-12 col-lg-12">
+							<div class="col-xs-6 col-xl-12 col-lg-12">
 								<div class="card shadow mb-4">
 									<div class="card-header py-3">
 										<h6 class="m-0 font-weight-bold text-violet">지역별 접종률
@@ -317,7 +320,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-12 mb-12">
+							<div class="col-xs-6 col-lg-12 mb-3">
 								<div class="card shadow mb-4">
 									<div class="card-header py-3">
 										<h6 class="m-0 font-weight-bold text-violet" style="text-align:left;">
@@ -408,7 +411,7 @@
 											</tbody>
 										</table>
 										<br>
-										<span class="badge badge-secondary">모더나 백신과 얀센 백신은 아직 국내허가 전으로, 해외 제품 정보이며 향후 변경 가능함.</span><br>
+										<span class="badge badge-secondary">모더나 백신과 얀센 백신은 아직 국내허가 전으로, 해외 제품 정보이며 향후 변경 가능</span><br>
 										<span class="badge badge-secondary">출처: 질병관리청 2021.04.21. 기준</span>
 									</div>
 								</div>
@@ -416,7 +419,7 @@
 						</div>
 
 						<div class="row">
-							<div class="col-lg-12 mb-12">
+							<div class="col-xs-12 col-lg-12 mb-3">
 								<div class="card shadow mb-4">
 									<div class="card-header py-3">
 										<h6 class="m-0 font-weight-bold text-violet" style="text-align:left;">
@@ -490,7 +493,7 @@
 											</tbody>
 										</table>
 										<br>
-										<span class="badge badge-secondary">모더나 백신과 얀센 백신은 아직 국내허가 전으로, 해외 제품 정보이며 향후 변경 가능함.</span><br>
+										<span class="badge badge-secondary">모더나 백신과 얀센 백신은 아직 국내허가 전으로, 해외 제품 정보이며 향후 변경 가능</span><br>
 										<span class="badge badge-secondary">출처: 질병관리청 2021.04.21. 기준</span>
 		
 									</div>

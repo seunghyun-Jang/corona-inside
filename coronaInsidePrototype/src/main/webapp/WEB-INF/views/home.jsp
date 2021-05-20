@@ -42,17 +42,20 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<ul class="navbar-nav ml-auto">
-						<%
-						if(session.getAttribute("username")==null){%>
+					<c:choose>
+						<c:when test="${session.getAttribute('username') == null}">
 							<li class="nav-item mx-0 mx-lg-1 login-item"><a
 								class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
 								href="login">로그인 하기</a></li>
-						<%} else if(session.getAttribute("username")!=null){%>
+						</c:when>
+						<c:when test="${session.getAttribute('username') != null}">
 							<li class="nav-item mx-0 mx-lg-1"><a
-								class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"><%=session.getAttribute("username")%>님
-									환영합니다.</a></li>
-						<%} %>
-						<li class="nav-item mx-0 mx-lg-1"><a
+								class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">
+									<%=session.getAttribute("username")%>님 환영합니다.
+							</a></li>
+						</c:when>
+					</c:choose>
+					<li class="nav-item mx-0 mx-lg-1"><a
 							class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
 							href="corona">코로나 현황</a></li>
 						<li class="nav-item mx-0 mx-lg-1"><a
@@ -65,17 +68,17 @@
 					</ul>
 					
 				</div>
-				<%
-				if(session.getAttribute("username") == null){%>
-				<button class="bg-primary rounded text-white login-btn"
-					id="login-btn" onClick="location.href='login'">로그인</button>
-				<% }%>
-				<%
-				if(session.getAttribute("username")!=null){%>
-				<button class="bg-primary rounded text-white login-btn"
-					id="login-btn" onClick="location.href='logout'">로그아웃</button>
-				<%}%>
-			</div>
+				<c:choose>
+					<c:when test="${session.getAttribute('username') == null}">
+						<button class="bg-primary rounded text-white login-btn"
+							id="login-btn" onClick="location.href='login'">로그인</button>
+					</c:when>
+					<c:when test="${session.getAttribute('username') != null}">
+						<button class="bg-primary rounded text-white login-btn"
+							id="login-btn" onClick="location.href='logout'">로그아웃</button>
+					</c:when>
+				</c:choose>
+		</div>
 		</nav>
         <!-- Masthead-->
         <header class="masthead bg-violet text-white text-center">
@@ -108,6 +111,50 @@
                 </div>
                 <br>
                 <!-- Grid Items-->
+                <div class="container-fluid">
+                	<div class="row">
+                		<div class="col-xs-12 col-lg-12">
+                			<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-violet">코로나 뉴스 리스트</h6>
+								</div>
+								<div class="card-body">
+									<ul class="list-group">
+										<li class="list-group-item"><a href=${href0} target="_blank">${item0}</a></li>
+										<li class="list-group-item"><a href=${href1} target="_blank">${item1}</a></li>
+										<li class="list-group-item"><a href=${href2} target="_blank">${item2}</a></li>
+									
+									</ul>
+								</div>
+								
+							</div>
+							<br>
+						</div>
+						<div class="col-xs-12 col-lg-12">
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-violet">일별 신규 확진자 수
+									<!-- <button class="bg-violet rounded text-white float-right badge-pill" onClick="buttonClick3(this)">1달</button>			
+									<button class="bg-violet rounded text-white float-right mx-3 badge-pill" onClick="buttonClick2(this)">2주</button>
+									<button class="bg-violet rounded text-white float-right mx-0 badge-pill" onClick="buttonClick1(this)">1주</button> -->
+									</h6>
+									
+								</div>
+								<div class="card-body">
+									<div id="myBar">
+										<div class="chart-bar">
+											<canvas id="myBarChart2"></canvas>
+										</div>
+									</div>
+									<br><span class="badge badge-secondary">국내현황 ${beforeHour} 00:00 집계 기준.</span>
+									
+									
+								</div>
+							</div>
+							
+						</div>
+					</div>
+                </div>
                 <div class="row justify-content-center">
                     <!-- Item 1-->
                     <button class="col-md-4 col-lg-4 mb-5" onclick="location.href='corona'">
@@ -189,6 +236,39 @@
         <div class="copyright py-4 text-center text-white">
             <div class="container"><small>Copyright © Corona-Inside 2021</small></div>
         </div>
+        <script>
+        function strAddSlash(str) {
+			var len = str.length;
+			var rtnStr = "";
+			for (var i = 0, j = len; i < len; i++, j--) {
+				if (j % 2 == 0 && j != len) {
+					rtnStr += "/";
+				}
+				rtnStr += str.charAt(i);
+			}
+			return rtnStr;
+		};
+
+
+
+		var date0 = strAddSlash("${InfDTO.getItem()[0].getStateDt()}".substring(4, 8));
+		var date1 = strAddSlash("${InfDTO.getItem()[1].getStateDt()}".substring(4, 8));
+		var date2 = strAddSlash("${InfDTO.getItem()[2].getStateDt()}".substring(4, 8));
+		var date3 = strAddSlash("${InfDTO.getItem()[3].getStateDt()}".substring(4, 8));
+		var date4 = strAddSlash("${InfDTO.getItem()[4].getStateDt()}".substring(4, 8));
+		var date5 = strAddSlash("${InfDTO.getItem()[5].getStateDt()}".substring(4, 8));
+		var date6 = strAddSlash("${InfDTO.getItem()[6].getStateDt()}".substring(4, 8));
+		var date7 = strAddSlash("${InfDTO.getItem()[7].getStateDt()}".substring(4, 8));
+		
+		var cnt0 = "${InfDTO.getItem()[0].getDecideCnt()}";
+		var cnt1 = "${InfDTO.getItem()[1].getDecideCnt()}";
+		var cnt2 = "${InfDTO.getItem()[2].getDecideCnt()}";
+		var cnt3 = "${InfDTO.getItem()[3].getDecideCnt()}";
+		var cnt4 = "${InfDTO.getItem()[4].getDecideCnt()}";
+		var cnt5 = "${InfDTO.getItem()[5].getDecideCnt()}";
+		var cnt6 = "${InfDTO.getItem()[6].getDecideCnt()}";
+		var cnt7 = "${InfDTO.getItem()[7].getDecideCnt()}";
+        </script>
         
         <!-- Bootstrap core JS-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -197,6 +277,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
         <!-- Core theme JS-->
         <script src="resources/js/scripts.js"></script>
+        <script src="resources/vendor/chart.js/Chart.min.js"></script>
+		<script src="resources/js/demo/chart-bar-demo2.js"></script>
         
     </body>
 

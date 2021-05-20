@@ -236,7 +236,7 @@ public class CoronaController {
 		return "corona";
 	}
 
-	public ApiDTO getCovid19Inf(String toDay, String beforeMonth) throws Exception { // �׽�Ʈ��
+	public static ApiDTO getCovid19Inf(String toDay, String beforeMonth) throws Exception { // �׽�Ʈ��
 
 		try {
 			String serviceKeyDecoded = URLDecoder.decode(
@@ -540,7 +540,7 @@ public class CoronaController {
 
 	}
 	
-	public void crawler() {
+	public static String[] crawler() {
 		try {
 		String URL = "https://search.naver.com/search.naver?where=news&query=%EC%BD%94%EB%A1%9C%EB%82%98&sm=tab_srt&sort=0&photo=0&field=0&reporter_article=&pd=0&ds=&de=&docid=&nso=so%3Ar%2Cp%3Aall%2Ca%3Aall&mynews=0&refresh_start=0&related=0";
 		
@@ -587,11 +587,14 @@ public class CoronaController {
         //System.out.println(sb.toString());
         
         //System.out.println(html.toString()); 
-      
+        
+        return strArray;
 				
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		return null;
 		
 	}
 	

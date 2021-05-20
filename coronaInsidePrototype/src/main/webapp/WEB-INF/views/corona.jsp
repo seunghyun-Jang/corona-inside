@@ -128,7 +128,7 @@
 
 					<div class="row">
 
-						<div class="col-xl-8 col-lg-7">
+						<div class="col-xs-12 col-xl-8 col-lg-7">
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
 									<h6 class="m-0 font-weight-bold text-violet">일별 신규 확진자 수
@@ -158,7 +158,7 @@
 							</div>
 						</div>
 						<!-- Pie Chart -->
-						<div class="col-xl-4 col-lg-5">
+						<div class="col-xs-12 col-xl-4 col-lg-5">
 							<div class="card shadow mb-4">
 								<!-- Card Header -->
 								<div
@@ -185,7 +185,7 @@
 						</div>
 
 						<!-- Area Chart -->
-						<div class="col-xl-12 col-lg-12">
+						<div class="col-xs-12 col-xl-12 col-lg-12">
 							<div class="card shadow mb-4">
 								<!-- Card Header -->
 								<div
@@ -208,7 +208,7 @@
 					<div class="row">
 
 						<!-- Content Column -->
-						<div class="col-lg-6 mb-4">
+						<div class="col-xs-12 col-lg-6 mb-4">
 
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
@@ -246,7 +246,7 @@
 							</div>
 						</div>
 
-						<div class="col-lg-6 mb-4">
+						<div class="col-xs-12 col-lg-6 mb-4">
 
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
