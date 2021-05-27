@@ -283,7 +283,7 @@
 										</table>
 										<br>
 										<span class="badge badge-secondary">백신접종현황은 질병관리청의 '예방접종실적 총 현황'을 기준으로 제공.</span><br>
-										<span class="badge badge-secondary">국내현황 ${today} 00:00 집계 기준.</span>
+										<span class="badge badge-secondary">국내현황 ${beforeDate} 24:00 집계 기준.</span>
 									</div>
 								</div>
 
@@ -314,7 +314,7 @@
 										</div>
 										<br>
 										<span class="badge badge-secondary">접종률은 전국 및 시도별 인구 대비 접종자 비율을 제공.</span><br>
-										<span class="badge badge-secondary">국내현황 ${today} 00:00 집계 기준.</span>
+										<span class="badge badge-secondary">국내현황 ${beforeDate} 24:00 집계 기준.</span>
 									</div>
 								</div>
 							</div>

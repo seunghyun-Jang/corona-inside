@@ -2,6 +2,7 @@ package kr.ac.hansung.controller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import org.jsoup.Connection;
@@ -31,11 +32,13 @@ public class VaccineController {
 		SimpleDateFormat format1 = new SimpleDateFormat ("yyyy/MM/dd");			
 		Date today = new Date();		
 		String toDay = format1.format(today);	
-		
-		model.addAttribute("today",toDay);
-		System.out.println(toDay);
+
+		Calendar day = Calendar.getInstance();
+		day.add(Calendar.DATE , -2);
+		String beforeDate = new java.text.SimpleDateFormat("yyyy/MM/dd").format(day.getTime());
+
+		model.addAttribute("beforeDate",beforeDate);
 	
-		
 		crawler();
 
 		String[] arr3 = strArray[2].split("\r");
@@ -49,20 +52,11 @@ public class VaccineController {
 				arr4[i-6][j] = str[j];
 			}
 		}	
-		System.out.println(arr4[0][0]);
-		System.out.println(arr4[0][1]);
-		System.out.println(arr4[0][2]);
-		System.out.println(arr4[0][3]);
-		System.out.println(arr4[0][4]);
-		
 		model.addAttribute("vaccineCurrent",arr4);
-		
-		
-		
 		return "vaccine";
 	}
 
-	public void crawler() {
+	public static String crawler() {
 		try {
 		String URL = "https://ncv.kdca.go.kr/mainStatus.es?mid=a11702000000";
 		
@@ -103,10 +97,14 @@ public class VaccineController {
 		
         }
         strArray[2] = sb.toString();
+        return sb.toString();
   				
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
+		return null;
+		
 	}
+	
 }

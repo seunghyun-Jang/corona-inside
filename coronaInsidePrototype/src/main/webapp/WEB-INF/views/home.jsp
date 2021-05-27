@@ -102,21 +102,54 @@
         <section class="page-section portfolio" id="portfolio">
             <div class="container">
                 <!-- Portfolio Section Heading-->
-                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">MENU</h2>
-                <!-- Icon Divider-->
-                <div class="divider-custom">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
-                </div>
-                <br>
+               
                 <!-- Grid Items-->
                 <div class="container-fluid">
                 	<div class="row">
                 		<div class="col-xs-12 col-lg-12">
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-violet" style="text-align:left;">
+									일일 확진자 수
+		
+    									<a href="#" onclick="location.href='corona'" style="float:right;">자세히 보기 ></a>
+									</h6>
+									
+								</div>
+								<div class="card-body">
+									<!--  <div id="myBar">
+										<div class="chart-bar">
+											<canvas id="myBarChart2"></canvas>
+										</div>
+									</div>
+									<br><span class="badge badge-secondary">국내현황 ${beforeHour} 00:00 집계 기준.</span> -->
+									<table class="table">
+											<tbody>
+												<tr class="bg-violet text-white">
+													<th scope="row" align="center"><div id="date"> </div></th>
+													<td align="center"><div id="today"> </div> </td>
+												</tr>
+												<tr>
+													<th scope="row" align="center">vs 어제</th>
+													<td align="center"><div id="yesterday"> </div> </td>
+												</tr>
+												<tr>
+													<th scope="row" align="center">vs 1주전</th>
+													<td align="center"><div id="weekago"> </div> </td>		
+												</tr>
+											</tbody>
+										</table>
+								</div>
+							</div>
+							
+						</div>
+                		<div class="col-xs-12 col-lg-12">
                 			<div class="card shadow mb-4">
 								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-violet">코로나 뉴스 리스트</h6>
+									<h6 class="m-0 font-weight-bold text-violet" style="text-align:left;">코로나 뉴스 리스트
+									
+										<a href="#section" onclick="location.href='corona'" style="float:right;">뉴스 더 보기 ></a>
+									</h6>
 								</div>
 								<div class="card-body">
 									<ul class="list-group">
@@ -126,34 +159,54 @@
 									
 									</ul>
 								</div>
-								
 							</div>
-							<br>
 						</div>
-						<div class="col-xs-12 col-lg-12">
-							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-violet">일별 신규 확진자 수
-									<!-- <button class="bg-violet rounded text-white float-right badge-pill" onClick="buttonClick3(this)">1달</button>			
-									<button class="bg-violet rounded text-white float-right mx-3 badge-pill" onClick="buttonClick2(this)">2주</button>
-									<button class="bg-violet rounded text-white float-right mx-0 badge-pill" onClick="buttonClick1(this)">1주</button> -->
-									</h6>
-									
-								</div>
-								<div class="card-body">
-									<div id="myBar">
-										<div class="chart-bar">
-											<canvas id="myBarChart2"></canvas>
-										</div>
+						<div class="col-xs-6 col-lg-12 mb-3">
+								<div class="card shadow mb-4">
+									<div class="card-header py-3">
+										<h6 class="m-0 font-weight-bold text-violet">백신 접종 현황</h6>
 									</div>
-									<br><span class="badge badge-secondary">국내현황 ${beforeHour} 00:00 집계 기준.</span>
-									
-									
+									<div class="card-body">
+										<table class="table">
+
+											<thead class="text-center thead-light">
+												<tr>
+													<th scope="col" rowspan="2">구분</th>
+													<th scope="col" colspan="2">1회차 접종</th>
+													<th scope="col" colspan="2">2회차 접종</th>
+												</tr>
+												<tr>
+													<th scope="col">당일 실적</th>
+													<th scope="col">당일 누계</th>
+													<th scope="col">당일 실적</th>
+													<th scope="col">당일 누계</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<th scope="row" align="center">${vaccineCurrent0}</th>
+													<td align="center"><strong>${vaccineCurrent1}</strong></td>
+													<td align="center"><strong>${vaccineCurrent2}</strong></td>
+													<td align="center"><strong>${vaccineCurrent3}</strong></td>
+													<td align="center"><strong>${vaccineCurrent4}</strong></td>
+												</tr>
+											</tbody>
+										</table>
+										<span class="badge badge-secondary">국내현황 ${beforeDate2} 24:00 집계 기준.</span>
+									</div>
 								</div>
+
 							</div>
-							
-						</div>
+					
 					</div>
+                </div>
+                
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">MENU</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
                 </div>
                 <div class="row justify-content-center">
                     <!-- Item 1-->
@@ -248,7 +301,8 @@
 			}
 			return rtnStr;
 		};
-
+		
+		
 
 
 		var date0 = strAddSlash("${InfDTO.getItem()[0].getStateDt()}".substring(4, 8));
@@ -268,6 +322,26 @@
 		var cnt5 = "${InfDTO.getItem()[5].getDecideCnt()}";
 		var cnt6 = "${InfDTO.getItem()[6].getDecideCnt()}";
 		var cnt7 = "${InfDTO.getItem()[7].getDecideCnt()}";
+		
+		document.getElementById("date").innerHTML=date1+" 일자 확진자 수";
+		document.getElementById("today").innerHTML=(cnt0-cnt1)+" 명";
+		//document.getElementById("yesterday").innerHTML=(cnt1-cnt2)-(cnt0-cnt1)+" ↑";//(cnt0-cnt1)-(cnt1-cnt2);
+		if((cnt0-cnt1)-(cnt1-cnt2)>0) {
+			document.getElementById("yesterday").innerHTML=(cnt0-cnt1)-(cnt1-cnt2)+" ↑";
+			document.getElementById("yesterday").style.color="red";
+		} else {
+			document.getElementById("yesterday").innerHTML=(cnt0-cnt1)-(cnt1-cnt2)+" ↓";
+			document.getElementById("yesterday").style.color="blue";
+		}
+		
+		
+		if((cnt0-cnt1)-(cnt6-cnt7)>0) {
+			document.getElementById("weekago").innerHTML=(cnt0-cnt1)-(cnt6-cnt7)+" ↑";
+			document.getElementById("weekago").style.color="red";
+		} else {
+			document.getElementById("weekago").innerHTML=(cnt0-cnt1)-(cnt6-cnt7)+" ↓";
+			document.getElementById("weekago").style.color="blue";
+		}
         </script>
         
         <!-- Bootstrap core JS-->
