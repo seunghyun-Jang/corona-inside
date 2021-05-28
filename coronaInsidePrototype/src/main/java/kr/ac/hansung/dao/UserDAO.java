@@ -1,49 +1,84 @@
 package kr.ac.hansung.dao;
 
+import java.util.List;
+
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import kr.ac.hansung.dto.UserVO;
-import kr.ac.hansung.model.User;
-
+import kr.ac.hansung.model.CustomUserDetails;
 
 @Repository
+@Transactional
 public class UserDAO {
 
-	private static SessionFactory sessionFactory;
-	
+	@Inject
+	BCryptPasswordEncoder passwordEncoder;
 
-	public void signUp(User user){
+	
+	@Autowired
+	private SessionFactory sessionFactory;
+	
+	public CustomUserDetails getUserById(String user_id) {
+    	Session session = sessionFactory.getCurrentSession();
 		
-		sessionFactory = new Configuration().configure().buildSessionFactory();
+		String hql = "from CustomUserDetails user where user.user_id =:id";
+		  
+		  
+		Query<CustomUserDetails> query = session.createQuery(hql, CustomUserDetails.class);
+		query.setParameter("id", user_id);
+		List<CustomUserDetails> results = query.getResultList();
+		if(!results.isEmpty()) {
+			CustomUserDetails user = (CustomUserDetails)results.get(0);
+			return user;
+		}
 		
-		User user1 = new User();
+		return null;
+		//CustomUserDetails user = (CustomUserDetails)query.getSingleResult();
+		  
+		//return user;
+		 
+ 
+    }
+
+	public void signUp(CustomUserDetails user) {
+
+		Session session = sessionFactory.getCurrentSession();
+
+		CustomUserDetails user1 = new CustomUserDetails();
 		user1.setUser_id(user.getUser_id());
-		user1.setUser_pw(user.getUser_pw());
+		user1.setPassword(user.getPassword());
 		user1.setUsername(user.getUsername());
-		
-		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		
-		session.save(user);
-		
-		tx.commit();
-		
-		session.close();
-		sessionFactory.close();
-		
-		
-	}
-	
-	public void loginCheck(UserVO vo) {
+
+		session.save(user1);
+
 
 	}
-	
+
+	public boolean loginCheck(String user_id, String password) {
+		
+		/* String checkPw = sqlSession.selectOne("user.loginCheck", user); */
+		CustomUserDetails userInfo = getUserById(user_id);
+		/*
+		 * boolean matchPw = passwordEncoder.matches(user.getPassword(), checkPw);
+		 */
+		
+		System.out.println("가져온 password : " + userInfo.getPassword() + "   입력한 password : " + password);
+		
+		boolean result = passwordEncoder.matches(password, userInfo.getPassword());
+		
+		System.out.println("결과 : " + result);
+
+		return result;
+	}
+
 	public void logout(HttpSession session) {
 		session.invalidate();
 	}

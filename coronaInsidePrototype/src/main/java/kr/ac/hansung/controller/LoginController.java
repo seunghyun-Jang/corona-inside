@@ -2,34 +2,39 @@ package kr.ac.hansung.controller;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.ac.hansung.dao.UserDAO;
-import kr.ac.hansung.dto.UserVO;
-import kr.ac.hansung.model.User;
+import kr.ac.hansung.model.CustomUserDetails;
 
 
 @Controller
 public class LoginController { //login & signup
 
+	@Inject
+	BCryptPasswordEncoder passwordEncoder;
+	
 	@Autowired
 	private UserDAO userdao;
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/login", method = { RequestMethod.GET, RequestMethod.POST })
 	public String login(@RequestParam(value = "error", required = false) String error, Model model) {
 		if (error != null) {
-			model.addAttribute("errorMsg", "invalid username or password");
+			model.addAttribute("errorMsg", "ID또는 PW가 일치하지 않습니다.");
 		}
 		return "login";
 	}
@@ -41,36 +46,33 @@ public class LoginController { //login & signup
 
 	@RequestMapping(value = "/insert-user", method = { RequestMethod.GET, RequestMethod.POST })
 	public String insertUser(@RequestParam(value = "user_id",required=false) String user_id,
-			@RequestParam(value = "user_pw",required=false) String user_pw, 
+			@RequestParam(value = "password",required=false) String password, 
 			@RequestParam(value = "username",required=false)String username) throws IOException {
 			
-			User user = new User();
+			CustomUserDetails user = new CustomUserDetails();
 			user.setUser_id(user_id);
-			user.setUser_pw(user_pw);
+			String Bcrypt_pw = passwordEncoder.encode(password);
+			user.setPassword(Bcrypt_pw);
 			user.setUsername(username);
 			userdao.signUp(user);
 		return "redirect:/login";
 	}
 
-//	�α���(POST)	
-	@RequestMapping(value = "/login-success", method = RequestMethod.POST)
-	public String loginSuccess(HttpSession session, UserVO vo, Model model) {
-		/*
-		 * if(session.getAttribute("login") != null) { session.removeAttribute("login");
-		 * } UserDAO loginUser = new UserDAO();
-		 * 
-		 * if(loginUser.loginCheck(vo)==1) { // ����
-		 * session.setAttribute("username",vo.getUser_id());
-		 * logger.info("success login"); return "redirect:/home"; } else {
-		 * if(loginUser.loginCheck(vo)==0)// ���� logger.info("wrong pw"); else
-		 * if(loginUser.loginCheck(vo)==-1) logger.info("Id doesn't exist"); else
-		 * if(loginUser.loginCheck(vo)==-2) logger.info("database error");
-		 * //logger.info(Integer.toString((loginUser.loginCheck(vo))));
-		 */ return "redirect:/login";
-		// }
+
+	@RequestMapping(value = "/logincheck", method = RequestMethod.POST)
+	public String loginCheck(@RequestParam(value = "user_id",required=false) String user_id,
+			@RequestParam(value = "password",required=false) String password, 
+			@RequestParam(value = "username",required=false)String username, Model model) throws IOException {
+		
+		if(userdao.loginCheck(user_id, password)) {
+			return "redirect:/home";
+		} else {
+			model.addAttribute("errorMsg", "ID또는 PW가 일치하지 않습니다.");
+			return "login";
+		}
+		 
 	}
 
-	// �α׾ƿ�
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		UserDAO logout = new UserDAO();
