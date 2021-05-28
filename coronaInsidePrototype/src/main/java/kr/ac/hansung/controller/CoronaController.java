@@ -88,7 +88,7 @@ public class CoronaController {
 	    sdformat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
 	    String beforeHour = sdformat.format(cal.getTime());
-	    System.out.println("1�ð� �� : " + beforeHour);
+	    
 	    
 	
 	    
@@ -96,17 +96,17 @@ public class CoronaController {
 	    Calendar day = Calendar.getInstance();
 	    day.add(Calendar.DATE , -1);
 	    String beforeDate = new java.text.SimpleDateFormat("yyyyMMdd").format(day.getTime());
-	    System.out.println(beforeDate);
+	   
 
 	    Calendar week = Calendar.getInstance();
 	    week.add(Calendar.DATE , -13);
 	    String beforeWeek = new java.text.SimpleDateFormat("yyyyMMdd").format(week.getTime());
-	    System.out.println(beforeWeek);
+	   
 
 	    Calendar month = Calendar.getInstance();
 	    month.add(Calendar.DATE , -31);
 	    String beforeMonth = new java.text.SimpleDateFormat("yyyyMMdd").format(month.getTime());
-	    System.out.println(beforeMonth);
+	   
 
 	    if(InfDTO==null) {		
 			System.out.println("InfDTO is null.");
@@ -143,23 +143,13 @@ public class CoronaController {
 		model.addAttribute("InfDTO", InfDTO.getResponse().getBody().getItems());
 		model.addAttribute("SidoDTO", SidoDTO.getResponse().getBody().getItems());
 		model.addAttribute("map", map);
-		System.out.println("now, dto is not null.");
-		
-		
-		
-		//String korea = readJson(request);
-		//String point = readJson2(request);
-		
-		List<List<String>> codeMap= readCsv(request);
-		
+
+		List<List<String>> codeMap= readCsv(request);	
 		List<List<String>> pointMap = readCsv2(request);
 					
-		//System.out.println(codeMap.get(0).get(1));
-		
 		model.addAttribute("codeMap", codeMap);
 		model.addAttribute("pointMap", pointMap);
-		//model.addAttribute("korea",korea);
-		//model.addAttribute("point",point);
+
 		
 		crawler();
 		crawler2();
@@ -221,13 +211,6 @@ public class CoronaController {
 		model.addAttribute("sd14",Double.parseDouble(arr5[14])-0.5);
 		model.addAttribute("sd15",Double.parseDouble(arr5[15])-0.5);
 		model.addAttribute("sd16",Double.parseDouble(arr5[16])-0.5);
-		
-		
-		System.out.println(arr4[0][0]);
-		System.out.println(arr4[0][1]);
-		System.out.println(arr4[0][2]);
-		System.out.println(arr4[0][3]);
-		System.out.println(arr4[0][4]);
 		
 		model.addAttribute("vaccineCurrent",arr4);
 		

@@ -41,9 +41,16 @@
 		#bt2 {background:#7E41D9;}/*전구 끄기 버튼 css속성*/
 
 	</style>
-
 </head>
 <body id="page-top">
+	<!-- Bootstrap core JS-->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
+	<!-- Third party plugin JS-->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+	
 
 	<div id="tooltip" class="hidden">
 		<p>This Value : <b id="value"></b></p>
@@ -225,8 +232,12 @@
 
 							</div>
 							
+							
+							
 							<div class="card shadow mb-4">
-								<div class="card-header py-3">
+								
+								<div class="card-header py-3">				
+										<a id="section"></a>
 									<h6 class="m-0 font-weight-bold text-violet">코로나 뉴스 리스트</h6>
 								</div>
 								<div class="card-body">
@@ -243,7 +254,19 @@
 										<li class="list-group-item"><a href=${href9} target="_blank">${item9}</a></li>
 									</ul>
 								</div>
+								<script type="text/javascript">
+								$(document).ready(function() {
+									var target = $(location).attr("hash");
+									var offset = ($(this).attr('data-offset') ? $(this).attr('data-offset') : 0);
+							
+									$('body,html').animate({
+										scrollTop: $(target).offset().top - offset
+									}, 700);
+									
+								});
+								</script>
 							</div>
+							
 						</div>
 
 						<div class="col-xs-12 col-lg-6 mb-4">
@@ -335,13 +358,11 @@
 			<!-- End of Page Wrapper -->
 
 			<!-- Bootstrap core JS-->
-			<script
-				src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		
 			<script
 				src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
 			<!-- Third party plugin JS-->
-			<script
-				src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+		
 
 			<!-- Custom scripts for all pages-->
 			<script src="js/sb-admin-2.js"></script>
@@ -652,13 +673,13 @@
 				}
 				
 				function update() {
-
-					
 					$('#myBar').load(window.location+'#myBar');
-					}
+				}
 
 
 				drawMap('#container');
+				
+			
 				//drawMap2('#container2');
 	
 
@@ -691,11 +712,7 @@
 			
 			<!-- Core theme JS-->
 			<script src="resources/js/scripts.js"></script>
-		
 
-			<script type="text/javascript">
-				
-			</script>
 		</div>
 	</div>
 </body>

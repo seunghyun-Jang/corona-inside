@@ -94,22 +94,19 @@ public class HomeController {
 	    sdformat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
 	    String beforeHour = sdformat.format(cal.getTime());
-	      
 
 	    Calendar day = Calendar.getInstance();
 	    day.add(Calendar.DATE , -1);
-	    String beforeDate = new java.text.SimpleDateFormat("yyyyMMdd").format(day.getTime());
-	    System.out.println(beforeDate);
+	    String beforeDate = new java.text.SimpleDateFormat("yyyy/MM/dd").format(day.getTime());
 
-	    Calendar week = Calendar.getInstance();
-	    week.add(Calendar.DATE , -13);
-	    String beforeWeek = new java.text.SimpleDateFormat("yyyyMMdd").format(week.getTime());
-	    System.out.println(beforeWeek);
-
+	    day.add(Calendar.DATE , -1);
+	    String beforeDate2 = new java.text.SimpleDateFormat("yyyy/MM/dd").format(day.getTime());
+	    
+	    model.addAttribute("beforeDate2", beforeDate2);
+	    
 	    Calendar month = Calendar.getInstance();
 	    month.add(Calendar.DATE , -31);
 	    String beforeMonth = new java.text.SimpleDateFormat("yyyyMMdd").format(month.getTime());
-	    System.out.println(beforeMonth);
 
 	    if(InfDTO==null) {		
 			System.out.println("InfDTO is null.");
@@ -128,9 +125,29 @@ public class HomeController {
 	    
 	    
 	    strArray = CoronaController.crawler();
+	    String s = VaccineController.crawler();
+	    strArray[2] = s;
 	    
 	    String[] arr = strArray[0].split("\r");
 		String[] arr2 = strArray[1].split("\r");
+		
+		String[] arr3 = strArray[2].split("\r");
+		String[] str;
+		String[][] arr4 = new String[18][5];
+		
+		for(int i=6; i<24; i++) {
+			str = arr3[i].split(" ");
+			for(int j=0; j<5; j++) {
+			
+				arr4[i-6][j] = str[j];
+			}
+		}	
+	
+		model.addAttribute("vaccineCurrent0",arr4[0][0]);
+		model.addAttribute("vaccineCurrent1",arr4[0][1]);
+		model.addAttribute("vaccineCurrent2",arr4[0][2]);
+		model.addAttribute("vaccineCurrent3",arr4[0][3]);
+		model.addAttribute("vaccineCurrent4",arr4[0][4]);
 		
 		model.addAttribute("item0",arr[0]);
 		model.addAttribute("item1",arr[1]);
@@ -139,14 +156,6 @@ public class HomeController {
 		model.addAttribute("href0",arr2[0]);
 		model.addAttribute("href1",arr2[1]);
 		model.addAttribute("href2",arr2[2]);
-		
 
 	}
-	
-	
-	
-	
-	
-	
-	
 }
