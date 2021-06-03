@@ -91,7 +91,7 @@
     			<a class="a-violet" href="${pageContext.request.contextPath}/community/best"><i class="fas fa-crown"></i> 인기글</a>
     		</c:when>
     		<c:otherwise>
-    			<a class="a-violet best-post" href="${pageContext.request.contextPath}/community/best"><i class="fas fa-crown"></i> 인기글</a>
+    			<a class="a-violet best-post" href="${pageContext.request.contextPath}/community"><i class="fas fa-crown"></i> 인기글</a>
     		</c:otherwise>
     	</c:choose>
     	
@@ -122,20 +122,36 @@
     			<c:if test="${num%10 != 0}"> <c:set var="pages" value="${pages+1}"/> </c:if>
     		</tbody>
     	</table>
-    	<p align="center">
+    	<form action="community" method="get">
+   			<div class="searchbar">
+    			<input class="search_input" type="text" name="search_keyword">
+    			<input type="hidden" name="search_condition" value="true">
+	    		<button class="search_btn" type="submit"><i class="fas fa-search"></i></button>
+    		</div>
+    		<div class="search-target-div">
+	    		<select name="search_target" class="search-target-select">
+	    			<option value="title_content">제목+내용</option>
+	    			<option value="title">제목</option>
+	    			<option value="content">내용</option>
+	    			<option value="comment">댓글</option>
+	    			<option value="nickname">닉네임</option>
+		    	</select>
+	    	</div>
+    	</form>
+    	<div style="float=right;">
+	   		<c:if test="${session.getAttribute('username') != null }" >
+	    		<button type="submit" align="right" class="btn btn-default bg-violet text-white" 
+	    			onClick="location.href='${pageContext.request.contextPath}/community-post-make'">글 작성</button>
+	   		</c:if>
+   		</div>
+    	<div style="clear:both; text-align:center;">
     		<c:forEach var="i" begin="1" end="${pages}" step="1">
     			<c:choose>
     				<c:when test="${page == i}"> <a class="a-violet-bold" href="${pageContext.request.contextPath}/community/${i}">${i}</a>&nbsp;&nbsp;</c:when>
     				<c:otherwise> <a class="a-violet" href="${pageContext.request.contextPath}/community/${i}">${i}</a>&nbsp;&nbsp;</c:otherwise>
     			</c:choose>
     		</c:forEach>
-    	</p>
-    	<p align="right">
-    		<c:if test="${session.getAttribute('username') != null }" >
-	    		<button type="submit" align="right" class="btn btn-default bg-violet text-white" 
-	    			onClick="location.href='${pageContext.request.contextPath}/community-post-make'">글 작성</button>
-    		</c:if>
-    	</p>
+    	</div>
     </div>
     </section>
     <!-- Copyright Section-->

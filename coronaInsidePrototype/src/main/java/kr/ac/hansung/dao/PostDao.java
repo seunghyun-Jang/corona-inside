@@ -1,5 +1,8 @@
 package kr.ac.hansung.dao;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -9,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.ac.hansung.identifier.SearchTarget;
 import kr.ac.hansung.model.Post;
+import kr.ac.hansung.model.Reply;
 
 @Repository
 @Transactional
@@ -48,6 +53,47 @@ public class PostDao {
 		List<Post> bestPosts = query.getResultList();
 		
 		return bestPosts;
+	}
+	
+	public List<Post> searchPost(SearchTarget target, String keyword) {
+		Session session = sessionFactory.getCurrentSession();
+		
+		List<Post> result = null;
+		
+		String hql = null;
+		if(target.equals(SearchTarget.COMMENT)) {
+			hql = "from Reply reply where reply.content like :keyword";
+			Query<Reply> replyQuery = session.createQuery(hql, Reply.class);
+			replyQuery.setParameter("keyword", "%" + keyword + "%");
+			List<Reply> searchedList = replyQuery.getResultList();
+			if(!searchedList.isEmpty()) {
+				System.out.println("isn't empty");
+				HashSet<Integer> resultHashSet = new HashSet<>();
+				for(Reply reply : searchedList) {
+					resultHashSet.add(reply.getPostNo());
+				}
+				List<Integer> resultPostNoList = new ArrayList<>(resultHashSet);
+				Collections.sort(resultPostNoList, Collections.reverseOrder());
+				result = new ArrayList<>();
+				for(int index : resultPostNoList) {
+					result.add(getPost(index));
+				}
+			}
+		} else {
+			if(target.equals(SearchTarget.TITLE_CONTENT))
+				hql = "from Post post where post.title like :keyword or post.content like :keyword order by post.postNo desc";
+			else if(target.equals(SearchTarget.TITLE))
+				hql = "from Post post where post.title like :keyword order by post.postNo desc";
+			else if(target.equals(SearchTarget.CONTENT))
+				hql = "from Post post where post.content like :keyword order by post.postNo desc";
+			else if(target.equals(SearchTarget.NICKANME))
+				hql = "from Post post where post.author like :keyword order by post.postNo desc";
+			Query<Post> query = session.createQuery(hql, Post.class);
+			query.setParameter("keyword", "%" + keyword + "%");
+			result = query.getResultList();
+		}
+		
+		return result;
 	}
 	
 	public void insert(Post post) {
