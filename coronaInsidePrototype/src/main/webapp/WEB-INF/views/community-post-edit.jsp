@@ -36,13 +36,13 @@
 						js-scroll-trigger"><%=session.getAttribute("username")%>님 환영합니다.</a></li>
 					<li class="nav-item mx-0 mx-lg-1"><a
 						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-						href="corona">코로나 현황</a></li>
+						href="${pageContext.request.contextPath}/corona">코로나 현황</a></li>
 					<li class="nav-item mx-0 mx-lg-1"><a
 						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-						href="vaccine">백신현황</a></li>
+						href="${pageContext.request.contextPath}/vaccine">백신현황</a></li>
 					<li class="nav-item mx-0 mx-lg-1"><a
 						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger text-selected"
-						href="community">커뮤니티</a></li>
+						href="${pageContext.request.contextPath}/community">커뮤니티</a></li>
 				</ul>
 				
 			</div>
