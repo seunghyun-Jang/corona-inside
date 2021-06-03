@@ -1,21 +1,14 @@
 package kr.ac.hansung.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
-
-import javax.sql.DataSource;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.ac.hansung.model.Post;
 import kr.ac.hansung.model.Reply;
 
 @Repository
