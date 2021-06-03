@@ -122,7 +122,7 @@
 					        </div>
 					        <div class="comment-box add-comment">
 					          <span class="commenter-name p-left">
-					          	<sf:form method="post" action="${pageContext.request.contextPath}/doreply" modelAttribute="reply">
+					          	<sf:form method="post" action="${pageContext.request.contextPath}/do-reply" modelAttribute="reply">
 					          	
 				              		<sf:input class="control" type="text" placeholder="여기에 답글을 입력하세요." name="Add Comment" path="content"/>
 				              		<sf:errors class="error" path="content"/>
