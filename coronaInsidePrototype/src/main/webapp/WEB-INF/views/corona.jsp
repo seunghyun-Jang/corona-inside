@@ -83,7 +83,7 @@
                <sec:authorize access="isAuthenticated()">
                   <li class="login-item mx-0 mx-lg-1"><a
                   class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger login-displayusername-mobile">
-                  <sec:authentication property="principal.username" /> 님 환영합니다.</a></li> 
+                  <sec:authentication property="principal.nickname" /> 님 환영합니다.</a></li> 
                   <li class="nav-item login-item mx-0 mx-lg-1"><a
                   class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
                   href="logout">로그아웃</a></li>
@@ -103,7 +103,7 @@
          </div>
          <sec:authorize access="isAuthenticated()">
             <p class="login-displayusername">
-               <sec:authentication property="principal.username" />
+               <sec:authentication property="principal.nickname" />
                님 <br>환영합니다.
             </p>
          </sec:authorize>
