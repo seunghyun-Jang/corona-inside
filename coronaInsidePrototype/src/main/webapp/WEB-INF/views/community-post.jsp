@@ -49,13 +49,13 @@
 					</c:choose>
 					<li class="nav-item mx-0 mx-lg-1"><a
 						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-						href="corona">코로나 현황</a></li>
+						href="${pageContext.request.contextPath}/corona">코로나 현황</a></li>
 					<li class="nav-item mx-0 mx-lg-1"><a
 						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-						href="vaccine">백신현황</a></li>
+						href="${pageContext.request.contextPath}/vaccine">백신현황</a></li>
 					<li class="nav-item mx-0 mx-lg-1"><a
 						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger text-selected"
-						href="community">커뮤니티</a></li>
+						href="${pageContext.request.contextPath}/community">커뮤니티</a></li>
 				</ul>
 				
 			</div>
@@ -122,7 +122,7 @@
 					        </div>
 					        <div class="comment-box add-comment">
 					          <span class="commenter-name p-left">
-					          	<sf:form method="post" action="${pageContext.request.contextPath}/doreply" modelAttribute="reply">
+					          	<sf:form method="post" action="${pageContext.request.contextPath}/do-reply" modelAttribute="reply">
 					          	
 				              		<sf:input class="control" type="text" placeholder="여기에 답글을 입력하세요." name="Add Comment" path="content"/>
 				              		<sf:errors class="error" path="content"/>

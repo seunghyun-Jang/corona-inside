@@ -31,9 +31,17 @@ public class PostController {
 	private ReplyService replyService;
 	
 	@RequestMapping(value = "/community", method = RequestMethod.GET)
-	public String community(Model model) {
+	public String community(Model model, HttpServletRequest request) {
 		
-		List<Post> posts = postService.getCurrent();
+		List<Post> posts = null;
+		
+		if( request.getParameter("search_condition") == null) {
+			posts = postService.getCurrent();
+		} else if( request.getParameter("search_condition").equals("true")) {
+			String searchTarget = request.getParameter("search_target");
+			String keyword = request.getParameter("search_keyword");
+			posts = postService.searchPost(searchTarget, keyword);
+		}
 		model.addAttribute("posts", posts);
 		
 		model.addAttribute("page", 1);
@@ -46,7 +54,16 @@ public class PostController {
 	@RequestMapping(value = "/community/*", method = RequestMethod.GET)
 	public String communityPage(Model model, HttpServletRequest request) {
 		
-		List<Post> posts = postService.getCurrent();
+		List<Post> posts = null;
+		
+		if( request.getParameter("search_condition") == null) {
+			posts = postService.getCurrent();
+		} else if( request.getParameter("search_condition").equals("true")) {
+			String searchTarget = request.getParameter("search_target");
+			String keyword = request.getParameter("search_keyword");
+			posts = postService.searchPost(searchTarget, keyword);
+		}
+		
 		model.addAttribute("posts", posts);
 		
 		String[] url = request.getRequestURI().split("/");

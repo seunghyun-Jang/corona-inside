@@ -24,7 +24,7 @@ import lombok.ToString;
 public class Reply {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="reply_id")
 	private int replyId;
 	

@@ -1,5 +1,8 @@
 package kr.ac.hansung.dao;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -9,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.ac.hansung.identifier.SearchTarget;
 import kr.ac.hansung.model.Post;
+import kr.ac.hansung.model.Reply;
 
 @Repository
 @Transactional
@@ -18,20 +23,6 @@ public class PostDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-//	private JdbcTemplate jdbcTemplate;
-//
-//	@Autowired
-//    public void setDataSource(DataSource dataSource) {
-//        this.jdbcTemplate = new JdbcTemplate(dataSource);
-//    }
-//    	
-//    public int getRowCount() {
-//    	
-//    	String sqlStatement = "select count(*) from posts";
-//    	return jdbcTemplate.queryForObject(sqlStatement, Integer.class);
-//    	
-//    }
-	
 	public Post getPost(int postNo) {
 		
 		Session session = sessionFactory.getCurrentSession();
@@ -39,33 +30,6 @@ public class PostDao {
 		
 		return post;
 	}
-    
-//    // Return 1 Post
-//    public Post getPost(int postNo) {
-//    	
-//    	String sqlStatement = "select * from posts where post_no=?";
-//    	return jdbcTemplate.queryForObject(sqlStatement, new Object[] {postNo}, 
-//    			new RowMapper<Post>() {
-//
-//			@Override
-//			public Post mapRow(ResultSet rs, int rowNum) throws SQLException {
-//				
-//				Post post = new Post();
-//				
-//				post.setPostNo(rs.getInt("post_no"));
-//				post.setTitle(rs.getString("title"));
-//				post.setAuthor(rs.getString("author"));
-//				post.setDate(rs.getDate("date").toString());
-//				post.setContent(rs.getString("content"));
-//				post.setLike(rs.getInt("like"));
-//				post.setUnlike(rs.getInt("unlike"));
-//				
-//				return post;
-//			}
-//    		
-//    	});
-//    	
-//    }
 	
 	public List<Post> getPosts() {
 		
@@ -78,32 +42,6 @@ public class PostDao {
 		return posts;
 		
 	}
-    
-//    // Return Posts
-//    public List<Post> getPosts() {
-//    	
-//    	String sqlStatement = "select * from posts order by post_no desc";
-//    	return jdbcTemplate.query(sqlStatement,	new RowMapper<Post>() {
-//
-//			@Override
-//			public Post mapRow(ResultSet rs, int rowNum) throws SQLException {
-//				
-//				Post post = new Post();
-//				
-//				post.setPostNo(rs.getInt("post_no"));
-//				post.setTitle(rs.getString("title"));
-//				post.setAuthor(rs.getString("author"));
-//				post.setDate(rs.getDate("date").toString());
-//				post.setContent(rs.getString("content"));
-//				post.setLike(rs.getInt("like"));
-//				post.setUnlike(rs.getInt("unlike"));
-//				
-//				return post;
-//			}
-//    		
-//    	});
-//    	
-//    }
 	
 	public List<Post> getBestPosts() {
 		Session session = sessionFactory.getCurrentSession();
@@ -116,82 +54,65 @@ public class PostDao {
 		
 		return bestPosts;
 	}
-    
-//	public List<Post> getBestPosts() {
-//    	
-//    	String sqlStatement = "select * from posts where posts.like>=? order by post_no desc";
-//    	return jdbcTemplate.query(sqlStatement,	new Object[] {30},new RowMapper<Post>() {
-//
-//			@Override
-//			public Post mapRow(ResultSet rs, int rowNum) throws SQLException {
-//				
-//				Post post = new Post();
-//				
-//				post.setPostNo(rs.getInt("post_no"));
-//				post.setTitle(rs.getString("title"));
-//				post.setAuthor(rs.getString("author"));
-//				post.setDate(rs.getDate("date").toString());
-//				post.setContent(rs.getString("content"));
-//				post.setLike(rs.getInt("like"));
-//				post.setUnlike(rs.getInt("unlike"));
-//				
-//				return post;
-//			}
-//    		
-//    	});
-//    	
-//    }
+	
+	public List<Post> searchPost(SearchTarget target, String keyword) {
+		Session session = sessionFactory.getCurrentSession();
+		
+		List<Post> result = null;
+		
+		String hql = null;
+		if(target.equals(SearchTarget.COMMENT)) {
+			hql = "from Reply reply where reply.content like :keyword";
+			Query<Reply> replyQuery = session.createQuery(hql, Reply.class);
+			replyQuery.setParameter("keyword", "%" + keyword + "%");
+			List<Reply> searchedList = replyQuery.getResultList();
+			if(!searchedList.isEmpty()) {
+				System.out.println("isn't empty");
+				HashSet<Integer> resultHashSet = new HashSet<>();
+				for(Reply reply : searchedList) {
+					resultHashSet.add(reply.getPostNo());
+				}
+				List<Integer> resultPostNoList = new ArrayList<>(resultHashSet);
+				Collections.sort(resultPostNoList, Collections.reverseOrder());
+				result = new ArrayList<>();
+				for(int index : resultPostNoList) {
+					result.add(getPost(index));
+				}
+			}
+		} else {
+			if(target.equals(SearchTarget.TITLE_CONTENT))
+				hql = "from Post post where post.title like :keyword or post.content like :keyword order by post.postNo desc";
+			else if(target.equals(SearchTarget.TITLE))
+				hql = "from Post post where post.title like :keyword order by post.postNo desc";
+			else if(target.equals(SearchTarget.CONTENT))
+				hql = "from Post post where post.content like :keyword order by post.postNo desc";
+			else if(target.equals(SearchTarget.NICKANME))
+				hql = "from Post post where post.author like :keyword order by post.postNo desc";
+			Query<Post> query = session.createQuery(hql, Post.class);
+			query.setParameter("keyword", "%" + keyword + "%");
+			result = query.getResultList();
+		}
+		
+		return result;
+	}
 	
 	public void insert(Post post) {
 		Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(post);
         session.flush();
 	}
-    
-//    // Insert Data
-//    public boolean insert(Post post) {
-//    	
-//    	String title = post.getTitle();
-//    	String author = post.getAuthor();
-//    	String content = post.getContent();
-//    	
-//    	String sqlStatement = 
-//    			"insert into posts (title, author, content) values (?,?,?)";
-//    	
-//    	return (jdbcTemplate.update(sqlStatement, new Object[] {title, author, content}) == 1);
-//    }
 	
 	public void update(Post post) {
 		Session session = sessionFactory.getCurrentSession();
 		session.saveOrUpdate(post);
 		session.flush();
 	}
-    
-//    // Update Data
-//    public boolean update(Post post) {
-//    	
-//    	int postNo = post.getPostNo();
-//    	String content = post.getContent();
-//    	
-//    	String sqlStatement = 
-//    			"update posts set content=? where post_no=?";
-//    	
-//    	return (jdbcTemplate.update(sqlStatement, new Object[] {content, postNo}) == 1);
-//    }
 	
 	public void delete(Post post) {
 		Session session = sessionFactory.getCurrentSession();
 		session.delete(post);
 		session.flush();
 	}
-    
-//    // Delete Data
-//    public boolean delete(int postNo) {
-//    	
-//    	String sqlStatement = "delete from posts where post_no=?";
-//    	
-//    	return (jdbcTemplate.update(sqlStatement, new Object[] {postNo}) == 1);
-//    }
 	
 	public void like(Post post) {
 		Session session = sessionFactory.getCurrentSession();
@@ -199,16 +120,6 @@ public class PostDao {
 		session.saveOrUpdate(post);
 		session.flush();
 	}
-    
-//    public boolean like(Post post) {
-//    	int postNo = post.getPostNo();
-//    	int like = post.getLike()+1;
-//    	
-//    	String sqlStatement =
-//    			"update posts set posts.like=? where post_no=?";
-//    	
-//    	return (jdbcTemplate.update(sqlStatement, new Object[] {like, postNo}) == 1);
-//    }
 	
 	public void unlike(Post post) {
 		Session session = sessionFactory.getCurrentSession();
@@ -216,16 +127,6 @@ public class PostDao {
 		session.saveOrUpdate(post);
 		session.flush();
 	}
-	
-//    public boolean unlike(Post post) {
-//    	int postNo = post.getPostNo();
-//    	int unlike = post.getUnlike()+1;
-//    	
-//    	String sqlStatement =
-//    			"update posts set unlike=? where post_no=?";
-//    	
-//    	return (jdbcTemplate.update(sqlStatement, new Object[] {unlike, postNo}) == 1);
-//    }
 	
 	public int getCurrentPostNo() {
 		Session session = sessionFactory.getCurrentSession();
@@ -236,11 +137,5 @@ public class PostDao {
 		
 		return currentPostNo;
 	}
-    
-//    public int getCurrentPostNo() {
-//    	String sqlStatement =
-//    			"select max(post_no) from posts";
-//    	return jdbcTemplate.queryForObject(sqlStatement, Integer.class);
-//    }
 
 }
