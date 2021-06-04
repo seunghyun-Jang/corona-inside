@@ -8,7 +8,7 @@ function initialize(){
 		            d3.json(TEST_SPOT_JSON_DATA_URL).then(function(_data){
 		            	console.log(_data);
 		            	console.log("wow");
-		                d3_korea_map('map2',_data); //_data 삭제
+		                d3_korea_map('map2',_data); 
 		            })
 		        }
 

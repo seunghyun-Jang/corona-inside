@@ -1,9 +1,9 @@
 function drawMap2(target) {
-	var width = 700; //지도의 넓이
-	var height = 700; //지도의 높이
-	var initialScale = 5500; //확대시킬 값
-	var initialX = -11900; //초기 위치값 X
-	var initialY = 4050; //초기 위치값 Y
+	var width = 700; 
+	var height = 700; 
+	var initialScale = 5500; 
+	var initialX = -11900; 
+	var initialY = 4050; 
 	var labels;
 
  
@@ -13,8 +13,6 @@ function drawMap2(target) {
 	`${sd10}`, `${sd11}`, `${sd12}`, `${sd13}`, `${sd14}`,
 	`${sd15}`, `${sd16}`];
 
-	//var myColor = d3.scaleLinear().domain([1,10])
-  //.range(["white", "blue"]);
 
 	
 
@@ -24,13 +22,6 @@ function drawMap2(target) {
 		.translate([initialX, initialY]);
 	var path = d3.geo.path().projection(projection);
 
-	/*var zoom = d3.behavior
-		.zoom()
-		.translate(projection.translate())
-		.scale(projection.scale())
-		.scaleExtent([height, 800 * height])
-		.on('zoom', zoom);
-*/
 	var svg = d3
 		.select(target)
 		.append('svg')
@@ -44,7 +35,7 @@ function drawMap2(target) {
 	var states2 = svg
 		.append('g')
 		.attr('id', 'states');
-		//.call(zoom);
+		
 
 	states2
 		.append('rect')
@@ -71,10 +62,9 @@ function drawMap2(target) {
 	}
 	
 
-	//geoJson데이터를 파싱하여 지도그리기
 	d3.json('resources/json/korea.json', function(json) {
 		states2
-			.selectAll('path') //지역 설정
+			.selectAll('path') 
 			.data(json.features)
 			.enter()
 			.append('path')
@@ -201,43 +191,6 @@ function drawMap2(target) {
 			});
 
 	});
-
-	/*
-	function render(data) {
-		states2 = svg.selectAll("path").data(data)
-		.enter().append("path")
-		.attr("fill", function(d) {
-			return colorScale(d);
-		});
-	}*/
-
-	//텍스트 위치 조절 - 하드코딩으로 위치 조절을 했습니다.
-	function translateTolabel(d) {
-		var arr = path.centroid(d);
-		if (d.properties.code == 31) {
-			//서울 경기도 이름 겹쳐서 경기도 내리기
-
-			arr[1] +=
-				d3.event && d3.event.scale
-					? d3.event.scale / height + 20
-					: initialScale / height + 20;
-		} else if (d.properties.code == 34) {
-			//충남은 조금 더 내리기
-			arr[1] +=
-				d3.event && d3.event.scale
-					? d3.event.scale / height + 10
-					: initialScale / height + 10;
-		}
-		return 'translate(' + arr + ')';
-	}
-
-/*
-	function zoom() {
-		projection.translate(d3.event.translate).scale(d3.event.scale);
-		states2.selectAll('path').attr('d', path);
-		labels.attr('transform', translateTolabel);
-	}
-*/
 
 	var tooltip = d3.select("body").append("div")
 		.attr("class", "toolTip2")

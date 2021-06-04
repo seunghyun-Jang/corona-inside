@@ -70,7 +70,6 @@ public class CoronaController {
 		SimpleDateFormat format1 = new SimpleDateFormat ("yyyyMMdd");			
 		Date today = new Date();		
 		String toDay = format1.format(today);		
-		System.out.println(toDay);
 		
 		Calendar cal = Calendar.getInstance();
 	    cal.setTime(today);
@@ -87,11 +86,7 @@ public class CoronaController {
 	    sdformat = new SimpleDateFormat("yyyyMMdd");
 	    sdformat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-	    String beforeHour = sdformat.format(cal.getTime());
-	    
-	    
-	
-	    
+	    String beforeHour = sdformat.format(cal.getTime());  
 
 	    Calendar day = Calendar.getInstance();
 	    day.add(Calendar.DATE , -1);
@@ -109,30 +104,23 @@ public class CoronaController {
 	   
 
 	    if(InfDTO==null) {		
-			System.out.println("InfDTO is null.");
-			//InfDTO = getCovid19Inf(beforeDate, beforeWeek);
 			InfDTO = getCovid19Inf(beforeHour, beforeMonth);
 			model.addAttribute("InfDTO", InfDTO.getResponse().getBody().getItems());
 			InfDTO.getResponse().getBody().getItems().getItem()[0].getDecideCnt();
 		}
 
 		if(SidoDTO==null) {		
-			System.out.println("SidoDTO is null.");
 			SidoDTO = getCovid19Sido(beforeHour);
 			model.addAttribute("SidoDTO", SidoDTO.getResponse().getBody().getItems());
-			
-			
-			
-			
+					
 			ItemDTO[] list = SidoDTO.getResponse().getBody().getItems().getItem();
-			
 			
 			if (list != null && list.length != 0) {
 				for (kr.ac.hansung.dto.Covid19Sido.ItemDTO item : list) {
-					if (!(item.getGubun().equals("�˿�") || item.getGubun().equals("�հ�"))) {
-						//System.out.println(item.getGubun());
+					/*if (!(item.getGubun().equals("�˿�") || item.getGubun().equals("�հ�"))) {
 						map.put(item.getGubun(), item.getDefCnt());
-					}
+					}*/
+					map.put(item.getGubun(), item.getDefCnt());
 				}
 			}
 			
@@ -195,7 +183,7 @@ public class CoronaController {
 		model.addAttribute("href9",arr2[9]);
 		
 		model.addAttribute("sd0",Double.parseDouble(arr5[0])-0.5);
-		model.addAttribute("sd1",Double.parseDouble(arr5[1])-0.5);
+		model.addAttribute("sd1",Double.parseDouble(arr5[1])-1.0);
 		model.addAttribute("sd2",Double.parseDouble(arr5[2])-0.5);
 		model.addAttribute("sd3",Double.parseDouble(arr5[3])-0.5);
 		model.addAttribute("sd4",Double.parseDouble(arr5[4])-0.5);
@@ -207,51 +195,42 @@ public class CoronaController {
 		model.addAttribute("sd10",Double.parseDouble(arr5[10])-0.5);
 		model.addAttribute("sd11",Double.parseDouble(arr5[11])-0.5);
 		model.addAttribute("sd12",Double.parseDouble(arr5[12])-0.5);
-		model.addAttribute("sd13",Double.parseDouble(arr5[13])-0.5);
+		model.addAttribute("sd13",Double.parseDouble(arr5[13])-1.0);
 		model.addAttribute("sd14",Double.parseDouble(arr5[14])-0.5);
 		model.addAttribute("sd15",Double.parseDouble(arr5[15])-0.5);
-		model.addAttribute("sd16",Double.parseDouble(arr5[16])-0.5);
+		model.addAttribute("sd16",Double.parseDouble(arr5[16]));
 		
 		model.addAttribute("vaccineCurrent",arr4);
-		
-		//System.out.println(dto.getResponse().getBody().getItems().getItem()[0].getExamCnt()+", "+dto.getResponse().getBody().getItems().getItem()[1].getExamCnt()+", "+dto.getResponse().getBody().getItems().getItem()[2].getExamCnt());
 		
 		return "corona";
 	}
 
-	public static ApiDTO getCovid19Inf(String toDay, String beforeMonth) throws Exception { // �׽�Ʈ��
+	public static ApiDTO getCovid19Inf(String toDay, String beforeMonth) throws Exception { 
 
 		try {
 			String serviceKeyDecoded = URLDecoder.decode(
 					"0OhBU7ZCGIobDVKDeBJDpmDRqK3IRNF6jlf%2FJB2diFAf%2FfR2czYO9A4UTGcsOwppV6W2HVUeho%2FFPwXoL6DwqA%3D%3D",
 					"UTF-8");
 			StringBuilder urlBuilder = new StringBuilder(
-					"http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson"); /* URL */
-			// urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") +
-			// "=gdV4T70HlOTqis98q%2FvzD0cd0%2BVcdZiWpY2H86q3bPpKeUnuY7Jb4xBG%2FjoXBmtzhiXtp932xZhCC7GXi%2BF5Kg%3D%3D");
-			// /*Service Key*/
-			// urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" +
-			// URLEncoder.encode(serviceKeyDecoded, "UTF-8")); /*�������������п��� ���� ����Ű*/
+					"http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson"); 
+		
 			urlBuilder.append(
-					"?" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /* ��������ȣ */
+					"?" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); 
 			urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "="
-					+ URLEncoder.encode("10", "UTF-8")); /* �� ������ ��� �� */
+					+ URLEncoder.encode("10", "UTF-8")); 
 			urlBuilder.append("&" + URLEncoder.encode("startCreateDt", "UTF-8") + "="
-					+ URLEncoder.encode(beforeMonth, "UTF-8")); /* �˻��� ������ ������ ���� */
+					+ URLEncoder.encode(beforeMonth, "UTF-8")); 
 			urlBuilder.append("&" + URLEncoder.encode("endCreateDt", "UTF-8") + "="
-					+ URLEncoder.encode(toDay, "UTF-8")); /* �˻��� ������ ������ ���� */
+					+ URLEncoder.encode(toDay, "UTF-8")); 
 			urlBuilder.append("&" + URLEncoder.encode("serviceKey", "UTF-8") + "="
-					+ URLEncoder.encode(serviceKeyDecoded, "UTF-8")); /* �������������п��� ���� ����Ű */
+					+ URLEncoder.encode(serviceKeyDecoded, "UTF-8")); 
 			urlBuilder.append("&" + URLEncoder.encode("_returnType", "UTF-8") + "=" + "json");
 
-			System.out.println("today is" + toDay);
 			URL url = new URL(urlBuilder.toString());
 
-			System.out.println(url.toString());
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Content-type", "application/json");
-			System.out.println("Response code: " + conn.getResponseCode());
 			BufferedReader rd;
 			if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
 				rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -265,7 +244,6 @@ public class CoronaController {
 			}
 			rd.close();
 			conn.disconnect();
-			System.out.println(sb.toString());
 
 			org.json.JSONObject jObject = XML.toJSONObject(sb.toString());
 			ObjectMapper mapper = new ObjectMapper();
@@ -280,38 +258,32 @@ public class CoronaController {
 		}
 	}
 	
-	public kr.ac.hansung.dto.Covid19Sido.ApiDTO getCovid19Sido(String toDay) throws Exception { // �׽�Ʈ��
+	public kr.ac.hansung.dto.Covid19Sido.ApiDTO getCovid19Sido(String toDay) throws Exception { 
 
 		try {
 			String serviceKeyDecoded = URLDecoder.decode(
 					"0OhBU7ZCGIobDVKDeBJDpmDRqK3IRNF6jlf%2FJB2diFAf%2FfR2czYO9A4UTGcsOwppV6W2HVUeho%2FFPwXoL6DwqA%3D%3D",
 					"UTF-8");
 			StringBuilder urlBuilder = new StringBuilder(
-					"http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson"); /* URL */
-			// urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") +
-			// "=gdV4T70HlOTqis98q%2FvzD0cd0%2BVcdZiWpY2H86q3bPpKeUnuY7Jb4xBG%2FjoXBmtzhiXtp932xZhCC7GXi%2BF5Kg%3D%3D");
-			// /*Service Key*/
-			// urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" +
-			// URLEncoder.encode(serviceKeyDecoded, "UTF-8")); /*�������������п��� ���� ����Ű*/
+					"http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson"); 
+			
 			urlBuilder.append(
-					"?" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /* ��������ȣ */
+					"?" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); 
 			urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "="
-					+ URLEncoder.encode("10", "UTF-8")); /* �� ������ ��� �� */
+					+ URLEncoder.encode("10", "UTF-8"));
 			urlBuilder.append("&" + URLEncoder.encode("startCreateDt", "UTF-8") + "="
-					+ URLEncoder.encode(toDay, "UTF-8")); /* �˻��� ������ ������ ���� */
+					+ URLEncoder.encode(toDay, "UTF-8"));
 			urlBuilder.append("&" + URLEncoder.encode("endCreateDt", "UTF-8") + "="
-					+ URLEncoder.encode(toDay, "UTF-8")); /* �˻��� ������ ������ ���� */
+					+ URLEncoder.encode(toDay, "UTF-8")); 
 			urlBuilder.append("&" + URLEncoder.encode("serviceKey", "UTF-8") + "="
-					+ URLEncoder.encode(serviceKeyDecoded, "UTF-8")); /* �������������п��� ���� ����Ű */
+					+ URLEncoder.encode(serviceKeyDecoded, "UTF-8")); 
 			urlBuilder.append("&" + URLEncoder.encode("_returnType", "UTF-8") + "=" + "json");
 
 			URL url = new URL(urlBuilder.toString());
 
-			System.out.println(url.toString());
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Content-type", "application/json");
-			System.out.println("Response code: " + conn.getResponseCode());
 			BufferedReader rd;
 			if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
 				rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -325,7 +297,6 @@ public class CoronaController {
 			}
 			rd.close();
 			conn.disconnect();
-			System.out.println(sb.toString());
 
 			org.json.JSONObject jObject = XML.toJSONObject(sb.toString());
 			ObjectMapper mapper = new ObjectMapper();
@@ -343,39 +314,27 @@ public class CoronaController {
 	public List<List<String>> readCsv(HttpServletRequest request) throws Exception{
 		List<List<String>> ret = new ArrayList<List<String>>();
 		BufferedReader br = null;
-		
-		
+
 		String path = request.getSession().getServletContext().getRealPath("/resources/hospitallist.csv");
 		
-
-		//System.out.println(path);
-
-		//File f = new File(".\\src\\main\\webapp\\resources\\hospitallist.csv");
-		
-		//System.out.println(f.getCanonicalPath());
-		//System.out.println(f.getAbsolutePath());
 		
 		try {
 			br = Files.newBufferedReader(Paths.get(path));
-			//br = Files.newBufferedReader(Paths.get("C:\\Users\\radiuslab\\Desktop\\hospitallist.csv"));
-			//br = new BufferedReader(new FileReader(f));
+			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
-		// Charset.forName("UTF-8");
+
 		String line = "";
 
 		HashMap<String, String> map = new HashMap<String, String>();
 
 		try {
 			while ((line = br.readLine()) != null) {
-				// CSV 1���� �����ϴ� ����Ʈ
 				List<String> tmpList = new ArrayList<String>();
 				String array[] = line.split(",");
-				// �迭���� ����Ʈ ��ȯ
 				tmpList = Arrays.asList(array);
-				//System.out.println(tmpList);
 
 				map.put("name", tmpList.get(0));
 				map.put("address", tmpList.get(1));
@@ -390,11 +349,9 @@ public class CoronaController {
 				ret.add(tmpList);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		//System.out.println(ret);
 		return ret;
 
 	}	
@@ -406,31 +363,24 @@ public class CoronaController {
 		
 		String path = request.getSession().getServletContext().getRealPath("/resources/pointlist.csv");
 
-		//File f = new File(".\\src\\main\\webapp\\resources\\hospitallist.csv");
-		
-		//System.out.println(f.getCanonicalPath());
-		//System.out.println(f.getAbsolutePath());
-		
 		try {
 			br = Files.newBufferedReader(Paths.get(path));
-			//br = new BufferedReader(new FileReader(f));
+			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
-		// Charset.forName("UTF-8");
+
 		String line = "";
 
 		HashMap<String, String> map = new HashMap<String, String>();
 
 		try {
 			while ((line = br.readLine()) != null) {
-				// CSV 1���� �����ϴ� ����Ʈ
 				List<String> tmpList = new ArrayList<String>();
 				String array[] = line.split(",");
-				// �迭���� ����Ʈ ��ȯ
+
 				tmpList = Arrays.asList(array);
-				//System.out.println(tmpList);
 
 				map.put("name", tmpList.get(0));
 				map.put("address", tmpList.get(1));
@@ -444,11 +394,10 @@ public class CoronaController {
 				ret.add(tmpList);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
-		System.out.println(ret);
 		return ret;
 
 	}
@@ -462,7 +411,7 @@ public class CoronaController {
 			br = Files.newBufferedReader(Paths.get(path));
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
@@ -478,12 +427,11 @@ public class CoronaController {
 				sb.append(line);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}
 		
-		//System.out.println(ret);
-		System.out.println(sb.toString());
+
 		return sb.toString();
 
 	}
@@ -497,7 +445,6 @@ public class CoronaController {
 			br = Files.newBufferedReader(Paths.get(path));
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -513,12 +460,9 @@ public class CoronaController {
 				sb.append(line);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		//System.out.println(ret);
-		//System.out.println(sb.toString());
+
 		return sb.toString();
 
 	}
@@ -529,8 +473,8 @@ public class CoronaController {
 		
 		Connection conn = Jsoup.connect(URL);
 		String[] array = new String[2];
-        // 3. HTML �Ľ�.
-        Document html = conn.get(); // conn.post();
+
+        Document html = conn.get();
         
         Elements fileblocks = html.getElementsByClass("news_area");
         
@@ -546,7 +490,6 @@ public class CoronaController {
             for (Element elm : files2) {
 				time = elm.text();
 				
-				//System.out.println(text);
 			}
         
 			for (Element elm : files) {
@@ -555,7 +498,6 @@ public class CoronaController {
 				
 
 				if (title != "") {
-					//System.out.println(title + " > " + href + " ( "+ time +" ) ");
 					String result = title + " > " + " ( "+ time +" )\r";
 					String result2 = href + "\r";
 					sb.append(result);
@@ -567,10 +509,7 @@ public class CoronaController {
         
         strArray[0] = sb.toString();
         strArray[1] = sb2.toString();
-        //System.out.println(sb.toString());
-        
-        //System.out.println(html.toString()); 
-        
+
         return strArray;
 				
 		} catch (IOException e) {
@@ -587,8 +526,8 @@ public class CoronaController {
 		
 		Connection conn = Jsoup.connect(URL);
 		String[] array = new String[2];
-        // 3. HTML �Ľ�.
-        Document html = conn.get(); // conn.post();
+      
+        Document html = conn.get(); 
         
         
         Elements fileblocks = html.getElementsByClass("data_table tbl_scrl_mini");
@@ -601,41 +540,23 @@ public class CoronaController {
             
             Elements files = fileblock.getElementsByTag("tr");
             Elements files2 = fileblock.getElementsByTag("tr");
-            
-           //for (Element elm : files2) {
-				//city = elm.text();
-				
-				//System.out.println(text);
-			//}
-        
+
 			for (Element elm : files) {
-				//title = elm.attr("title");
-				//href = elm.attr("href");
-				
+
 				current = elm.text();
 
 				String result = current + "\r";
-					//System.out.println(title + " > " + href + " ( "+ time +" ) ");
 					
 				
 				sb.append(result);
-					//sb2.append(result2);
 				
 			
 			}
 				
         }
         
-        //System.out.println(sb.toString());
-        
-        //strArray[0] = sb.toString();
-        //strArray[1] = sb2.toString();
         strArray[2] = sb.toString();
-        //System.out.println(sb.toString());
-        
-        //System.out.println(html.toString()); 
-      
-				
+       		
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -648,8 +569,8 @@ public class CoronaController {
 		
 		Connection conn = Jsoup.connect(URL);
 		String[] array = new String[2];
-        // 3. HTML �Ľ�.
-        Document html = conn.get(); // conn.post();
+     
+        Document html = conn.get(); 
         
         
         Elements fileblocks = html.getElementsByClass("rssm_graph");
@@ -661,18 +582,9 @@ public class CoronaController {
         for( Element fileblock : fileblocks ) {
             
             Elements files = fileblock.getElementsByTag("span");
-           
-            
-           //for (Element elm : files2) {
-				//city = elm.text();
-				
-				//System.out.println(text);
-			//}
-            
+
 			for (Element elm : files) {
-				//title = elm.attr("title");
-				//href = elm.attr("href");
-				
+		
 				String result = "";
 				city = elm.text();
 				if(city.equals("1")||city.equals("1.5")||city.equals("2")||city.equals("2.5")||city.equals("3")) {
@@ -681,24 +593,13 @@ public class CoronaController {
 				
 				
 				sb.append(result);
-					//sb2.append(result2);
 
 			}
 				
         }
-        
-        System.out.println(sb.toString());
-      
-        //System.out.println(sb.toString());
-        
-        //strArray[0] = sb.toString();
-        //strArray[1] = sb2.toString();
-        //strArray[2] = sb.toString();
+   
         strArray[3] = sb.toString();
-        //System.out.println(sb.toString());
-        
-        //System.out.println(html.toString()); 
-      
+
 				
 		} catch (IOException e) {
 			e.printStackTrace();
