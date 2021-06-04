@@ -68,15 +68,18 @@
 
          </div>
          
+         <sec:authorize access="isAuthenticated()">
+            <p class="login-displayusername">
+               <sec:authentication property="principal.nickname" />
+               님 <br>환영합니다.
+            </p>
+         </sec:authorize>
+         
          <sec:authorize access="isAnonymous()">
             <button class="bg-primary rounded text-white login-btn"
                id="login-btn" onClick="location.href='${pageContext.request.contextPath}/login'">로그인</button>
          </sec:authorize>
          <sec:authorize access="isAuthenticated()">
-         	<p class="login-displayusername">
-               <sec:authentication property="principal.nickname" var="nickname"/>
-               님 <br>환영합니다.
-            </p>
             <button class="bg-primary rounded text-white login-btn"
                id="login-btn" onClick="location.href='${pageContext.request.contextPath}/logout'">로그아웃</button>
          </sec:authorize>
@@ -111,8 +114,12 @@
 				    <tr>
 					    <td><br><sf:textarea class="control" rows="20" style="width:100%;" path="content"/><br><br>
 					    <sf:errors class="error" path="content"/>
+					    <sec:authentication property="principal.nickname" var="nickname"/>
 					    <sf:input class="control" type="hidden" path="author" value="${nickname}"/>
 						<sf:errors class="error" path="author"/>	
+						<sec:authentication property="principal.username" var="username"/>
+						<sf:input class="control" type="hidden" path="username" value="${username}"/>
+						<sf:errors class="error" path="username"/>
 					    <p align="center"> <button type="submit" class="btn btn-default bg-violet text-white">완료</button> </p></td>
 				    </tr>
 				</tbody>

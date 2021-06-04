@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://www.springframework.org/security/tags"
    prefix="sec"%>
+ 
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,15 +24,14 @@
     
 </head>
 <body id="page-top">
-
+	
 	<!-- Navigation-->
-   <!-- Navigation-->
-   <nav
+   	<nav
       class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top"
       id="mainNav">
       <div class="container">
          <a class="navbar-brand js-scroll-trigger" style="padding-left: 10px;"
-            href="home">Corona Inside</a>
+            href="${pageContext.request.contextPath}/home">Corona Inside</a>
          <button
             class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-violet text-white rounded"
             type="button" data-toggle="collapse" data-target="#navbarResponsive"
@@ -43,7 +44,7 @@
                <sec:authorize access="isAnonymous()">
                   <li class="nav-item mx-0 mx-lg-1 login-item"><a
                      class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                     href="login">로그인</a></li>
+                     href="${pageContext.request.contextPath}/login">로그인</a></li>
                </sec:authorize>
                <sec:authorize access="isAuthenticated()">
                   <li class="login-item mx-0 mx-lg-1"><a
@@ -51,17 +52,17 @@
                   <sec:authentication property="principal.nickname" /> 님 환영합니다.</a></li> 
                   <li class="nav-item login-item mx-0 mx-lg-1"><a
                   class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                  href="logout">로그아웃</a></li>
+                  href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
                </sec:authorize>
                <li class="nav-item mx-0 mx-lg-1"><a
                   class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                  href="corona">코로나 현황</a></li>
+                  href="${pageContext.request.contextPath}/corona">코로나 현황</a></li>
                <li class="nav-item mx-0 mx-lg-1"><a
                   class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                  href="vaccine">백신현황</a></li>
+                  href="${pageContext.request.contextPath}/vaccine">백신현황</a></li>
                <li class="nav-item mx-0 mx-lg-1"><a
                   class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                  href="community">커뮤니티</a></li>
+                  href="${pageContext.request.contextPath}/community">커뮤니티</a></li>
 
             </ul>
 
@@ -75,11 +76,11 @@
          
          <sec:authorize access="isAnonymous()">
             <button class="bg-primary rounded text-white login-btn"
-               id="login-btn" onClick="location.href='login'">로그인</button>
+               id="login-btn" onClick="location.href='${pageContext.request.contextPath}/login'">로그인</button>
          </sec:authorize>
          <sec:authorize access="isAuthenticated()">
             <button class="bg-primary rounded text-white login-btn"
-               id="login-btn" onClick="location.href='logout'">로그아웃</button>
+               id="login-btn" onClick="location.href='${pageContext.request.contextPath}/logout'">로그아웃</button>
          </sec:authorize>
       </div>
    </nav>
@@ -98,8 +99,9 @@
     </header>
     
     <section class="page-section" id="post">
-    	<h2 class="masthead-heading text-secondary text-uppercase mb-4-5"><a class="a-violet" href="${pageContext.request.contextPath}/community">커뮤니티</a></h2>
+    	
     	<div class="container">
+    		<h2 class="masthead-heading text-secondary text-uppercase mb-4-5"><a class="a-violet" href="${pageContext.request.contextPath}/community">커뮤니티</a></h2>
     		<form method="post" action="${pageContext.request.contextPath}/do-editpost/${post.postNo}">
     		<table class="styled-table">
     			<tbody>
@@ -107,6 +109,7 @@
 				    	<td><br><h6>글 제목: &nbsp;${post.title}</h6> 
 				    </tr>
 				    <tr>
+				    	<sec:csrfInput />
 					    <td><br><textarea rows="20" style="width:100%;" name="content">${post.content}</textarea><br><br>
 					    <p align="center"> <button type="submit" class="btn btn-default bg-violet text-white">완료</button> </p></td>
 				    </tr>

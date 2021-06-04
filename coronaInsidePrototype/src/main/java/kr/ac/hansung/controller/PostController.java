@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import kr.ac.hansung.model.CustomUserDetails;
 import kr.ac.hansung.model.Post;
 import kr.ac.hansung.model.Reply;
 import kr.ac.hansung.service.PostService;
@@ -265,27 +267,40 @@ public class PostController {
 		return "redirect:post/" + postService.getCurrentPostNo();
 	}
 	
-	@RequestMapping(value = "/community-post-edit/*", method = RequestMethod.POST)
-	public String editPost(Model model, HttpServletRequest request) {
+	@RequestMapping(value = "/community-post-edit/*", method = RequestMethod.GET)
+	public String editPost(Model model, HttpServletRequest request, Authentication auth) {
 		String[] url = request.getRequestURI().split("/");
 		int postNo = Integer.parseInt(url[3]);
 		
 		Post post = postService.getPost(postNo);
-		model.addAttribute("post", post);
 		
-		return "community-post-edit";
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		if(!post.getUsername().equals(user.getUsername())) {
+			return "redirect:../post/" + postNo;
+		} else {
+			model.addAttribute("post", post);
+			
+			return "community-post-edit";
+		}
 	}
 	
-	@RequestMapping(value = "/do-editpost/*")
-	public String doEditPost(Model model, HttpServletRequest request) {
+	@RequestMapping(value = "/do-editpost/*", method = RequestMethod.POST)
+	public String doEditPost(Model model, HttpServletRequest request, Authentication auth) {
 		String[] url = request.getRequestURI().split("/");
 		int postNo = Integer.parseInt(url[3]);
 		
 		Post post = postService.getPost(postNo);
 		
-		postService.update(post);
-		model.addAttribute("post", post);
-		
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		if(post.getUsername().equals(user.getUsername())) {
+			
+			String editedContent = request.getParameter("content");
+			post.setContent(editedContent);
+			
+			System.out.println("Update Post - Content: " + post.getContent());
+			postService.update(post);
+			model.addAttribute("post", post);
+		}
 		return "redirect:../post/"+postNo;
 	}
 	

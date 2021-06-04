@@ -38,6 +38,8 @@ public class Post {
 	@NotEmpty(message="The author cannot be empty")
 	private String author;
 	
+	private String username;
+	
 	private Date date;
 	
 	@Transient

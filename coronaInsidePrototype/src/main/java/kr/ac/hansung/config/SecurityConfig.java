@@ -19,7 +19,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final String[] COMMUNITY_FUNCTION = {
 			"/community-post-make",
 			"/do-makepost",
-			"/community-post-edit/*",
+			"/community-post-edit/**",
+			"/do-editpost/**",
 			"/check-deletepost/*",
 			"/do-deletepost/*",
 			"/post/*/do-postlike",

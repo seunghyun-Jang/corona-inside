@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://www.springframework.org/security/tags"
    prefix="sec"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<% pageContext.setAttribute("replaceChar", "\n"); %>
    
 <!DOCTYPE html>
 <html>
@@ -34,7 +35,7 @@
       id="mainNav">
       <div class="container">
          <a class="navbar-brand js-scroll-trigger" style="padding-left: 10px;"
-            href="home">Corona Inside</a>
+            href="${pageContext.request.contextPath}home">Corona Inside</a>
          <button
             class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-violet text-white rounded"
             type="button" data-toggle="collapse" data-target="#navbarResponsive"
@@ -72,7 +73,7 @@
          </div>
          <sec:authorize access="isAuthenticated()">
             <p class="login-displayusername">
-               <sec:authentication property="principal.nickname" />
+               <sec:authentication property="principal.nickname"/>
                님 <br>환영합니다.
             </p>
          </sec:authorize>
@@ -114,17 +115,20 @@
 				    </tr>
 				    <tr>
 					    <td>
-						    <br><br>${post.content} <br><br><br><br>
+						    <br><br>${fn:replace(post.content, replaceChar, "<br>")} <br><br><br><br>
 						    <p class="p-like" align="center">
 						    	<button class="btn-like rounded text-white" onClick="doPostLike('like')">추천&nbsp;&nbsp;${post.likeCount}</button>
 						    	&emsp;<button class="btn-unlike rounded text-white" onClick="doPostLike('unlike')">비추&nbsp;&nbsp;-${post.unlikeCount}</button>
 						    </p>
 						    <p align="right">
 						    	<sec:authorize access="isAuthenticated()">
-							    	<button type="submit" class="btn btn-default bg-blue text-white"
-							    		onClick="location.href='${pageContext.request.contextPath}/community-post-edit/${post.postNo}'">글 수정</button>
-							    	<button type="submit" class="btn btn-default bg-gray text-white"
-							    		onClick="location.href='${pageContext.request.contextPath}/check-deletepost/${post.postNo}'">글 삭제</button>
+						    		<sec:authentication property="principal.username" var="username"/>
+						    		<c:if test="${username.equals(post.username)}">
+								    	<button type="submit" class="btn btn-default bg-blue text-white"
+								    		onClick="location.href='${pageContext.request.contextPath}/community-post-edit/${post.postNo}'">글 수정</button>
+								    	<button type="submit" class="btn btn-default bg-gray text-white"
+								    		onClick="location.href='${pageContext.request.contextPath}/check-deletepost/${post.postNo}'">글 삭제</button>
+							    	</c:if>
 						    	</sec:authorize>
 						    </p>
 						</td>
