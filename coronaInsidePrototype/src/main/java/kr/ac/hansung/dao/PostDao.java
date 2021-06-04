@@ -86,7 +86,7 @@ public class PostDao {
 				hql = "from Post post where post.title like :keyword order by post.postNo desc";
 			else if(target.equals(SearchTarget.CONTENT))
 				hql = "from Post post where post.content like :keyword order by post.postNo desc";
-			else if(target.equals(SearchTarget.NICKANME))
+			else if(target.equals(SearchTarget.NICKNAME))
 				hql = "from Post post where post.author like :keyword order by post.postNo desc";
 			Query<Post> query = session.createQuery(hql, Post.class);
 			query.setParameter("keyword", "%" + keyword + "%");

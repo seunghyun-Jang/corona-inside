@@ -40,7 +40,7 @@ public class PostService {
 		else if(target.equals("comment"))
 			result = postDao.searchPost(SearchTarget.COMMENT, keyword);
 		else if(target.equals("nickname"))
-			result = postDao.searchPost(SearchTarget.NICKANME, keyword);
+			result = postDao.searchPost(SearchTarget.NICKNAME, keyword);
 		
 		return result;
 	}

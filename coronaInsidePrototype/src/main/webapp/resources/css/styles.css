@@ -10483,9 +10483,38 @@ form .row:first-child .floating-label-form-group {
 }
 
 .login-btn {
-	margin-left:50px;
-	width:100px;
+	margin-left:30px;
+	width:150px;
 	height:60px;
+}
+
+.login-displayusername {
+	padding: 5px;
+	margin-left: 10px;
+	margin-top: 20px;
+	color: #ffc107;
+	width: 170px;
+	text-align: center;
+	border: 2px solid #fff;
+	border-radius: 0.5rem !important;
+}
+
+.login-displayusername-mobile {
+	padding: 5px;
+	margin-bottom: 20px;
+	color: #ffc107;
+	width: 170px;
+	text-align: center;
+	border: 2px solid #fff;
+	border-radius: 0.5rem !important;
+}
+
+.login-displayusername-mobile:hover {
+	color: #ffc107;
+}
+
+@media (max-width: 1200px) {
+	.login-displayusername { width: 200px; }
 }
 
 @media (min-width: 992px) {
@@ -10494,6 +10523,7 @@ form .row:first-child .floating-label-form-group {
 
 @media (max-width: 991px) {
 	.login-btn { display: none; }
+	.login-displayusername { display: none;}
 }
 
 .a-violet {
@@ -10664,60 +10694,20 @@ form .row:first-child .floating-label-form-group {
 }
 
 @media (max-width: 767px){
-	.comments .commenter-name {
-	    font-size: 13px;
-	    top: -5px;
-	}
-	.comments .commenter-pic {
-	    width: 40px;
-	    height: 40px;
-	}
-	.comments .commenter-name a{
-	  display: block;
-	}
-	.comments .commenter-name .comment-time{
-	  display: block;
-	  margin-left: 0px;
-	}
+.comments .commenter-name {
+    font-size: 13px;
+    top: -5px;
+}
+.comments .commenter-pic {
+    width: 40px;
+    height: 40px;
+}
+.comments .commenter-name a{
+  display: block;
+}
+.comments .commenter-name .comment-time{
+  display: block;
+  margin-left: 0px;
 }
 
-/* SearchBar */
-.searchbar {
-	height: 34px;
-	width: 235px;
-	border: 2px solid #A366FF;
-	background: #ffffff;
-	float: left;
 }
-
-.searchbar .search_input {
-	font-size: 16px;
-	width: 180px;
-	height: 30px;
-	padding: 10px;
-	border: 0px;
-	outline: none;
-	float: left;
-}
-
-.searchbar .search_btn {
-	width: 50px;
-	height: 100%;
-	border: 0px;
-	background: #A366FF;
-	outline: none;
-	float: right;
-	color: #ffffff;
-}
-
-.search-target-div {
-	float: left;
-	margin-left: 10px;
-}
-
-.search-target-div .search-target-select {
-	height: 34px;
-	border: 2px solid #A366FF;
-	background: #ffffff;
-}
-
