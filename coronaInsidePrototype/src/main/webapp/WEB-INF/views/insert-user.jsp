@@ -1,20 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+   prefix="sec"%>
 
-    pageEncoding="UTF-8"%>
+<%@ page import="kr.ac.hansung.dto.*"%>
+<%@ page import="kr.ac.hansung.dao.*"%>
+<%@ page import="kr.ac.hansung.model.*"%>
 
-<%@ page import ="kr.ac.hansung.dto.*" %>
-<%@ page import ="kr.ac.hansung.dao.*" %>
-<%@ page import ="kr.ac.hansung.model.*" %>
+<%@ page import="java.io.PrintWriter"%>
 
-<%@ page import="java.io.PrintWriter" %> 
-
-<% request.setCharacterEncoding("UTF-8"); %> 
+<%
+	request.setCharacterEncoding("UTF-8");
+%>
 
 <%-- <jsp:useBean id="User" class="kr.ac.hansung.dto.UserVO" scope="page" /> 
  --%>
- <jsp:useBean id="User" class="kr.ac.hansung.model.User" scope="page" /> 
+<jsp:useBean id="User" class="kr.ac.hansung.model.CustomUserDetails"
+	scope="page" />
 
-<jsp:setProperty name="User" property="user_id" /> 
+<jsp:setProperty name="User" property="user_id" />
 
 <jsp:setProperty name="User" property="user_pw" />
 
@@ -33,11 +37,9 @@
 </head>
 
 <body>
-<%
-
-	User user = new User();
-
-%>
+	<%
+		CustomUserDetails user = new CustomUserDetails();
+	%>
 
 
 </body>

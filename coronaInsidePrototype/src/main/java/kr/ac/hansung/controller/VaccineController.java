@@ -44,15 +44,23 @@ public class VaccineController {
 		String[] arr3 = strArray[2].split("\r");
 		String[] str;
 		String[][] arr4 = new String[18][5];
+		String[][] arr5 = new String[18][5];
 		
 		for(int i=6; i<24; i++) {
 			str = arr3[i].split(" ");
 			for(int j=0; j<5; j++) {
-			
 				arr4[i-6][j] = str[j];
 			}
 		}	
+	
+		for(int i=1; i<=17; i++) {
+			arr5[i][2]=arr4[i][2].replaceAll(",", "");
+			arr5[i][4]=arr4[i][4].replaceAll(",", "");
+		}
+		
 		model.addAttribute("vaccineCurrent",arr4);
+		model.addAttribute("vaccineCurrent2",arr5);
+		
 		return "vaccine";
 	}
 
@@ -62,10 +70,9 @@ public class VaccineController {
 		
 		Connection conn = Jsoup.connect(URL);
 		String[] array = new String[2];
-        // 3. HTML �Ľ�.
-        Document html = conn.get(); // conn.post();
-        
-        
+ 
+        Document html = conn.get(); 
+  
         Elements fileblocks = html.getElementsByClass("data_table tbl_scrl_mini");
         
         String current, city="";
@@ -76,25 +83,12 @@ public class VaccineController {
             
             Elements files = fileblock.getElementsByTag("tr");
             Elements files2 = fileblock.getElementsByTag("tr");
-            
 
 			for (Element elm : files) {
-				//title = elm.attr("title");
-				//href = elm.attr("href");
-				
 				current = elm.text();
-
 				String result = current + "\r";
-					//System.out.println(title + " > " + href + " ( "+ time +" ) ");
-					
-				
 				sb.append(result);
-					//sb2.append(result2);
-				
-			
-			}
-				
-		
+			}		
         }
         strArray[2] = sb.toString();
         return sb.toString();
@@ -102,9 +96,6 @@ public class VaccineController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 		return null;
-		
 	}
-	
 }

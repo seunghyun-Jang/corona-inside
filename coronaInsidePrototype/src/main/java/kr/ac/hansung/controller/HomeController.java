@@ -44,9 +44,6 @@ import kr.ac.hansung.dto.Covid19Inf.ApiDTO;
 import kr.ac.hansung.dto.Covid19Sido.ItemDTO;
 import kr.ac.hansung.controller.*;
 
-/**
- * Handles requests for the application home page.
- */
 @Controller
 public class HomeController {
 
@@ -55,9 +52,6 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) {
 		setup(model);
@@ -76,7 +70,6 @@ public class HomeController {
 		SimpleDateFormat format1 = new SimpleDateFormat ("yyyyMMdd");			
 		Date today = new Date();		
 		String toDay = format1.format(today);		
-		System.out.println(toDay);
 		
 		Calendar cal = Calendar.getInstance();
 	    cal.setTime(today);
@@ -88,8 +81,7 @@ public class HomeController {
 	    String BeforeHour = sdformat.format(cal.getTime());
 	    
 	    model.addAttribute("beforeHour",BeforeHour);
-	   
-	    
+	      
 	    sdformat = new SimpleDateFormat("yyyyMMdd");
 	    sdformat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
@@ -109,8 +101,6 @@ public class HomeController {
 	    String beforeMonth = new java.text.SimpleDateFormat("yyyyMMdd").format(month.getTime());
 
 	    if(InfDTO==null) {		
-			System.out.println("InfDTO is null.");
-			//InfDTO = getCovid19Inf(beforeDate, beforeWeek);
 			try {
 				InfDTO = CoronaController.getCovid19Inf(beforeHour, beforeMonth);
 			} catch (Exception e) {

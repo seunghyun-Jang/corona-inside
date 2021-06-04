@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+   prefix="sec"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,8 +39,8 @@
 	<script src="resources/js/demo/mapping4.js"></script>
 	
 	<style>
-		#bt1 {background:#7E41D9;}/*전구 켜기 버튼 css속성*/
-		#bt2 {background:#7E41D9;}/*전구 끄기 버튼 css속성*/
+		#bt1 {background:#7E41D9;}
+		#bt2 {background:#7E41D9;}
 
 	</style>
 </head>
@@ -57,53 +59,65 @@
 	</div>
 
 	<!-- Navigation-->
-	<nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
-		<div class="container">
-			<a class="navbar-brand js-scroll-trigger" style="padding-left: 10px;" href="home">Corona Inside</a>
-			<button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-violet text-white rounded"
-				type="button" data-toggle="collapse" data-target="#navbarResponsive"
-				aria-controls="navbarResponsive" aria-expanded="false"
-				aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav ml-auto">
-					<c:choose>
-						<c:when test="${session.getAttribute('username') == null}">
-							<li class="nav-item mx-0 mx-lg-1 login-item"><a
-								class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-								href="login">로그인 하기</a></li>
-						</c:when>
-						<c:when test="${session.getAttribute('username') != null}">
-							<li class="nav-item mx-0 mx-lg-1"><a
-								class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">
-									<%=session.getAttribute("username")%>님 환영합니다.
-							</a></li>
-						</c:when>
-					</c:choose>
-					<li class="nav-item mx-0 mx-lg-1"><a
-						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger text-selected"
-						href="corona">코로나 현황</a></li>
-					<li class="nav-item mx-0 mx-lg-1"><a
-						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-						href="vaccine">백신현황</a></li>
-					<li class="nav-item mx-0 mx-lg-1"><a
-						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-						href="community">커뮤니티</a></li>
-				</ul>
-				
-			</div>
-			<c:choose>
-				<c:when test="${session.getAttribute('username') == null}">
-					<button class="bg-primary rounded text-white login-btn"
-						id="login-btn" onClick="location.href='login'">로그인</button>
-				</c:when>
-				<c:when test="${session.getAttribute('username') != null}">
-					<button class="bg-primary rounded text-white login-btn"
-						id="login-btn" onClick="location.href='logout'">로그아웃</button>
-				</c:when>
-			</c:choose>
-		</div>
-	</nav>
+   <!-- Navigation-->
+   <nav
+      class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top"
+      id="mainNav">
+      <div class="container">
+         <a class="navbar-brand js-scroll-trigger" style="padding-left: 10px;"
+            href="home">Corona Inside</a>
+         <button
+            class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-violet text-white rounded"
+            type="button" data-toggle="collapse" data-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
+            Menu <i class="fas fa-bars"></i>
+         </button>
+         <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+               <sec:authorize access="isAnonymous()">
+                  <li class="nav-item mx-0 mx-lg-1 login-item"><a
+                     class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                     href="login">로그인</a></li>
+               </sec:authorize>
+               <sec:authorize access="isAuthenticated()">
+                  <li class="login-item mx-0 mx-lg-1"><a
+                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger login-displayusername-mobile">
+                  <sec:authentication property="principal.username" /> 님 환영합니다.</a></li> 
+                  <li class="nav-item login-item mx-0 mx-lg-1"><a
+                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                  href="logout">로그아웃</a></li>
+               </sec:authorize>
+               <li class="nav-item mx-0 mx-lg-1"><a
+                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                  href="corona">코로나 현황</a></li>
+               <li class="nav-item mx-0 mx-lg-1"><a
+                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                  href="vaccine">백신현황</a></li>
+               <li class="nav-item mx-0 mx-lg-1"><a
+                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                  href="community">커뮤니티</a></li>
+
+            </ul>
+
+         </div>
+         <sec:authorize access="isAuthenticated()">
+            <p class="login-displayusername">
+               <sec:authentication property="principal.username" />
+               님 <br>환영합니다.
+            </p>
+         </sec:authorize>
+         
+         <sec:authorize access="isAnonymous()">
+            <button class="bg-primary rounded text-white login-btn"
+               id="login-btn" onClick="location.href='login'">로그인</button>
+         </sec:authorize>
+         <sec:authorize access="isAuthenticated()">
+            <button class="bg-primary rounded text-white login-btn"
+               id="login-btn" onClick="location.href='logout'">로그아웃</button>
+         </sec:authorize>
+      </div>
+   </nav>
 
 	<!-- Masthead-->
 	<header class="masthead bg-violet text-white text-center">
@@ -139,10 +153,7 @@
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
 									<h6 class="m-0 font-weight-bold text-violet">일별 신규 확진자 수
-									<!-- <button class="bg-violet rounded text-white float-right badge-pill" onClick="buttonClick3(this)">1달</button>			
-									<button class="bg-violet rounded text-white float-right mx-3 badge-pill" onClick="buttonClick2(this)">2주</button>
-									<button class="bg-violet rounded text-white float-right mx-0 badge-pill" onClick="buttonClick1(this)">1주</button> -->
-									
+
 									<div class="btn-group" role="group" aria-label="Basic example" style="float: right;">
 												<button type="button" class="btn btn-violet" onClick="buttonClick1(this)">1주</button>
   												<button type="button" class="btn btn-violet" onClick="buttonClick2(this)">2주</button>
@@ -254,17 +265,6 @@
 										<li class="list-group-item"><a href=${href9} target="_blank">${item9}</a></li>
 									</ul>
 								</div>
-								<script type="text/javascript">
-								$(document).ready(function() {
-									var target = $(location).attr("hash");
-									var offset = ($(this).attr('data-offset') ? $(this).attr('data-offset') : 0);
-							
-									$('body,html').animate({
-										scrollTop: $(target).offset().top - offset
-									}, 700);
-									
-								});
-								</script>
 							</div>
 							
 						</div>
@@ -276,48 +276,15 @@
 									<h6 class="m-0 font-weight-bold text-violet">선별진료소 위치</h6>
 								</div>
 								<div class="card-body">
-								<!--<div class="card-body">
-                                    <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
-                                        CSS bloat and poor page performance. Custom CSS classes are used to create
-                                        custom components and custom utility classes.</p>
-                                    <p class="mb-0">Before working with this theme, you should become familiar with the
-                                        Bootstrap framework, especially the utility classes.</p>
-                                </div>
-								<div id="map" style="width: 100%; height: 400px;"></div>  -->
+								
 								<div id="map" style="width: 100%; height: 400px;"></div>
 								</div>
 								
 							</div>
 
-							<!-- Illustrations -->
-							<!--  <div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-violet">허전해서</h6>
-								</div>
-								<div class="card-body">
-									<div class="text-center">
-										<img class="img-fluid px-3 px-sm-4 mt-3 mb-4"
-											style="width: 25rem;" src="resources/assets/img/covid.svg"
-											alt="">
-									</div>
-									<p>
-										Add some quality, svg illustrations to your project courtesy
-										of <a target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>,
-										a constantly updated collection of beautiful svg images that
-										you can use completely free and without attribution!
-									</p>
-									<a target="_blank" rel="nofollow" href="https://undraw.co/">Browse
-										Illustrations on unDraw &rarr;</a>
-								</div>
-							
-							</div> -->
-					
-							
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-violet">지역별 데이터
-									<!-- <button id="bt1" class="rounded text-white float-right mx-3 badge-pill" onClick="buttonClick4(this)">누적 확진자수</button>
-									<button id="bt2" class="rounded text-white float-right mx-0 badge-pill" onClick="buttonClick5(this)">거리두기 단계</button> -->
+									<h6 class="m-0 font-weight-bold text-violet">지역별 데이터				
 									
 									<div class="btn-group" role="group" aria-label="Basic example" style="float: right;">
 												<button type="button" class="btn btn-violet" onClick="buttonClick5(this)">거리두기 단계</button>
@@ -330,7 +297,7 @@
 									<div id="container"></div>
 									<div id="container2"></div>
 									
-									<br><span class="badge badge-secondary">국내현황 2021/05/04 00:00 집계 기준 (거리두기 단계)</span>
+									<br><span class="badge badge-secondary">국내현황 2021/05/31 00:00 집계 기준 (거리두기 단계)</span>
 								</div>
 								
 							</div>
@@ -423,74 +390,6 @@
 				var date30 = strAddSlash("${InfDTO.getItem()[30].getStateDt()}".substring(4, 8));
 				var date31 = strAddSlash("${InfDTO.getItem()[31].getStateDt()}".substring(4, 8));
 				
-							
-
-				/*
-				var date12 = strAddSlash("${InfDTO.getItem()[0].getStateDt()}"
-						.substring(4, 8));
-				var date11 = strAddSlash("${InfDTO.getItem()[1].getStateDt()}"
-						.substring(4, 8));
-				var date10 = strAddSlash("${InfDTO.getItem()[2].getStateDt()}"
-						.substring(4, 8));
-				var date9 = strAddSlash("${InfDTO.getItem()[3].getStateDt()}"
-						.substring(4, 8));
-				var date8 = strAddSlash("${InfDTO.getItem()[4].getStateDt()}"
-						.substring(4, 8));
-				var date7 = strAddSlash("${InfDTO.getItem()[5].getStateDt()}"
-						.substring(4, 8));
-				var date6 = strAddSlash("${InfDTO.getItem()[6].getStateDt()}"
-						.substring(4, 8));
-				var date5 = strAddSlash("${InfDTO.getItem()[7].getStateDt()}"
-						.substring(4, 8));
-				var date4 = strAddSlash("${InfDTO.getItem()[8].getStateDt()}"
-						.substring(4, 8));
-				var date3 = strAddSlash("${InfDTO.getItem()[9].getStateDt()}"
-						.substring(4, 8));
-				var date2 = strAddSlash("${InfDTO.getItem()[10].getStateDt()}"
-						.substring(4, 8));
-				var date1 = strAddSlash("${InfDTO.getItem()[11].getStateDt()}"
-						.substring(4, 8));
-				var date0 = strAddSlash("${InfDTO.getItem()[12].getStateDt()}"
-						.substring(4, 8));
-				var date00 = strAddSlash("${InfDTO.getItem()[13].getStateDt()}"
-						.substring(4, 8));
-
-
-				*/
-				//var sick = strAddComma(date12);
-				/* 
-				 function slice(var ex) {
-				 var month = ex.substring(0,2);
-				 var day = ex.substring(2,4);
-
-
-
-				 console.log(month);
-				 }
-
-
-
-				 slice(date12); */
-				/*
-				var cnt12 = "${InfDTO.getItem()[0].getDecideCnt()}";
-				var cnt11 = "${InfDTO.getItem()[1].getDecideCnt()}";
-				var cnt10 = "${InfDTO.getItem()[2].getDecideCnt()}";
-				var cnt9 = "${InfDTO.getItem()[3].getDecideCnt()}";
-				var cnt8 = "${InfDTO.getItem()[4].getDecideCnt()}";
-				var cnt7 = "${InfDTO.getItem()[5].getDecideCnt()}";
-				var cnt6 = "${InfDTO.getItem()[6].getDecideCnt()}";
-				var cnt5 = "${InfDTO.getItem()[7].getDecideCnt()}";
-				var cnt4 = "${InfDTO.getItem()[8].getDecideCnt()}";
-				var cnt3 = "${InfDTO.getItem()[9].getDecideCnt()}";
-				var cnt2 = "${InfDTO.getItem()[10].getDecideCnt()}";
-				var cnt1 = "${InfDTO.getItem()[11].getDecideCnt()}";
-				var cnt0 = "${InfDTO.getItem()[12].getDecideCnt()}";
-				var cnt00 = "${InfDTO.getItem()[13].getDecideCnt()}";
-
-				*/
-
-
-
 				var cnt0 = "${InfDTO.getItem()[0].getDecideCnt()}";
 				var cnt1 = "${InfDTO.getItem()[1].getDecideCnt()}";
 				var cnt2 = "${InfDTO.getItem()[2].getDecideCnt()}";
@@ -568,26 +467,10 @@
 				var sd16 = "${sd16}";
 
 
-				// 네이버 맵 API
-				//var code0 = "${codeMap.get(0).get(1)}";  // 테스트용	
 				var flag = 0;
 				var arr1 = new Array();
 				var arr2 = new Array();
 				var arr3 = new Array();
-		
-				/*
-				<c:forEach items="${codeMap}" var="item">
-				var i = 0;
-				<c:forEach items="${item}" var="so">
-				if (i == 0) {
-					arr.push("${so}");
-					i++;
-				} else {
-					arr2.push("${so}");
-				}
-				</c:forEach>
-				</c:forEach>
-				*/
 				
 				<c:forEach items="${pointMap}" var="item">
 				var i = 0;
@@ -605,70 +488,28 @@
 				</c:forEach>
 				</c:forEach>
 
-
-				
-				
-				//arr.push("${item}");
-				//console.log(arr[0]);
-
 				
 				function buttonClick1(bt) {
-					/* var obj = document.getElementById("myBarChart3")
-					if(obj!=null) {
-						
-						obj.setAttribute('id','myBarChart2');
 					
-						//$('#myBar').load("/coronaInsidePrototype/coronaCurrent.jsp");
-					}
-					alert(obj.getAttribute("id")); */
 					updateChartType1();
 				}
 				function buttonClick2(bt) {
-					/* var obj = document.getElementById("myBarChart2")
 					
-					if(obj!=null) {
-						obj.setAttribute('id','myBarChart3');
-					
-						//$('#myBar').load("/coronaInsidePrototype/coronaCurrent.jsp");
-					}
-					alert(obj.getAttribute("id")); */
 					updateChartType2();
 				}
 
 				function buttonClick3(bt) {
-					/* var obj = document.getElementById("myBarChart2")
 					
-					if(obj!=null) {
-						obj.setAttribute('id','myBarChart3');
-					
-						//$('#myBar').load("/coronaInsidePrototype/coronaCurrent.jsp");
-					}
-					alert(obj.getAttribute("id")); */
 					updateChartType3();
 				}
 				function buttonClick4(bt) {
 					remove();
 					drawMap('#container');
-								
-					var bt1 = document.getElementById("bt1");
-					bt1.style.background="#343a40";
-			
-					var bt2 = document.getElementById("bt2");//전구끄기 버튼 색변경
-					bt2.style.background="#7E41D9";	
-					
-					
+	
 				}
 				function buttonClick5(bt) {
 					remove();
 					drawMap2('#container2');
-		
-					var bt2 = document.getElementById("bt2");
-					bt2.style.background="#343a40";
-				
-			
-					var bt1 = document.getElementById("bt1");//전구끄기 버튼 색변경
-					bt1.style.background="#7E41D9";	
-					
 					
 				}
 				
@@ -679,27 +520,6 @@
 
 				drawMap('#container');
 				
-			
-				//drawMap2('#container2');
-	
-
-				//var KOREA_JSON_DATA_URL = "{% static 'resources/korea.json' %}",
-					//TEST_SPOT_JSON_DATA_URL = "{% static 'resources/point.json' %}";
-					
-				//var KOREA_JSON_DATA_URL ="${korea}",
-					//TEST_SPOT_JSON_DATA_URL ="${point}";
-						
-				
-
-				//initialize();
-				
-				//var KOREA_JSON_DATA_URL = JSON.parse(${json});
-	            //TEST_SPOT_JSON_DATA_URL = "{% static 'map/testSpots.json' %}"
-	            
-	            //d3_korea_map('#map2');
-	 
-	        	
-				//var code0 = "${codeMap.get(0).get(1)}";
 			</script>
 			<script src="resources/js/demo/chart-area-demo.js"></script>
 			<script src="resources/js/demo/chart-pie-demo.js"></script>
