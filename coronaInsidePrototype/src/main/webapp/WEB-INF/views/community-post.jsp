@@ -124,10 +124,10 @@
 						    	<sec:authorize access="isAuthenticated()">
 						    		<sec:authentication property="principal.username" var="username"/>
 						    		<c:if test="${username.equals(post.username)}">
-								    	<button type="submit" class="btn btn-default bg-blue text-white"
+								    	<button type="button" class="btn btn-default bg-blue text-white"
 								    		onClick="location.href='${pageContext.request.contextPath}/community-post-edit/${post.postNo}'">글 수정</button>
-								    	<button type="submit" class="btn btn-default bg-gray text-white"
-								    		onClick="location.href='${pageContext.request.contextPath}/check-deletepost/${post.postNo}'">글 삭제</button>
+								    	<button type="button" class="btn btn-default bg-gray text-white"
+								    		onClick="clickDeleteBtn(${post.postNo})">글 삭제</button>
 							    	</c:if>
 						    	</sec:authorize>
 						    </p>
@@ -301,6 +301,23 @@
 			}
 			req.send();
 		}
+		
+		function clickDeleteBtn(postNo) {
+			var choice = confirm("삭제하시겠습니까?");
+				
+			if(choice) {
+				doDelete(postNo);
+				alert("삭제되었습니다!");
+			} else {
+				alert("취소되었습니다!");
+			}
+		}
+		
+		function doDelete(postNo) {
+			window.location.href = '${pageContext.request.contextPath}/do-deletepost/' + postNo;
+			
+		}
+		
 	</script>
 </body>
 </html>

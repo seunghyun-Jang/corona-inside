@@ -304,27 +304,18 @@ public class PostController {
 		return "redirect:../post/"+postNo;
 	}
 	
-	@RequestMapping(value = "/check-deletepost/*")
-	public String checkDeletePost(Model model, HttpServletRequest request) {
-		String[] url = request.getRequestURI().split("/");
-		int postNo = Integer.parseInt(url[3]);
-		
-		model.addAttribute("postNo", postNo);
-		String author = postService.getPost(postNo).getAuthor();
-		model.addAttribute("author", author);
-		
-		return "check-delete-post";
-	}
-	
 	@RequestMapping(value = "/do-deletepost/*")
-	public String doDeletePost(Model model, HttpServletRequest request) {
+	public String doDeletePost(Model model, HttpServletRequest request, Authentication auth) {
 		String[] url = request.getRequestURI().split("/");
 		int postNo = Integer.parseInt(url[3]);
+		
 		Post post = postService.getPost(postNo);
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		if(post.getUsername().equals(user.getUsername())) {
+			postService.delete(post);
+		}
 		
-		postService.delete(post);
-		
-		return "redirect:community";
+		return "redirect:../community";
 	}
 	
 	@RequestMapping(value = "/post/*/do-postlike")
