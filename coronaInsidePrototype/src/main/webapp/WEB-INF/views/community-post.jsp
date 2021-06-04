@@ -47,7 +47,7 @@
                <sec:authorize access="isAnonymous()">
                   <li class="nav-item mx-0 mx-lg-1 login-item"><a
                      class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                     href="login">로그인</a></li>
+                     href="${pageContext.request.contextPath}/login">로그인</a></li>
                </sec:authorize>
                <sec:authorize access="isAuthenticated()">
                   <li class="login-item mx-0 mx-lg-1"><a
@@ -55,17 +55,17 @@
                   <sec:authentication property="principal.nickname" /> 님 환영합니다.</a></li> 
                   <li class="nav-item login-item mx-0 mx-lg-1"><a
                   class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                  href="logout">로그아웃</a></li>
+                  href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
                </sec:authorize>
                <li class="nav-item mx-0 mx-lg-1"><a
                   class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                  href="corona">코로나 현황</a></li>
+                  href="${pageContext.request.contextPath}/corona">코로나 현황</a></li>
                <li class="nav-item mx-0 mx-lg-1"><a
                   class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                  href="vaccine">백신현황</a></li>
+                  href="${pageContext.request.contextPath}/vaccine">백신현황</a></li>
                <li class="nav-item mx-0 mx-lg-1"><a
                   class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                  href="community">커뮤니티</a></li>
+                  href="${pageContext.request.contextPath}/community">커뮤니티</a></li>
 
             </ul>
 
@@ -79,11 +79,11 @@
          
          <sec:authorize access="isAnonymous()">
             <button class="bg-primary rounded text-white login-btn"
-               id="login-btn" onClick="location.href='login'">로그인</button>
+               id="login-btn" onClick="location.href='${pageContext.request.contextPath}/login'">로그인</button>
          </sec:authorize>
          <sec:authorize access="isAuthenticated()">
             <button class="bg-primary rounded text-white login-btn"
-               id="login-btn" onClick="location.href='logout'">로그아웃</button>
+               id="login-btn" onClick="location.href='${pageContext.request.contextPath}/logout'">로그아웃</button>
          </sec:authorize>
       </div>
    </nav>
@@ -110,7 +110,7 @@
 				    	<td><br><h3>${post.title}</h3></td>
 				    </tr>
 				    <tr>
-				    	<td>작성자 : ${post.author}  &emsp; 날짜 : ${post.date}</td>
+				    	<td>작성자 : ${post.author}  &emsp; <i class="far fa-clock"></i> ${post.datetime}</td>
 				    </tr>
 				    <tr>
 					    <td>
@@ -120,12 +120,12 @@
 						    	&emsp;<button class="btn-unlike rounded text-white" onClick="doPostLike('unlike')">비추&nbsp;&nbsp;-${post.unlikeCount}</button>
 						    </p>
 						    <p align="right">
-						    	<c:if test="${session.getAttriube('username').equals(post.author) }">
-						    	<button type="submit" class="btn btn-default bg-blue text-white"
-						    		onClick="location.href='${pageContext.request.contextPath}/community-post-edit/${post.postNo}'">글 수정</button>
-						    	<button type="submit" class="btn btn-default bg-gray text-white"
-						    		onClick="location.href='${pageContext.request.contextPath}/community-post-delete/${post.postNo}'">글 삭제</button>
-						    	</c:if> 
+						    	<sec:authorize access="isAuthenticated()">
+							    	<button type="submit" class="btn btn-default bg-blue text-white"
+							    		onClick="location.href='${pageContext.request.contextPath}/community-post-edit/${post.postNo}'">글 수정</button>
+							    	<button type="submit" class="btn btn-default bg-gray text-white"
+							    		onClick="location.href='${pageContext.request.contextPath}/check-deletepost/${post.postNo}'">글 삭제</button>
+						    	</sec:authorize>
 						    </p>
 						</td>
 				    </tr>

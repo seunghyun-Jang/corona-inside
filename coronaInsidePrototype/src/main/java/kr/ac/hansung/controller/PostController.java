@@ -1,6 +1,8 @@
 package kr.ac.hansung.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,6 +44,29 @@ public class PostController {
 			String keyword = request.getParameter("search_keyword");
 			posts = postService.searchPost(searchTarget, keyword);
 		}
+		
+		for(Post post : posts) {
+			long timeBeforePost = System.currentTimeMillis() - post.getDate().getTime();
+			String timeBeforePostText = "";
+			long time;
+			if(timeBeforePost < 1000*60) {
+				time = timeBeforePost / 1000;
+				timeBeforePostText = time + "초 전";
+			} else if( timeBeforePost < 1000*60*60 ) {
+				time = timeBeforePost / 60000;
+				timeBeforePostText = time + "분 전";
+			} else if( timeBeforePost < 1000*60*60*24 ) {
+				time = timeBeforePost / 3600000;
+				timeBeforePostText = time + "시간 전";
+			} else if( timeBeforePost < 1000*60*60*24*7 ){
+				time = timeBeforePost / 79200000;
+				timeBeforePostText = time + "일 전";
+			} else {
+				timeBeforePostText = new SimpleDateFormat("yyyy-MM-dd").format(post.getDate());
+			}
+			post.setDatetime(timeBeforePostText);
+		}
+		
 		model.addAttribute("posts", posts);
 		
 		model.addAttribute("page", 1);
@@ -64,6 +89,28 @@ public class PostController {
 			posts = postService.searchPost(searchTarget, keyword);
 		}
 		
+		for(Post post : posts) {
+			long timeBeforePost = System.currentTimeMillis() - post.getDate().getTime();
+			String timeBeforePostText = "";
+			long time;
+			if(timeBeforePost < 1000*60) {
+				time = timeBeforePost / 1000;
+				timeBeforePostText = time + "초 전";
+			} else if( timeBeforePost < 1000*60*60 ) {
+				time = timeBeforePost / 60000;
+				timeBeforePostText = time + "분 전";
+			} else if( timeBeforePost < 1000*60*60*24 ) {
+				time = timeBeforePost / 3600000;
+				timeBeforePostText = time + "시간 전";
+			} else if( timeBeforePost < 1000*60*60*24*7 ){
+				time = timeBeforePost / 79200000;
+				timeBeforePostText = time + "일 전";
+			} else {
+				timeBeforePostText = new SimpleDateFormat("yyyy-MM-dd").format(post.getDate());
+			}
+			post.setDatetime(timeBeforePostText);
+		}
+		
 		model.addAttribute("posts", posts);
 		
 		String[] url = request.getRequestURI().split("/");
@@ -79,6 +126,29 @@ public class PostController {
 	public String communityBest(Model model) {
 		
 		List<Post> posts = postService.getBestPosts();
+		
+		for(Post post : posts) {
+			long timeBeforePost = System.currentTimeMillis() - post.getDate().getTime();
+			String timeBeforePostText = "";
+			long time;
+			if(timeBeforePost < 1000*60) {
+				time = timeBeforePost / 1000;
+				timeBeforePostText = time + "초 전";
+			} else if( timeBeforePost < 1000*60*60 ) {
+				time = timeBeforePost / 60000;
+				timeBeforePostText = time + "분 전";
+			} else if( timeBeforePost < 1000*60*60*24 ) {
+				time = timeBeforePost / 3600000;
+				timeBeforePostText = time + "시간 전";
+			} else if( timeBeforePost < 1000*60*60*24*7 ){
+				time = timeBeforePost / 79200000;
+				timeBeforePostText = time + "일 전";
+			} else {
+				timeBeforePostText = new SimpleDateFormat("yyyy-MM-dd").format(post.getDate());
+			}
+			post.setDatetime(timeBeforePostText);
+		}
+		
 		model.addAttribute("posts", posts);
 		
 		model.addAttribute("page", 1);
@@ -92,6 +162,29 @@ public class PostController {
 	public String communityBestPosts(Model model, HttpServletRequest request) {
 		
 		List<Post> posts = postService.getBestPosts();
+		
+		for(Post post : posts) {
+			long timeBeforePost = System.currentTimeMillis() - post.getDate().getTime();
+			String timeBeforePostText = "";
+			long time;
+			if(timeBeforePost < 1000*60) {
+				time = timeBeforePost / 1000;
+				timeBeforePostText = time + "초 전";
+			} else if( timeBeforePost < 1000*60*60 ) {
+				time = timeBeforePost / 60000;
+				timeBeforePostText = time + "분 전";
+			} else if( timeBeforePost < 1000*60*60*24 ) {
+				time = timeBeforePost / 3600000;
+				timeBeforePostText = time + "시간 전";
+			} else if( timeBeforePost < 1000*60*60*24*7 ){
+				time = timeBeforePost / 79200000;
+				timeBeforePostText = time + "일 전";
+			} else {
+				timeBeforePostText = new SimpleDateFormat("yyyy-MM-dd").format(post.getDate());
+			}
+			post.setDatetime(timeBeforePostText);
+		}
+		
 		model.addAttribute("posts", posts);
 		
 		String[] url = request.getRequestURI().split("/");
@@ -109,6 +202,26 @@ public class PostController {
 		int postNo = Integer.parseInt(url[3]);
 		
 		Post post = postService.getPost(postNo);
+				
+		long timeBeforePost = System.currentTimeMillis() - post.getDate().getTime();
+		String timeBeforePostText = "";
+		long time;
+		if(timeBeforePost < 1000*60) {
+			time = timeBeforePost / 1000;
+			timeBeforePostText = time + "초 전";
+		} else if( timeBeforePost < 1000*60*60 ) {
+			time = timeBeforePost / 60000;
+			timeBeforePostText = time + "분 전";
+		} else if( timeBeforePost < 1000*60*60*24 ) {
+			time = timeBeforePost / 3600000;
+			timeBeforePostText = time + "시간 전";
+		} else if( timeBeforePost < 1000*60*60*24*7 ){
+			time = timeBeforePost / 79200000;
+			timeBeforePostText = time + "일 전";
+		} else {
+			timeBeforePostText = new SimpleDateFormat("yyyy-MM-dd").format(post.getDate());
+		}
+		post.setDatetime(timeBeforePostText);
 		model.addAttribute("post", post);
 		
 		List<Reply> replies = replyService.getCurrent(postNo);
@@ -133,13 +246,17 @@ public class PostController {
 	public String doMakePost(Model model, @ModelAttribute("post") @Valid Post post, BindingResult result) {
 		
 		// utf-8로 인코딩하여 한글깨짐 문제 해결
-		try {
-			post.setTitle(new String(post.getTitle().getBytes("8859_1"), "utf-8"));
-			post.setAuthor(new String(post.getAuthor().getBytes("8859_1"), "utf-8"));
-			post.setContent(new String(post.getContent().getBytes("8859_1"), "utf-8"));
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			System.out.println("title: " + post.getTitle() + " / author: " + post.getAuthor() + " / content: " + post.getContent());
+//			
+//			post.setTitle(new String(post.getTitle().getBytes("8859_1"), "utf-8"));
+//			post.setAuthor(new String(post.getAuthor().getBytes("8859_1"), "utf-8"));
+//			post.setContent(new String(post.getContent().getBytes("8859_1"), "utf-8"));
+//			
+//			System.out.println("title: " + post.getTitle() + " / author: " + post.getAuthor() + " / content: " + post.getContent());
+//		} catch (UnsupportedEncodingException e) {
+//			e.printStackTrace();
+//		}
 		
 		if(result.hasErrors()) {
 			System.out.println("== Form data does not validated ==");
@@ -152,7 +269,7 @@ public class PostController {
 			
 			return "community-post-make";
 		}
-		
+		post.setDate(new Date());
 		postService.insert(post);
 		model.addAttribute("post", post);
 		
@@ -180,11 +297,11 @@ public class PostController {
 		Post post = postService.getPost(postNo);
 		
 		// utf-8로 인코딩하여 한글깨짐 문제 해결
-		try {
-			post.setContent(new String(request.getParameter("content").getBytes("8859_1"), "utf-8"));
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			post.setContent(new String(request.getParameter("content").getBytes("8859_1"), "utf-8"));
+//		} catch (UnsupportedEncodingException e) {
+//			e.printStackTrace();
+//		}
 		
 		postService.update(post);
 		model.addAttribute("post", post);

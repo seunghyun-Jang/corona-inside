@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.hansung.identifier.SearchTarget;
+import kr.ac.hansung.model.CustomUserDetails;
 import kr.ac.hansung.model.Post;
 import kr.ac.hansung.model.Reply;
 
@@ -133,9 +134,14 @@ public class PostDao {
 		String hql = "select max(post.postNo) from Post post";
 		
 		Query<Integer> query = session.createQuery(hql, Integer.class);
-		int currentPostNo = query.getFirstResult();
 		
-		return currentPostNo;
+		List<Integer> results = query.getResultList();
+		if (!results.isEmpty()) {
+			int currentPostNo = (int) results.get(0);
+			return currentPostNo;
+		}
+		
+		return 0;
 	}
 
 }

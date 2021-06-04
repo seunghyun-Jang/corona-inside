@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
@@ -43,7 +44,7 @@
                <sec:authorize access="isAnonymous()">
                   <li class="nav-item mx-0 mx-lg-1 login-item"><a
                      class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                     href="login">로그인</a></li>
+                     href="${pageContext.request.contextPath}/login">로그인</a></li>
                </sec:authorize>
                <sec:authorize access="isAuthenticated()">
                   <li class="login-item mx-0 mx-lg-1"><a
@@ -51,35 +52,33 @@
                   <sec:authentication property="principal.nickname" /> 님 환영합니다.</a></li> 
                   <li class="nav-item login-item mx-0 mx-lg-1"><a
                   class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                  href="logout">로그아웃</a></li>
+                  href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
                </sec:authorize>
                <li class="nav-item mx-0 mx-lg-1"><a
                   class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                  href="corona">코로나 현황</a></li>
+                  href="${pageContext.request.contextPath}/corona">코로나 현황</a></li>
                <li class="nav-item mx-0 mx-lg-1"><a
                   class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                  href="vaccine">백신현황</a></li>
+                  href="${pageContext.request.contextPath}/vaccine">백신현황</a></li>
                <li class="nav-item mx-0 mx-lg-1"><a
                   class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                  href="community">커뮤니티</a></li>
+                  href="${pageContext.request.contextPath}/community">커뮤니티</a></li>
 
             </ul>
 
          </div>
-         <sec:authorize access="isAuthenticated()">
-            <p class="login-displayusername">
-               <sec:authentication property="principal.nickname" />
-               님 <br>환영합니다.
-            </p>
-         </sec:authorize>
          
          <sec:authorize access="isAnonymous()">
             <button class="bg-primary rounded text-white login-btn"
-               id="login-btn" onClick="location.href='login'">로그인</button>
+               id="login-btn" onClick="location.href='${pageContext.request.contextPath}/login'">로그인</button>
          </sec:authorize>
          <sec:authorize access="isAuthenticated()">
+         	<p class="login-displayusername">
+               <sec:authentication property="principal.nickname" var="nickname"/>
+               님 <br>환영합니다.
+            </p>
             <button class="bg-primary rounded text-white login-btn"
-               id="login-btn" onClick="location.href='logout'">로그아웃</button>
+               id="login-btn" onClick="location.href='${pageContext.request.contextPath}/logout'">로그아웃</button>
          </sec:authorize>
       </div>
    </nav>
@@ -112,7 +111,7 @@
 				    <tr>
 					    <td><br><sf:textarea class="control" rows="20" style="width:100%;" path="content"/><br><br>
 					    <sf:errors class="error" path="content"/>
-					    <sf:input class="control" type="hidden" path="author" value="${session.getAttribute('username')}"/>
+					    <sf:input class="control" type="hidden" path="author" value="${nickname}"/>
 						<sf:errors class="error" path="author"/>	
 					    <p align="center"> <button type="submit" class="btn btn-default bg-violet text-white">완료</button> </p></td>
 				    </tr>

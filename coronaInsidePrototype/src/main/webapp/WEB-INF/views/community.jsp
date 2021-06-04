@@ -129,7 +129,7 @@
 							<td><button onClick="location.href='${pageContext.request.contextPath}/post/${post.postNo}'">${post.title}</button></td>
 		    				<td class="text-center">${post.author}</td>
 		    				<td class="text-center">${post.likeCount}</td>
-		    				<td class="text-center">${post.date}</td>
+		    				<td class="text-center" style="color: #888888">${post.datetime}</td>
 		    			</tr>
 	    			</c:if>
 	    			<c:set var="num" value="${num+1}"/>
@@ -154,11 +154,11 @@
 		    	</select>
 	    	</div>
     	</form>
-    	<div style="float=right;">
-	   		<c:if test="${session.getAttribute('username') != null }" >
-	    		<button type="submit" align="right" class="btn btn-default bg-violet text-white" 
+    	<div style="float: right;">
+	   		<sec:authorize access="isAuthenticated()">
+	   			<button type="submit" class="btn btn-default bg-violet text-white" 
 	    			onClick="location.href='${pageContext.request.contextPath}/community-post-make'">글 작성</button>
-	   		</c:if>
+	   		</sec:authorize>
    		</div>
     	<div style="clear:both; text-align:center;">
     		<c:forEach var="i" begin="1" end="${pages}" step="1">

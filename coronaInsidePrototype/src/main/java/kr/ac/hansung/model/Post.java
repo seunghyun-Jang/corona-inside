@@ -1,11 +1,14 @@
 package kr.ac.hansung.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -35,7 +38,10 @@ public class Post {
 	@NotEmpty(message="The author cannot be empty")
 	private String author;
 	
-	private String date;
+	private Date date;
+	
+	@Transient
+	private String datetime;
 	
 	@Size(min=2, max=500, message="내용은 2자 이상, 500자 이하로 적어주세요.")
 	@NotEmpty(message="The content cannot be empty")
