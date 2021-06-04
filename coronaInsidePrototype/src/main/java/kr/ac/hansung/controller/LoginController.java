@@ -3,15 +3,17 @@ package kr.ac.hansung.controller;
 import java.io.IOException;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,27 +60,10 @@ public class LoginController { //login & signup
 		return "redirect:/login";
 	}
 
-
-	@RequestMapping(value = "/logincheck", method = RequestMethod.POST)
-	public String loginCheck(@RequestParam(value = "user_id",required=false) String user_id,
-			@RequestParam(value = "password",required=false) String password, 
-			@RequestParam(value = "username",required=false)String username, Model model) throws IOException {
-		
-		if(userdao.loginCheck(user_id, password)) {
-			return "redirect:/home";
-		} else {
-			model.addAttribute("errorMsg", "ID또는 PW가 일치하지 않습니다.");
-			return "login";
-		}
-		 
-	}
-
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logout(HttpSession session) {
-		UserDAO logout = new UserDAO();
-		logout.logout(session);
-		logger.info("ByeBye Logout success");
-		return "redirect:/home";
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
+		new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
+	    return "redirect:/home";
 	}
 
 }
