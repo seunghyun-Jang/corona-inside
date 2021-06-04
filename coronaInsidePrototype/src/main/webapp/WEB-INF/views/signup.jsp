@@ -17,6 +17,7 @@
 <!-- Font Awesome icons (free version)-->
 <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js"
 	crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!-- Google fonts-->
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
 	rel="stylesheet" type="text/css" />
@@ -27,6 +28,7 @@
 <link href="resources/css/styles.css" rel="stylesheet" />
 </head>
 <body id="page-top">
+
 	<!-- Navigation-->
 	<nav
 		class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top"
@@ -88,16 +90,15 @@
 								<h1 class="text-center text-violet">회원가입</h1>
 								<div class="form-group">
 									<label for="username" class="text-violet font-weight-bold">아이디</label><br>
-									<input type="text" name="user_id" id="user_id" class="form-control">
+									<input type="text" name="user_id" id="user_id"
+										class="form-control">
+										<span>아이디는 4~8자리이어야 합니다.</span>
 								</div>
 								<div class="form-group">
 									<label for="password" class="text-violet font-weight-bold">비밀번호</label><br>
-									<input type="password" name="user_pw" id="user_pw" class="form-control">
-								</div>
-								<div class="form-group">
-									<label for="password" class="text-violet font-weight-bold">비밀번호
-										재확인</label><br> <input type="password" name="pwCheck"
-										id="pwCheck" class="form-control">
+									<input type="password" name="password" id="password"
+										class="form-control">
+										<span>비밀번호는 6~12자리 영문 숫자 조합이어야 합니다.</span>
 								</div>
 								<div class="form-group">
 									<label for="password" class="text-violet font-weight-bold">닉네임</label><br>
@@ -107,6 +108,8 @@
 								<div class="form-group">
 									<input type="submit" name="submit"
 										class="btn bg-violet text-white font-weight-bold" value="회원가입">
+									<input type="hidden" name="${_csrf.parameterName}"
+										value="${_csrf.token}" />
 								</div>
 							</form>
 						</div>
