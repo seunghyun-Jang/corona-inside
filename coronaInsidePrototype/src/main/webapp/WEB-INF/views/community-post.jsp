@@ -275,7 +275,7 @@
 			else if(todo == "unlike") {
 				page += "/do-postunlike";
 			}
-			req.open("POST", page);
+			req.open("GET", page);
 			req.onreadystatechange = function() {
 				if (req.readyState == 4 && req.status == 200) {
 					$(".p-like").load(window.location.href + " .p-like");
@@ -293,7 +293,7 @@
 			else if(todo == "unlike") {
 				page += "/do-replyunlike";
 			}
-			req.open("POST", page);
+			req.open("GET", page);
 			req.onreadystatechange = function() {
 				if (req.readyState == 4 && req.status == 200) {
 					$(id).load(window.location.href + id);
