@@ -10711,3 +10711,43 @@ form .row:first-child .floating-label-form-group {
 }
 
 }
+
+/* SearchBar */
+.searchbar {
+	height: 34px;
+	width: 235px;
+	border: 2px solid #A366FF;
+	background: #ffffff;
+	float: left;
+}
+
+.searchbar .search_input {
+	font-size: 16px;
+	width: 180px;
+	height: 30px;
+	padding: 10px;
+	border: 0px;
+	outline: none;
+	float: left;
+}
+
+.searchbar .search_btn {
+	width: 50px;
+	height: 100%;
+	border: 0px;
+	background: #A366FF;
+	outline: none;
+	float: right;
+	color: #ffffff;
+}
+
+.search-target-div {
+	float: left;
+	margin-left: 10px;
+}
+
+.search-target-div .search-target-select {
+	height: 34px;
+	border: 2px solid #A366FF;
+	background: #ffffff;
+}
