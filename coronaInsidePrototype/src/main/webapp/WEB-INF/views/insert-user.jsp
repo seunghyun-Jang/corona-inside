@@ -18,11 +18,11 @@
 <jsp:useBean id="User" class="kr.ac.hansung.model.CustomUserDetails"
 	scope="page" />
 
-<jsp:setProperty name="User" property="user_id" />
-
-<jsp:setProperty name="User" property="user_pw" />
-
 <jsp:setProperty name="User" property="username" />
+
+<jsp:setProperty name="User" property="password" />
+
+<jsp:setProperty name="User" property="nickname" />
 
 <!DOCTYPE html>
 

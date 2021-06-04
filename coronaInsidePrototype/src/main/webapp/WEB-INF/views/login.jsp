@@ -146,9 +146,6 @@
 										class="btn bg-violet text-white font-weight-bold" value="회원가입"
 										onclick="location.href='signup'"> 
 								</div>
-								<div id="register-link" class="text-right">
-									<a href="signup" class="text-violet">Register here</a>
-								</div>
 							</form>
 						</div>
 					</div>

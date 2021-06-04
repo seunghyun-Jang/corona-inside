@@ -47,15 +47,18 @@ public class LoginController { //login & signup
 	}
 
 	@RequestMapping(value = "/insert-user", method = { RequestMethod.GET, RequestMethod.POST })
-	public String insertUser(@RequestParam(value = "user_id",required=false) String user_id,
+	public String insertUser(@RequestParam(value = "username",required=false) String username,
 			@RequestParam(value = "password",required=false) String password, 
-			@RequestParam(value = "username",required=false)String username) throws IOException {
+			@RequestParam(value = "nickname",required=false)String nickname) throws IOException {
 			
 			CustomUserDetails user = new CustomUserDetails();
-			user.setUser_id(user_id);
+			user.setUsername(username);
 			String Bcrypt_pw = passwordEncoder.encode(password);
 			user.setPassword(Bcrypt_pw);
-			user.setUsername(username);
+			user.setNickname(nickname);
+			user.setAUTHORITY("ROLE_USER");
+		    user.setENABLED(true);
+			
 			userdao.signUp(user);
 		return "redirect:/login";
 	}

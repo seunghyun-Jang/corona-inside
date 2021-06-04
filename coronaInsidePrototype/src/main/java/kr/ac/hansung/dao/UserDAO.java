@@ -25,13 +25,13 @@ public class UserDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public CustomUserDetails getUserById(String user_id) {
+	public CustomUserDetails getUserById(String username) {
 		Session session = sessionFactory.getCurrentSession();
 
-		String hql = "from CustomUserDetails user where user.user_id =:id";
+		String hql = "from CustomUserDetails user where user.username =:id";
 
 		Query<CustomUserDetails> query = session.createQuery(hql, CustomUserDetails.class);
-		query.setParameter("id", user_id);
+		query.setParameter("id", username);
 		List<CustomUserDetails> results = query.getResultList();
 		if (!results.isEmpty()) {
 			CustomUserDetails user = (CustomUserDetails) results.get(0);
@@ -44,19 +44,27 @@ public class UserDAO {
 		// return user;
 
 	}
-
+	
 	public void signUp(CustomUserDetails user) {
 
-		Session session = sessionFactory.getCurrentSession();
+	      Session session = sessionFactory.getCurrentSession();
 
-		CustomUserDetails user1 = new CustomUserDetails();
-		user1.setUser_id(user.getUser_id());
-		user1.setPassword(user.getPassword());
-		user1.setUsername(user.getUsername());
+	      session.save(user);
 
-		session.save(user1);
+	   }
 
-	}
+//	public void signUp(CustomUserDetails user) {
+//
+//		Session session = sessionFactory.getCurrentSession();
+//
+//		CustomUserDetails user1 = new CustomUserDetails();
+//		user1.setUser_id(user.getUser_id());
+//		user1.setPassword(user.getPassword());
+//		user1.setUsername(user.getUsername());
+//
+//		session.save(user1);
+//
+//	}
 
 	public void logout(HttpSession session) {
 		session.invalidate();
