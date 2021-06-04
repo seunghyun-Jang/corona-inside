@@ -245,19 +245,6 @@ public class PostController {
 	@RequestMapping(value = "/do-makepost")
 	public String doMakePost(Model model, @ModelAttribute("post") @Valid Post post, BindingResult result) {
 		
-		// utf-8로 인코딩하여 한글깨짐 문제 해결
-//		try {
-//			System.out.println("title: " + post.getTitle() + " / author: " + post.getAuthor() + " / content: " + post.getContent());
-//			
-//			post.setTitle(new String(post.getTitle().getBytes("8859_1"), "utf-8"));
-//			post.setAuthor(new String(post.getAuthor().getBytes("8859_1"), "utf-8"));
-//			post.setContent(new String(post.getContent().getBytes("8859_1"), "utf-8"));
-//			
-//			System.out.println("title: " + post.getTitle() + " / author: " + post.getAuthor() + " / content: " + post.getContent());
-//		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//		}
-		
 		if(result.hasErrors()) {
 			System.out.println("== Form data does not validated ==");
 			
@@ -295,13 +282,6 @@ public class PostController {
 		int postNo = Integer.parseInt(url[3]);
 		
 		Post post = postService.getPost(postNo);
-		
-		// utf-8로 인코딩하여 한글깨짐 문제 해결
-//		try {
-//			post.setContent(new String(request.getParameter("content").getBytes("8859_1"), "utf-8"));
-//		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//		}
 		
 		postService.update(post);
 		model.addAttribute("post", post);
