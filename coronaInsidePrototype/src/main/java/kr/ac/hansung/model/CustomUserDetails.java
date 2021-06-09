@@ -51,7 +51,7 @@ public class CustomUserDetails implements UserDetails {
 	@Id    
 	@GeneratedValue	
 	@Column(name="user_id")
-	private int user_id;
+	private int userId;
 	
 	@Column(name="enabled",columnDefinition = "boolean default false")
 	private boolean ENABLED;

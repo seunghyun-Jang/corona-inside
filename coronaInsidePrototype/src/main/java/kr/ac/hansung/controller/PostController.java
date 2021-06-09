@@ -1,6 +1,5 @@
 package kr.ac.hansung.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -327,9 +326,10 @@ public class PostController {
 		Post post = postService.getPost(postNo);
 		
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
-		if(!postService.isAlreadyLiked(user.getUser_id(), postNo)) {
-			
-			postService.like(post, user.getUser_id());
+		if(!postService.isAlreadyLiked(user.getUserId(), postNo)) {
+			postService.like(post, user.getUserId());
+		} else {
+			return "already-liked";
 		}
 		
 		model.addAttribute("post", post);
@@ -351,9 +351,11 @@ public class PostController {
 		Post post = postService.getPost(postNo);
 		
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
-		if(!postService.isAlreadyLiked(user.getUser_id(), postNo)) {
+		if(!postService.isAlreadyLiked(user.getUserId(), postNo)) {
 			
-			postService.unlike(post, user.getUser_id());
+			postService.unlike(post, user.getUserId());
+		} else {
+			return "already-liked";
 		}
 		
 		model.addAttribute("post", post);

@@ -28,8 +28,6 @@
 </head>
 <body id="page-top">
 
-	
-	
     <!-- Navigation-->
    	<nav
    	  class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top"
@@ -122,8 +120,8 @@
 					    <td>
 						    <br><br>${fn:replace(post.content, replaceChar, "<br>")} <br><br><br><br>
 						    <p class="p-like" align="center">
-						    	<button class="btn-like rounded text-white" onClick="doPostLike('like')">추천&nbsp;&nbsp;${post.likeCount}</button>
-						    	&emsp;<button class="btn-unlike rounded text-white" onClick="doPostLike('unlike')">비추&nbsp;&nbsp;-${post.unlikeCount}</button>
+						    	<button type="button" class="btn-like rounded text-white" onClick="doPostLike('like')">추천&nbsp;&nbsp;${post.likeCount}</button>
+						    	&emsp;<button type="button" class="btn-unlike rounded text-white" onClick="doPostLike('unlike')">비추&nbsp;&nbsp;-${post.unlikeCount}</button>
 						    </p>
 						    <p align="right">
 						    	<sec:authorize access="isAuthenticated()">
@@ -265,6 +263,7 @@
     <script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  	
     <script>
 		function replyToggle(id) {
 			obj=document.getElementById(id);
@@ -285,7 +284,14 @@
 				if (req.readyState == 4 && req.status == 200) {
 					$(".p-like").load(window.location.href + " .p-like");
 				}
-			}		req.send();
+			}
+			req.onload = () => {
+				if(req.response == "alreadyLiked")
+					alert("이미 추천/비추천 한 글입니다.")
+				
+			}
+			req.send();
+			
 		}
 		
 		function doReplyLike(todo, replyId, id) {
@@ -319,10 +325,8 @@
 		}
 		
 		function doDelete(postNo) {
-			window.location.href = '${pageContext.request.contextPath}/do-deletepost/' + p
+			window.location.href = '${pageContext.request.contextPath}/do-deletepost/' + postNo;
 		}
-		
-	}
 		
 	</script>
 </body>
