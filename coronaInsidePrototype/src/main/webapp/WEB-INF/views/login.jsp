@@ -36,64 +36,65 @@
 </head>
 <body id="page-top">
 	<!-- Navigation-->
-	<nav
-		class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top"
-		id="mainNav">
-		<div class="container">
-			<a class="navbar-brand js-scroll-trigger" style="padding-left: 10px;"
-				href="home">Corona Inside</a>
-			<button
-				class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-violet text-white rounded"
-				type="button" data-toggle="collapse" data-target="#navbarResponsive"
-				aria-controls="navbarResponsive" aria-expanded="false"
-				aria-label="Toggle navigation">
-				Menu <i class="fas fa-bars"></i>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav ml-auto">
-					<sec:authorize access="isAnonymous()">
-						<li class="nav-item mx-0 mx-lg-1 login-item"><a
-							class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-							href="login">로그인</a></li>
-					</sec:authorize>
-					<sec:authorize access="isAuthenticated()">
-						<li class="nav-item mx-0 mx-lg-1"><a
-						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">
-						<sec:authentication property="principal.nickname" /> 님 환영합니다.</a></li> 
-						<li class="nav-item mx-0 mx-lg-1"><a
-						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-						href="logout">로그아웃</a></li>
-					</sec:authorize>
-					<li class="nav-item mx-0 mx-lg-1"><a
-						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-						href="corona">코로나 현황</a></li>
-					<li class="nav-item mx-0 mx-lg-1"><a
-						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-						href="vaccine">백신현황</a></li>
-					<li class="nav-item mx-0 mx-lg-1"><a
-						class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-						href="community">커뮤니티</a></li>
+   <nav
+      class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top"
+      id="mainNav">
+      <div class="container">
+         <a class="navbar-brand js-scroll-trigger" style="padding-left: 10px;"
+            href="${pageContext.request.contextPath}/home">Corona Inside</a>
+         <button
+            class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-violet text-white rounded"
+            type="button" data-toggle="collapse" data-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
+            Menu <i class="fas fa-bars"></i>
+         </button>
+         <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+               <sec:authorize access="isAnonymous()">
+                  <li class="nav-item mx-0 mx-lg-1 login-item"><a
+                     class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                     href="${pageContext.request.contextPath}/login">로그인</a></li>
+               </sec:authorize>
+               <sec:authorize access="isAuthenticated()">
+                  <li class="login-item mx-0 mx-lg-1"><a
+                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger login-displayusername-mobile">
+                  <sec:authentication property="principal.nickname" /> 님 환영합니다.</a></li> 
+                  <li class="nav-item login-item mx-0 mx-lg-1"><a
+                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                  href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
+               </sec:authorize>
+               <li class="nav-item mx-0 mx-lg-1"><a
+                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger text-non-selected"
+                  href="${pageContext.request.contextPath}/corona">코로나 현황</a></li>
+               <li class="nav-item mx-0 mx-lg-1"><a
+                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger text-non-selected"
+                  href="${pageContext.request.contextPath}/vaccine">백신현황</a></li>
+               <li class="nav-item mx-0 mx-lg-1"><a
+                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger text-selected"
+                  href="${pageContext.request.contextPath}/community">
+                  	<i class="fas fa-chevron-right sel-icons"></i> 커뮤니티 <i class="fas fa-chevron-left sel-icons"></i></a></li>
 
-				</ul>
+            </ul>
 
-			</div>
-			<sec:authorize access="isAuthenticated()">
-				<p class="login-displayusername">
-					<sec:authentication property="principal.nickname" />
-					님 환영합니다.
-				</p>
-			</sec:authorize>
-			
-			<sec:authorize access="isAnonymous()">
-				<button class="bg-primary rounded text-white login-btn"
-					id="login-btn" onClick="location.href='login'">로그인</button>
-			</sec:authorize>
-			<sec:authorize access="isAuthenticated()">
-				<button class="bg-primary rounded text-white login-btn"
-					id="login-btn" onClick="location.href='logout'">로그아웃</button>
-			</sec:authorize>
-		</div>
-	</nav>
+         </div>
+         <sec:authorize access="isAuthenticated()">
+            <p class="login-displayusername">
+               <sec:authentication property="principal.nickname" />
+               님 <br>환영합니다.
+            </p>
+         </sec:authorize>
+         
+         <sec:authorize access="isAnonymous()">
+            <button class="bg-primary rounded text-white login-btn"
+               id="login-btn" onClick="location.href='login'">로그인</button>
+         </sec:authorize>
+         <sec:authorize access="isAuthenticated()">
+            <button class="bg-primary rounded text-white login-btn"
+               id="login-btn" onClick="location.href='logout'">로그아웃</button>
+         </sec:authorize>
+      </div>
+   </nav>
 	<!-- Masthead-->
 	<header class="masthead bg-violet text-white text-center">
 		<div class="container d-flex align-items-center flex-column">
