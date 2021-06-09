@@ -13,8 +13,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.hansung.identifier.SearchTarget;
-import kr.ac.hansung.model.CustomUserDetails;
 import kr.ac.hansung.model.Post;
+import kr.ac.hansung.model.PostLikeUser;
 import kr.ac.hansung.model.Reply;
 
 @Repository
@@ -68,7 +68,6 @@ public class PostDao {
 			replyQuery.setParameter("keyword", "%" + keyword + "%");
 			List<Reply> searchedList = replyQuery.getResultList();
 			if(!searchedList.isEmpty()) {
-				System.out.println("isn't empty");
 				HashSet<Integer> resultHashSet = new HashSet<>();
 				for(Reply reply : searchedList) {
 					resultHashSet.add(reply.getPostNo());
@@ -142,6 +141,31 @@ public class PostDao {
 		}
 		
 		return 0;
+	}
+
+	public boolean isAlreadyLiked(int userId, int postNo) {
+
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "select count(*) from PostLikeUser plu where plu.postNo=:postNo and plu.userId=:userId";
+		
+		Query<Long> query = session.createQuery(hql, Long.class);
+		query.setParameter("userId", userId);
+		query.setParameter("postNo", postNo);
+		long resultList = query.getSingleResult();
+		
+		if(resultList == 0) return false;
+		else return true;
+	}
+
+	public void insertPostLikeUser(int userId, int postNo, boolean isLike) {
+		PostLikeUser pul = new PostLikeUser();
+		pul.setPostNo(postNo);
+		pul.setUserId(userId);
+		pul.setLike(isLike);
+		
+		Session session = sessionFactory.getCurrentSession();
+        session.saveOrUpdate(pul);
+        session.flush();
 	}
 
 }

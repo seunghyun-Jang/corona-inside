@@ -57,16 +57,23 @@ public class PostService {
 		postDao.delete(post);
 	}
 	
-	public void like(Post post) {
+	public void like(Post post, int userId) {
+		postDao.insertPostLikeUser(userId, post.getPostNo(), true);
 		postDao.like(post);
 	}
 	
-	public void unlike(Post post) {
+	public void unlike(Post post, int userId) {
+		postDao.insertPostLikeUser(userId, post.getPostNo(), false);
 		postDao.unlike(post);
 	}
 	
 	public int getCurrentPostNo() {
 		return postDao.getCurrentPostNo();
+	}
+
+	public boolean isAlreadyLiked(int userId, int postNo) {
+		
+		return postDao.isAlreadyLiked(userId, postNo);
 	}
 
 }

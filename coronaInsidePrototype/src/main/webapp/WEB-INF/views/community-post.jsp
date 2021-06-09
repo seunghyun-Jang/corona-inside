@@ -28,10 +28,11 @@
 </head>
 <body id="page-top">
 
-	<!-- Navigation-->
-   <!-- Navigation-->
-   <nav
-      class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top"
+	
+	
+    <!-- Navigation-->
+   	<nav
+   	  class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top"
       id="mainNav">
       <div class="container">
          <a class="navbar-brand js-scroll-trigger" style="padding-left: 10px;"
@@ -89,6 +90,8 @@
          </sec:authorize>
       </div>
    </nav>
+   
+   
 	<!-- Masthead-->
     <header class="masthead bg-violet text-white text-center">
         <div class="container d-flex align-items-center flex-column">
@@ -104,7 +107,8 @@
     </header>
     
     <section class="page-section" id="post">
-    	<div class="container">
+	    
+	    <div class="container">
     		<h2 class="masthead-heading text-secondary text-uppercase mb-4-5"><a class="a-violet" href="${pageContext.request.contextPath}/community">커뮤니티</a></h2>
     		<table class="styled-table">
     			<tbody>
@@ -281,8 +285,7 @@
 				if (req.readyState == 4 && req.status == 200) {
 					$(".p-like").load(window.location.href + " .p-like");
 				}
-			}
-			req.send();
+			}		req.send();
 		}
 		
 		function doReplyLike(todo, replyId, id) {
@@ -301,6 +304,7 @@
 				}
 			}
 			req.send();
+			
 		}
 		
 		function clickDeleteBtn(postNo) {
@@ -315,9 +319,10 @@
 		}
 		
 		function doDelete(postNo) {
-			window.location.href = '${pageContext.request.contextPath}/do-deletepost/' + postNo;
-			
+			window.location.href = '${pageContext.request.contextPath}/do-deletepost/' + p
 		}
+		
+	}
 		
 	</script>
 </body>
