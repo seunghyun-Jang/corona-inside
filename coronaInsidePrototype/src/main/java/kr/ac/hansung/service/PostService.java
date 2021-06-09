@@ -58,12 +58,12 @@ public class PostService {
 	}
 	
 	public void like(Post post, int userId) {
-		postDao.insertPostLikeUser(userId, post.getPostNo(), true);
+		postDao.insertPostLikeUser(post.getPostNo(), userId);
 		postDao.like(post);
 	}
 	
 	public void unlike(Post post, int userId) {
-		postDao.insertPostLikeUser(userId, post.getPostNo(), false);
+		postDao.insertPostLikeUser(post.getPostNo(), userId);
 		postDao.unlike(post);
 	}
 	
@@ -71,9 +71,9 @@ public class PostService {
 		return postDao.getCurrentPostNo();
 	}
 
-	public boolean isAlreadyLiked(int userId, int postNo) {
+	public boolean isAlreadyLiked(int postNo, int userId) {
 		
-		return postDao.isAlreadyLiked(userId, postNo);
+		return postDao.isAlreadyLiked(postNo, userId);
 	}
 
 }

@@ -143,25 +143,24 @@ public class PostDao {
 		return 0;
 	}
 
-	public boolean isAlreadyLiked(int userId, int postNo) {
+	public boolean isAlreadyLiked(int postNo, int userId) {
 
 		Session session = sessionFactory.getCurrentSession();
 		String hql = "select count(*) from PostLikeUser plu where plu.postNo=:postNo and plu.userId=:userId";
 		
 		Query<Long> query = session.createQuery(hql, Long.class);
-		query.setParameter("userId", userId);
 		query.setParameter("postNo", postNo);
-		long resultList = query.getSingleResult();
+		query.setParameter("userId", userId);
+		long result = query.getSingleResult();
 		
-		if(resultList == 0) return false;
+		if(result == 0) return false;
 		else return true;
 	}
 
-	public void insertPostLikeUser(int userId, int postNo, boolean isLike) {
+	public void insertPostLikeUser(int postNo, int userId) {
 		PostLikeUser pul = new PostLikeUser();
 		pul.setPostNo(postNo);
 		pul.setUserId(userId);
-		pul.setLike(isLike);
 		
 		Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(pul);

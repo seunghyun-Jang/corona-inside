@@ -326,7 +326,7 @@ public class PostController {
 		Post post = postService.getPost(postNo);
 		
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
-		if(!postService.isAlreadyLiked(user.getUserId(), postNo)) {
+		if(!postService.isAlreadyLiked(postNo, user.getUserId())) {
 			postService.like(post, user.getUserId());
 		} else {
 			return "already-liked";
@@ -351,7 +351,7 @@ public class PostController {
 		Post post = postService.getPost(postNo);
 		
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
-		if(!postService.isAlreadyLiked(user.getUserId(), postNo)) {
+		if(!postService.isAlreadyLiked(postNo, user.getUserId())) {
 			
 			postService.unlike(post, user.getUserId());
 		} else {
@@ -413,13 +413,20 @@ public class PostController {
 	}
 	
 	@RequestMapping(value = "/post/*/do-replylike")
-	public String doReplyLike(Model model, HttpServletRequest request) {
+	public String doReplyLike(Model model, HttpServletRequest request, Authentication auth) {
 		
 		String[] url = request.getRequestURI().split("/");
 		int replyId = Integer.parseInt(url[3]);
 		
 		Reply reply = replyService.getReply(replyId);
-		replyService.like(reply);
+		
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		if(!replyService.isAlreadyLiked(reply.getReplyId(), user.getUserId())) {
+
+			replyService.like(reply, user.getUserId());
+		} else {
+			return "already-liked";
+		}
 		
 		int postNo = reply.getPostNo();
 		Post post = postService.getPost(postNo);
@@ -434,13 +441,20 @@ public class PostController {
 	}
 	
 	@RequestMapping(value = "/post/*/do-replyunlike")
-	public String doReplyUnlike(Model model, HttpServletRequest request) {
+	public String doReplyUnlike(Model model, HttpServletRequest request, Authentication auth) {
 		
 		String[] url = request.getRequestURI().split("/");
 		int replyId = Integer.parseInt(url[3]);
 		
 		Reply reply = replyService.getReply(replyId);
-		replyService.unlike(reply);
+		
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		if(!replyService.isAlreadyLiked(reply.getReplyId(), user.getUserId())) {
+
+			replyService.unlike(reply, user.getUserId());
+		} else {
+			return "already-liked";
+		}
 		
 		int postNo = reply.getPostNo();
 		Post post = postService.getPost(postNo);

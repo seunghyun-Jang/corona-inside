@@ -309,6 +309,11 @@
 					$(id).load(window.location.href + id);
 				}
 			}
+			req.onload = () => {
+				if(req.response == "alreadyLiked")
+					alert("이미 추천/비추천 한 댓글입니다.")
+				
+			}
 			req.send();
 			
 		}

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.hansung.model.Reply;
+import kr.ac.hansung.model.ReplyLikeUser;
 
 @Repository
 @Transactional
@@ -146,6 +147,29 @@ public class ReplyDao {
 		List<Reply> resultList = query.getResultList();
 		
 		return resultList;
+	}
+
+	public boolean isAlreadyLiked(int replyId, int userId) {
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "select count(*) from ReplyLikeUser rlu where rlu.replyId=:replyId and rlu.userId=:userId";
+		
+		Query<Long> query = session.createQuery(hql, Long.class);
+		query.setParameter("userId", userId);
+		query.setParameter("replyId", replyId);
+		long resultList = query.getSingleResult();
+		
+		if(resultList == 0) return false;
+		else return true;
+	}
+	
+	public void insertReplyLikeUser(int replyId, int userId) {
+		ReplyLikeUser rul = new ReplyLikeUser();
+		rul.setReplyId(replyId);
+		rul.setUserId(userId);
+		
+		Session session = sessionFactory.getCurrentSession();
+        session.saveOrUpdate(rul);
+        session.flush();
 	}
     
 }

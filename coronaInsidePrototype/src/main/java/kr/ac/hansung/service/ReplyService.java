@@ -69,12 +69,14 @@ public class ReplyService {
 		}
 	}
 	
-	public void like(Reply reply) {
+	public void like(Reply reply, int userId) {
+		replyDao.insertReplyLikeUser(reply.getReplyId(), userId);
 		replyDao.like(reply);
 		refreshBestReplies(reply.getPostNo());
 	}
 	
-	public void unlike(Reply reply) {
+	public void unlike(Reply reply, int userId) {
+		replyDao.insertReplyLikeUser(reply.getReplyId(), userId);
 		replyDao.unlike(reply);
 	}
 	
@@ -107,6 +109,11 @@ public class ReplyService {
 			reply.setOrderNo(reply.getOrderNo()+1);
 			update(reply);
 		}
+	}
+
+	public boolean isAlreadyLiked(int replyId, int userId) {
+
+		return replyDao.isAlreadyLiked(replyId, userId);
 	}
 
 }

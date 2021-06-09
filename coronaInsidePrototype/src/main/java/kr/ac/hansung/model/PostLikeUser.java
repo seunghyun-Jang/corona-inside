@@ -27,9 +27,6 @@ public class PostLikeUser {
 	@Column(name="user_id")
 	int userId;
 	
-	@Column(name="is_like")
-	boolean isLike;
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
