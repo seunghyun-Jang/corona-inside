@@ -11,7 +11,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<title>Corona Inside</title>
+		<title>Corona Inside</title>`
 		<link rel="stylesheet" href="resources/css/bootstrap.min.css">
 		<!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/favicon_covid.ico" />
@@ -272,28 +272,21 @@
 			<div class="row">
 				<!-- Footer Location-->
 				<div class="col-lg-4 mb-5 mb-lg-0">
-					<h4 class="text-uppercase mb-4">Location</h4>
+					<h4 class="text-uppercase mb-4">TEAM</h4>
 					<p class="lead mb-0">
-						HANSUNG <br /> UNIVERSITY
+						모자돌 <br /> CAP-STONE
 					</p>
 				</div>
 				<!-- Footer Social Icons-->
 				<div class="col-lg-4 mb-5 mb-lg-0">
-					<h4 class="text-uppercase mb-4">Around the Web</h4>
-					<a class="btn btn-outline-light btn-social mx-1" href="#!"><i
-						class="fab fa-fw fa-facebook-f"></i></a> <a
-						class="btn btn-outline-light btn-social mx-1" href="#!"><i
-						class="fab fa-fw fa-twitter"></i></a> <a
-						class="btn btn-outline-light btn-social mx-1" href="#!"><i
-						class="fab fa-fw fa-linkedin-in"></i></a> <a
-						class="btn btn-outline-light btn-social mx-1" href="#!"><i
-						class="fab fa-fw fa-dribbble"></i></a>
+					
+					<img class="img-fluid" src="resources/assets/img/hsu-logo.png" alt="" />
 				</div>
 				<!-- Footer About Text-->
 				<div class="col-lg-4">
 					<h4 class="text-uppercase mb-4">MEMBER</h4>
 					<p class="lead mb-0">
-						HONG<br> JANG<br> DDO
+						1692082 홍찬휘<br> 1692064 장승현<br> 1692071 정한솔
 					</p>
 				</div>
 			</div>
@@ -302,7 +295,7 @@
 	<!-- Copyright Section-->
 	<div class="copyright py-4 text-center text-white">
 		<div class="container">
-			<small>Copyright © Corona-Inside 2021</small>
+			<small>Corona-Inside 2021</small>
 		</div>
 	</div>
 

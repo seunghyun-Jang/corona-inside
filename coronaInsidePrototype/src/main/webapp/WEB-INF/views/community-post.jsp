@@ -150,7 +150,7 @@
 									<sf:errors class="error" path="parentId"/>
 									<sf:input class="control" type="hidden" path="postNo" value="${post.postNo}"/>
 									<sf:errors class="error" path="postNo"/>
-									<sf:input class="control" type="hidden" path="author" value="reply 테스트"/>
+									<sf:input class="control" type="hidden" path="author" value="${username}"/>
 									<sf:errors class="error" path="author"/>
 									
 				              		<button type="submit" class="btn btn-default bg-violet">답글달기</button>
@@ -184,7 +184,7 @@
 												<sf:errors class="error" path="groupNo"/>
 												<sf:input class="control" type="hidden" path="postNo" value="${best_reply.postNo}"/>
 												<sf:errors class="error" path="postNo"/>
-												<sf:input class="control" type="hidden" path="author" value="${best_reply.author}-reply"/>
+												<sf:input class="control" type="hidden" path="author" value="${username}"/>
 												<sf:errors class="error" path="author"/>
 												<button type="submit" class="btn btn-default bg-violet">답글달기</button>
 							              		
@@ -228,7 +228,7 @@
 												<sf:errors class="error" path="groupNo"/>
 												<sf:input class="control" type="hidden" path="postNo" value="${reply.postNo}"/>
 												<sf:errors class="error" path="postNo"/>
-												<sf:input class="control" type="hidden" path="author" value="${session.getAttribute('username')}"/>
+												<sf:input class="control" type="hidden" path="author" value="${username}"/>
 												<sf:errors class="error" path="author"/>
 												<button type="submit" class="btn btn-default bg-violet">답글달기</button>
 							              		
@@ -249,7 +249,7 @@
 	</section>
 	<!-- Copyright Section-->
    	<div class="copyright py-4 text-center text-white">
-       	<div class="container"><small>Copyright © Corona-Inside 2021</small></div>
+       	<div class="container"><small>Corona-Inside 2021</small></div>
    	</div>
    	
    	<!-- Bootstrap core JS-->
