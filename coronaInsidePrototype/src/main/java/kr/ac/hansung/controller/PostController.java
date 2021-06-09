@@ -319,13 +319,19 @@ public class PostController {
 	}
 	
 	@RequestMapping(value = "/post/*/do-postlike")
-	public String doPostLike(Model model, HttpServletRequest request) {
+	public String doPostLike(Model model, HttpServletRequest request, Authentication auth) {
 		
 		String[] url = request.getRequestURI().split("/");
 		int postNo = Integer.parseInt(url[3]);
 		
 		Post post = postService.getPost(postNo);
-		postService.like(post);
+		
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		if(!postService.isAlreadyLiked(user.getUser_id(), postNo)) {
+			
+			postService.like(post, user.getUser_id());
+		}
+		
 		model.addAttribute("post", post);
 		
 		List<Reply> replies = replyService.getCurrent(postNo);
@@ -337,13 +343,19 @@ public class PostController {
 	}
 	
 	@RequestMapping(value = "/post/*/do-postunlike")
-	public String doPostUnlike(Model model, HttpServletRequest request) {
+	public String doPostUnlike(Model model, HttpServletRequest request, Authentication auth) {
 		
 		String[] url = request.getRequestURI().split("/");
 		int postNo = Integer.parseInt(url[3]);
 		
 		Post post = postService.getPost(postNo);
-		postService.unlike(post);
+		
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		if(!postService.isAlreadyLiked(user.getUser_id(), postNo)) {
+			
+			postService.unlike(post, user.getUser_id());
+		}
+		
 		model.addAttribute("post", post);
 		
 		List<Reply> replies = replyService.getCurrent(postNo);
@@ -356,14 +368,6 @@ public class PostController {
 	
 	@RequestMapping(value = "/do-reply", method = RequestMethod.POST)
 	public String doReply(Model model, @ModelAttribute("reply") @Valid Reply reply, BindingResult result) {
-		
-		// utf-8로 인코딩하여 한글깨짐 문제 해결
-		try {
-			reply.setContent(new String(reply.getContent().getBytes("8859_1"), "utf-8"));
-			reply.setAuthor(new String(reply.getAuthor().getBytes("8859_1"), "utf-8"));
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
 		
 		if(result.hasErrors()) {
 			System.out.println("== Form data does not validated ==");
@@ -386,8 +390,12 @@ public class PostController {
 			reply.setOrderNo(1);
 			reply.setGroupNo(1);
 		} else if(reply.getParentId() == 0) {
-			reply.setOrderNo(replyService.getNextOrderNo(reply.getPostNo()));
+			int nextOrderNo = replyService.getNextOrderNo(reply.getPostNo());
+			replyService.updateOrderNums(nextOrderNo);
+			reply.setOrderNo(nextOrderNo);
 			reply.setGroupNo(replyService.getNextGroupNo(reply.getPostNo()));
+			
+			
 		} else {
 			reply.setOrderNo(replyService.getNextOrderNo(reply.getPostNo(), reply.getGroupNo()));
 		}

@@ -43,6 +43,10 @@ public class ReplyService {
 		replyDao.insert(reply);
 	}
 	
+	public void update(Reply reply) {
+		replyDao.update(reply);
+	}
+	
 	public void delete(Reply reply) {
 		replyDao.delete(reply);
 	}
@@ -83,11 +87,26 @@ public class ReplyService {
 	}
 	
 	public int getNextOrderNo(int postNo, int groupNo) {
-		return replyDao.getCurrentOrderNo(postNo, groupNo)+1;
+		int nextOrderNo = replyDao.getCurrentOrderNo(postNo, groupNo)+1;
+		updateOrderNums(nextOrderNo);
+		return nextOrderNo;
 	}
 	
 	public int getNextGroupNo(int postNo) {
 		return replyDao.getCurrentGroupNo(postNo)+1;
+	}
+	
+	public List<Reply> getListAfterOrderNo(int orderNo) {
+		return replyDao.getListAfterOrderNo(orderNo);
+	}
+	
+	public void updateOrderNums(int fromOrderNo) {
+		List<Reply> replyList = getListAfterOrderNo(fromOrderNo);
+		
+		for(Reply reply : replyList) {
+			reply.setOrderNo(reply.getOrderNo()+1);
+			update(reply);
+		}
 	}
 
 }

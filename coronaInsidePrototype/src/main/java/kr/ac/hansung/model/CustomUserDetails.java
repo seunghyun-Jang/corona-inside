@@ -42,7 +42,7 @@ public class CustomUserDetails implements UserDetails {
 	private String password;
 	
 	@Column
-	@Pattern(regexp="\\S{2,6}", message="이름은 2~6자로 입력해주세요.")
+	@Pattern(regexp="\\S{2,12}", message="이름은 2~12자로 입력해주세요.")
 	private String nickname;
 	
 	@Column(name="authority",columnDefinition = "varchar(255) default 'ROLE_USER'")
@@ -50,8 +50,8 @@ public class CustomUserDetails implements UserDetails {
 	
 	@Id    
 	@GeneratedValue	
-	@Column(name="user_no")
-	private int user_no;
+	@Column(name="user_id")
+	private int user_id;
 	
 	@Column(name="enabled",columnDefinition = "boolean default false")
 	private boolean ENABLED;

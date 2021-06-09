@@ -312,7 +312,7 @@
 					<!-- Copyright Section-->
 					<div class="copyright py-4 text-center text-white">
 						<div class="container">
-							<small>Copyright © Corona-Inside 2021</small>
+							<small>Corona-Inside 2021</small>
 						</div>
 
 					</div>
