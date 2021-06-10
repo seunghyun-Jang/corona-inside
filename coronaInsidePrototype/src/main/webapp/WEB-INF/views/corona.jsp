@@ -308,22 +308,23 @@
 
 					</div>
 					<!-- End of Main Content -->
-
-					<!-- Copyright Section-->
-					<div class="copyright py-4 text-center text-white">
-						<div class="container">
-							<small>Corona-Inside 2021</small>
-						</div>
-
-					</div>
-
-
-
 				</div>
 				<!-- End of Content Wrapper -->
 
 			</div>
 			<!-- End of Page Wrapper -->
+			<div class="copyright py-4 text-center text-white">
+						<div class="container">
+							<small>질병관리청이 매일 발표하는 '코로나바이러스감염증-19 국내 발생 현황' 보도참고자료 기준(매일 0시 기준, 하루 1회 집계). <br>
+
+							집계 수치는 행정안전부 공공데이터포털 오픈 API를 통해 제공되며, 오픈 API의 집계 수치 업데이트가 중앙방역대책본부의 일일 현황 발표보다 지연될 수 있음. <br><br>
+							
+							Corona-Inside 2021	
+							
+							</small>
+						</div>
+
+					</div>
 
 			<!-- Bootstrap core JS-->
 		
@@ -536,6 +537,7 @@
 
 		</div>
 	</div>
+	
 </body>
 </html>
 

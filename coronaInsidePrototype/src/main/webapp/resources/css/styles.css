@@ -10787,4 +10787,18 @@ form .row:first-child .floating-label-form-group {
 .search-target-div .search-target-select {
 	font-size: 12px;
 }
+
+.no-left-padding {
+  padding-left: 0 !important;
+}
+.no-right-padding {
+  padding-right: 0 !important;
+}
+
+.no-left-margin {
+  margin-left: 0 !important;
+}
+.no-right-margin {
+  margin-right: 0 !important;
+}
 }

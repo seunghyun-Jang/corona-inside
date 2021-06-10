@@ -31,7 +31,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 
 var ctx = document.getElementById("myBarChart3");
 var myBarChart = new Chart(ctx, {
-	type: 'bar',
+	type: 'horizontalBar',
 	data: {
 		labels: ["제주", "경남", "경북", "전남", "전북", "충남", "충북", "강원", "경기", "세종", "울산", "대전", "광주", "인천", "대구", "부산", "서울"],
 		datasets: [{
@@ -48,14 +48,14 @@ var myBarChart = new Chart(ctx, {
 		maintainAspectRatio: false,
 		layout: {
 			padding: {
-				left: 10,
-				right: 25,
-				top: 25,
+				left: 0,
+				right: 0,
+				top: 0,
 				bottom: 0
 			}
 		},
 		scales: {
-			xAxes: [{
+			yAxes: [{
 				time: {
 					unit: 'month'
 				},
@@ -68,19 +68,22 @@ var myBarChart = new Chart(ctx, {
 					interval: 50,
 					autoSkip: false,		
 					minRotation: 0,		
-					maxRotation: 0,
+					maxRotation: 45,
 					fontSize: 10
+						
 
 				},
-				maxBarThickness: 25,
+				maxBarThickness: 25
+				
 			}],
-			yAxes: [{
+			xAxes: [{
 				ticks: {
 					min: 0,
 					max: 100,
 					maxTicksLimit: 5,
 					padding: 10,
-				
+					
+	
 					callback: function(value, index, values) {
 						
 						return number_format(value) + ' %';
@@ -116,7 +119,7 @@ var myBarChart = new Chart(ctx, {
 				label: function(tooltipItem, chart) {
 					var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
 					
-					return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + ' %';
+					return datasetLabel + ': ' + number_format(tooltipItem.xLabel) + ' %';
 				}
 			}
 		},
@@ -132,7 +135,7 @@ function updateChartType1(bt) {
 				myBarChart.destroy();
                 
 				myBarChart = new Chart(ctx, {
-	type: 'bar',
+	type: 'horizontalBar',
 	data: {
 		labels: ["제주", "경남", "경북", "전남", "전북", "충남", "충북", "강원", "경기", "세종", "울산", "대전", "광주", "인천", "대구", "부산", "서울"],
 		datasets: [{
@@ -149,14 +152,14 @@ function updateChartType1(bt) {
 		maintainAspectRatio: false,
 		layout: {
 			padding: {
-				left: 10,
-				right: 25,
-				top: 25,
+				left: 0,
+				right: 0,
+				top: 0,
 				bottom: 0
 			}
 		},
 		scales: {
-			xAxes: [{
+			yAxes: [{
 				time: {
 					unit: 'month'
 				},
@@ -175,7 +178,7 @@ function updateChartType1(bt) {
 				},
 				maxBarThickness: 25,
 			}],
-			yAxes: [{
+			xAxes: [{
 				ticks: {
 					min: 0,
 					max: 100,
@@ -217,7 +220,7 @@ function updateChartType1(bt) {
 				label: function(tooltipItem, chart) {
 					var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
 					
-					return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + ' %';
+					return datasetLabel + ': ' + number_format(tooltipItem.xLabel) + ' %';
 				}
 			}
 		},
@@ -236,7 +239,7 @@ function updateChartType2(bt) {
 				myBarChart.destroy();
                 
 				myBarChart = new Chart(ctx, {
-	type: 'bar',
+	type: 'horizontalBar',
 	data: {
 		labels: ["제주", "경남", "경북", "전남", "전북", "충남", "충북", "강원", "경기", "세종", "울산", "대전", "광주", "인천", "대구", "부산", "서울"],
 		datasets: [{
@@ -253,14 +256,14 @@ function updateChartType2(bt) {
 		maintainAspectRatio: false,
 		layout: {
 			padding: {
-				left: 10,
-				right: 25,
-				top: 25,
+				left: 0,
+				right: 0,
+				top: 0,
 				bottom: 0
 			}
 		},
 		scales: {
-			xAxes: [{
+			yAxes: [{
 				time: {
 					unit: 'month'
 				},
@@ -279,7 +282,7 @@ function updateChartType2(bt) {
 				},
 				maxBarThickness: 25,
 			}],
-			yAxes: [{
+			xAxes: [{
 				ticks: {
 					min: 0,
 					max: 100,
@@ -321,7 +324,7 @@ function updateChartType2(bt) {
 				label: function(tooltipItem, chart) {
 					var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
 					
-					return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + ' %';
+					return datasetLabel + ': ' + number_format(tooltipItem.xLabel) + ' %';
 				}
 			}
 		},
