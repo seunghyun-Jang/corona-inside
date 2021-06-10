@@ -10497,7 +10497,7 @@ form .row:first-child .floating-label-form-group {
 
 @media (max-width:992px) {
 	.styled-table td:first-child { font-size: 1em;}
-	.styled-table td:nth-child(2) {width: 20%; }
+  .styled-table td:nth-child(2) {width: 20%; }
 	.styled-table td:nth-child(3) {width : 20%; }
 	.styled-table td:last-child { width: 20%; }
 	.styled-table thead { font-size: 0.7em; }
