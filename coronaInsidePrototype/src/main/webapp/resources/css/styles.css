@@ -6147,6 +6147,19 @@ a.close.disabled {
   background-color: #980000 !important;
 }
 
+@media(max-width: 992px) {
+	.btn-like {
+      margin-left:0px;
+	  width:80px;
+	  height:50px;
+	}
+	.btn-unlike {
+	  margin-left:20px;
+	  width:80px;
+	  height:50px;
+	}
+}
+
 a.bg-primary:hover, a.bg-primary:focus,
 button.bg-primary:hover,
 button.bg-primary:focus {
@@ -10483,12 +10496,13 @@ form .row:first-child .floating-label-form-group {
 .styled-table td:last-child { width: 10%; }
 
 @media (max-width:992px) {
-	.styled-table td:first-child { font-size: 1em; width: 50%; }
+	.styled-table td:first-child { font-size: 1em;}
+	.styled-table td:nth-child(2) {width: 20%; }
 	.styled-table td:nth-child(3) {width : 20%; }
 	.styled-table td:last-child { width: 20%; }
-	.styled-table thead { font-size: 0.8em; }
+	.styled-table thead { font-size: 0.7em; }
 	.styled-table td:nth-child(2),
-	.styled-table td:nth-child(3) { font-size: 0.8em; }
+	.styled-table td:nth-child(3) { font-size: 0.7em; }
 	.styled-table td:nth-child(4) { font-size: 0.7em; }
 }
 
