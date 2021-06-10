@@ -371,7 +371,7 @@ function updateChartType3() {
 					drawBorder: false
 				},
 				ticks: {
-					maxTicksLimit: 10,
+					maxTicksLimit: 3,
 					interval: 50,
 					autoSkip: true,		
 					minRotation: 0,		
