@@ -10483,12 +10483,13 @@ form .row:first-child .floating-label-form-group {
 .styled-table td:last-child { width: 10%; }
 
 @media (max-width:992px) {
-	.styled-table td:first-child { font-size: 1em; width: 50%; }
+	.styled-table td:first-child { font-size: 1em;}
+	.styled-table td:nth-child(2) { width: 20%; }
 	.styled-table td:nth-child(3) {width : 20%; }
 	.styled-table td:last-child { width: 20%; }
-	.styled-table thead { font-size: 0.8em; }
+	.styled-table thead { font-size: 0.7em; }
 	.styled-table td:nth-child(2),
-	.styled-table td:nth-child(3) { font-size: 0.8em; }
+	.styled-table td:nth-child(3) { font-size: 0.7em; }
 	.styled-table td:nth-child(4) { font-size: 0.7em; }
 }
 
