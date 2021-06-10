@@ -31,6 +31,7 @@ public class Post {
 	@Column(name="post_no")
 	private int postNo;
 	
+	@Size(min=2, max=40, message="제목은 2자 이상, 40자 이하로 적어주세요.")
 	@NotEmpty(message="제목을 입력해주세요")
 	private String title;
 	
