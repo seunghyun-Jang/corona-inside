@@ -35,6 +35,16 @@
   			}
 		}
 		
+		@media screen and (max-width: 425px) {
+  			.table {
+    			font-size: 8px;
+  			}
+  			
+  			.small-font {
+    			font-size: 0.5em;
+			}
+		}
+		
 		</style>
         
 	</head>
@@ -125,7 +135,7 @@
             <!-- Grid Items-->
             <div class="container-fluid">
             	<div class="row">
-            		<div class="col-xs-12 col-lg-12">
+            		<div class="col-xs-12 col-lg-12 no-left-padding no-right-padding">
 			<div class="card shadow mb-4">
 				<div class="card-header py-3">
 					<h6 class="m-0 font-weight-bold text-violet" style="text-align:left;">
@@ -155,7 +165,7 @@
 				</div>
 			</div>
 		</div>
-	    <div class="col-xs-12 col-lg-12">
+	    <div class="col-xs-12 col-lg-12 no-left-padding no-right-padding">
 	       	<div class="card shadow mb-4">
 				<div class="card-header py-3">
 					<h6 class="m-0 font-weight-bold text-violet" style="text-align:left;">코로나 뉴스 리스트
@@ -173,7 +183,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-xs-6 col-lg-12 mb-3">
+		<div class="col-xs-6 col-lg-12 mb-3 no-left-padding no-right-padding">
 				<div class="card shadow mb-4">
 					<div class="card-header py-3">
 						<h6 class="m-0 font-weight-bold text-violet" style="text-align:left;">백신 접종 현황
@@ -206,7 +216,7 @@
 								</tr>
 							</tbody>
 						</table>
-						<span class="badge badge-secondary">국내현황 ${beforeDate2} 24:00 집계 기준.</span>
+						<span class="badge badge-secondary small-font">국내현황 ${beforeDate2} 24:00 집계 기준.</span>
 					</div>
 				</div>
 

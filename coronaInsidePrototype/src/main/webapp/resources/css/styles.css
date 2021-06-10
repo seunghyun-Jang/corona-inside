@@ -10496,7 +10496,7 @@ form .row:first-child .floating-label-form-group {
 .styled-table td:last-child { width: 10%; }
 
 @media (max-width:992px) {
-	.styled-table td:first-child { font-size: 0.8em; width: 46%; }
+.styled-table td:first-child { font-size: 0.8em; width: 46%; }
 	.styled-table td:nth-child(3) {width : 16%; }
 	.styled-table td:last-child { width: 19%; }
 	.styled-table thead { font-size: 0.7em; }
@@ -10799,5 +10799,19 @@ form .row:first-child .floating-label-form-group {
 
 .search-target-div .search-target-select {
 	font-size: 12px;
+}
+
+.no-left-padding {
+  padding-left: 0 !important;
+}
+.no-right-padding {
+  padding-right: 0 !important;
+}
+
+.no-left-margin {
+  margin-left: 0 !important;
+}
+.no-right-margin {
+  margin-right: 0 !important;
 }
 }

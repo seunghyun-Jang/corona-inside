@@ -21,7 +21,7 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="resources/css/styles.css" rel="stylesheet" />
     <!-- Custom fonts for this template-->
-    <link href="resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <!--  <link href="resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">-->
    	<link
        	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
        	rel="stylesheet">
@@ -41,6 +41,15 @@
 	<style>
 		#bt1 {background:#7E41D9;}
 		#bt2 {background:#7E41D9;}
+		
+		
+		}
+		
+		@media screen and (max-width: 465px) {
+  			.small-font {
+    			font-size: 0.5em;
+			}
+		}
 
 	</style>
 </head>
@@ -156,9 +165,9 @@
 									<h6 class="m-0 font-weight-bold text-violet">일별 신규 확진자 수
 
 									<div class="btn-group" role="group" aria-label="Basic example" style="float: right;">
-												<button type="button" class="btn btn-violet" onClick="buttonClick1(this)">1주</button>
-  												<button type="button" class="btn btn-violet" onClick="buttonClick2(this)">2주</button>
-  												<button type="button" class="btn btn-violet" onClick="buttonClick3(this)">1달</button>
+												<button type="button" class="btn btn-violet btn-sm" onClick="buttonClick1(this)">1주</button>
+  												<button type="button" class="btn btn-violet btn-sm" onClick="buttonClick2(this)">2주</button>
+  												<button type="button" class="btn btn-violet btn-sm" onClick="buttonClick3(this)">1달</button>
 									</div>
 
 									</h6>
@@ -170,7 +179,7 @@
 											<canvas id="myBarChart2"></canvas>
 										</div>
 									</div>
-									<br><span class="badge badge-secondary">국내현황 ${beforeHour} 00:00 집계 기준.</span>
+									<br><span class="badge badge-secondary small-font">국내현황 ${beforeHour} 00:00 집계 기준.</span>
 									
 									
 								</div>
@@ -198,7 +207,7 @@
 											class="fa fa-circle text-danger"></i> 사망자 수
 										</span>
 									</div>
-									<br><span class="badge badge-secondary">국내현황 ${beforeHour} 00:00 집계 기준.</span>
+									<br><span class="badge badge-secondary small-font">국내현황 ${beforeHour} 00:00 집계 기준.</span>
 								</div>
 							</div>
 						</div>
@@ -217,7 +226,7 @@
 										<canvas id="myAreaChart"></canvas>
 									</div>
 									
-									<br><span class="badge badge-secondary">국내현황 ${beforeHour} 00:00 집계 기준.</span>
+									<br><span class="badge badge-secondary small-font">국내현황 ${beforeHour} 00:00 집계 기준.</span>
 								</div>
 							</div>
 						</div>
@@ -239,7 +248,7 @@
 										<canvas id="myBarChart"></canvas>
 									</div>
 									
-									<br><span class="badge badge-secondary">국내현황 ${beforeHour} 00:00 집계 기준.</span>
+									<br><span class="badge badge-secondary small-font">국내현황 ${beforeHour} 00:00 집계 기준.</span>
 								</div>
 
 							</div>
@@ -288,8 +297,8 @@
 									<h6 class="m-0 font-weight-bold text-violet">지역별 데이터				
 									
 									<div class="btn-group" role="group" aria-label="Basic example" style="float: right;">
-												<button type="button" class="btn btn-violet" onClick="buttonClick5(this)">거리두기 단계</button>
-  												<button type="button" class="btn btn-violet" onClick="buttonClick4(this)">누적 확진자수</button>
+												<button type="button" class="btn btn-violet btn-sm" onClick="buttonClick5(this)">거리두기 단계</button>
+  												<button type="button" class="btn btn-violet btn-sm" onClick="buttonClick4(this)">누적 확진자수</button>
 									</div>
 									</h6>
 								</div>
@@ -298,7 +307,7 @@
 									<div id="container"></div>
 									<div id="container2"></div>
 									
-									<br><span class="badge badge-secondary">국내현황 2021/05/31 00:00 집계 기준 (거리두기 단계)</span>
+									<br><span class="badge badge-secondary small-font">국내현황 2021/05/31 00:00 집계기준(거리두기)</span>
 								</div>
 								
 							</div>
@@ -308,32 +317,29 @@
 
 					</div>
 					<!-- End of Main Content -->
-
-					<!-- Copyright Section-->
-					<div class="copyright py-4 text-center text-white">
-						<div class="container">
-							<small>Corona-Inside 2021</small>
-						</div>
-
-					</div>
-
-
-
 				</div>
 				<!-- End of Content Wrapper -->
 
 			</div>
 			<!-- End of Page Wrapper -->
+			<div class="copyright py-4 text-center text-white">
+						<div class="container">
+							<small>질병관리청이 매일 발표하는 '코로나바이러스감염증-19 국내 발생 현황' 보도참고자료 기준(매일 0시 기준, 하루 1회 집계). <br>
+
+							집계 수치는 행정안전부 공공데이터포털 오픈 API를 통해 제공되며, 오픈 API의 집계 수치 업데이트가 중앙방역대책본부의 일일 현황 발표보다 지연될 수 있음. <br><br>
+							
+							Corona-Inside 2021	
+							
+							</small>
+						</div>
+
+					</div>
 
 			<!-- Bootstrap core JS-->
 		
 			<script
 				src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
-			<!-- Third party plugin JS-->
-		
-
-			<!-- Custom scripts for all pages-->
-			<script src="js/sb-admin-2.js"></script>
+			<!-- Third party plugin JS-->	
 
 			<!-- Page level plugins -->
 			<script src="resources/vendor/chart.js/Chart.min.js"></script>
@@ -536,6 +542,7 @@
 
 		</div>
 	</div>
+	
 </body>
 </html>
 
