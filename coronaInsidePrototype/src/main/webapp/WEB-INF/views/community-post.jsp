@@ -141,7 +141,7 @@
 					          <span class="commenter-name p-left">
 					          	<sf:form method="post" action="${pageContext.request.contextPath}/do-reply" modelAttribute="reply">
 					          	
-				              		<sf:input class="control" type="text" placeholder="여기에 답글을 입력하세요." name="Add Comment" path="content"/>
+				              		<sf:input class="control" type="text" placeholder="여기에 댓글을 입력하세요." name="Add Comment" path="content"/>
 				              		<sf:errors class="error" path="content"/>
 				              		<sf:input class="control" type="hidden" path="parentId" value="${0}"/>
 									<sf:errors class="error" path="parentId"/>
@@ -150,7 +150,7 @@
 									<sf:input class="control" type="hidden" path="author" value="${username}"/>
 									<sf:errors class="error" path="author"/>
 									
-				              		<button type="submit" class="btn btn-default bg-violet">답글달기</button>
+				              		<button type="submit" class="btn btn-default bg-violet">댓글달기</button>
 				              	</sf:form>
 					          </span>
 					        </div>
