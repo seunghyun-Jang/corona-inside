@@ -8,6 +8,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Corona Inside : 코로나 현황</title>
 	<link rel="stylesheet" href="resources/css/bootstrap.min.css">
