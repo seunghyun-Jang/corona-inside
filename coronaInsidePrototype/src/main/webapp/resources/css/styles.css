@@ -10483,13 +10483,13 @@ form .row:first-child .floating-label-form-group {
 .styled-table td:last-child { width: 10%; }
 
 @media (max-width:992px) {
-	.styled-table td:first-child { width: 50%; font-size: 13px; }
-	.styled-table td:nth-child(3) {width : 15%;}
-	.styled-table td:last-child { width: 15%; }
-	.styled-table thead { font-size: 12px; }
+	.styled-table td:first-child { font-size: 1em; width: 50%; }
+	.styled-table td:nth-child(3) {width : 20%; }
+	.styled-table td:last-child { width: 20%; }
+	.styled-table thead { font-size: 0.8em; }
 	.styled-table td:nth-child(2),
-	.styled-table td:nth-child(3),
-	.styled-table td:nth-child(4) { font-size: 12px; }
+	.styled-table td:nth-child(3) { font-size: 0.8em; }
+	.styled-table td:nth-child(4) { font-size: 0.7em; }
 }
 
 .login-section {
@@ -10509,7 +10509,7 @@ form .row:first-child .floating-label-form-group {
 	margin-left: 10px;
 	margin-top: 17px;
 	color: #ffc107;
-	width: 170px;
+	width: 230px;
 	text-align: center;
 	border: 2px solid #fff;
 	border-radius: 0.5rem !important;
@@ -10519,7 +10519,7 @@ form .row:first-child .floating-label-form-group {
 	padding: 5px;
 	margin-bottom: 20px;
 	color: #ffc107;
-	width: 170px;
+	width: 320px;
 	text-align: center;
 	border: 2px solid #fff;
 	border-radius: 0.5rem !important;
@@ -10530,7 +10530,7 @@ form .row:first-child .floating-label-form-group {
 }
 
 @media (max-width: 1200px) {
-	.login-displayusername { width: 200px; }
+	.login-displayusername { width: 230px; }
 }
 
 @media (min-width: 992px) {
