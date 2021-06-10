@@ -33,25 +33,25 @@ import lombok.ToString;
 @SuppressWarnings("serial")
 public class CustomUserDetails implements UserDetails {
 	
-	@Column(name="user_id")
+	@Column(name="username")
 	@Size(min=4, max=8, message="아이디는 4~8자리이어야 합니다.")
-	private String user_id;
+	private String username;
 	
 	@Column
     @Pattern(regexp="^.*(?=.{6,12})(?=.*[0-9])(?=.*[a-zA-Z]).*$", message="비밀번호는 영문과 숫자 조합으로 6~12글자 이내여야합니다.")
 	private String password;
 	
 	@Column
-	@Pattern(regexp="\\S{2,6}", message="이름은 2~6자로 입력해주세요.")
-	private String username;
+	@Pattern(regexp="\\S{2,12}", message="이름은 2~12자로 입력해주세요.")
+	private String nickname;
 	
 	@Column(name="authority",columnDefinition = "varchar(255) default 'ROLE_USER'")
 	private String AUTHORITY;
 	
 	@Id    
 	@GeneratedValue	
-	@Column(name="user_no")
-	private int user_no;
+	@Column(name="user_id")
+	private int userId;
 	
 	@Column(name="enabled",columnDefinition = "boolean default false")
 	private boolean ENABLED;

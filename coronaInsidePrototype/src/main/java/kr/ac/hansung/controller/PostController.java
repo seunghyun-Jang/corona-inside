@@ -1,12 +1,14 @@
 package kr.ac.hansung.controller;
 
-import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import kr.ac.hansung.model.CustomUserDetails;
 import kr.ac.hansung.model.Post;
 import kr.ac.hansung.model.Reply;
 import kr.ac.hansung.service.PostService;
@@ -42,6 +45,29 @@ public class PostController {
 			String keyword = request.getParameter("search_keyword");
 			posts = postService.searchPost(searchTarget, keyword);
 		}
+		
+		for(Post post : posts) {
+			long timeBeforePost = System.currentTimeMillis() - post.getDate().getTime();
+			String timeBeforePostText = "";
+			long time;
+			if(timeBeforePost < 1000*60) {
+				time = timeBeforePost / 1000;
+				timeBeforePostText = time + "초 전";
+			} else if( timeBeforePost < 1000*60*60 ) {
+				time = timeBeforePost / 60000;
+				timeBeforePostText = time + "분 전";
+			} else if( timeBeforePost < 1000*60*60*24 ) {
+				time = timeBeforePost / 3600000;
+				timeBeforePostText = time + "시간 전";
+			} else if( timeBeforePost < 1000*60*60*24*7 ){
+				time = timeBeforePost / 79200000;
+				timeBeforePostText = time + "일 전";
+			} else {
+				timeBeforePostText = new SimpleDateFormat("yyyy-MM-dd").format(post.getDate());
+			}
+			post.setDatetime(timeBeforePostText);
+		}
+		
 		model.addAttribute("posts", posts);
 		
 		model.addAttribute("page", 1);
@@ -64,6 +90,28 @@ public class PostController {
 			posts = postService.searchPost(searchTarget, keyword);
 		}
 		
+		for(Post post : posts) {
+			long timeBeforePost = System.currentTimeMillis() - post.getDate().getTime();
+			String timeBeforePostText = "";
+			long time;
+			if(timeBeforePost < 1000*60) {
+				time = timeBeforePost / 1000;
+				timeBeforePostText = time + "초 전";
+			} else if( timeBeforePost < 1000*60*60 ) {
+				time = timeBeforePost / 60000;
+				timeBeforePostText = time + "분 전";
+			} else if( timeBeforePost < 1000*60*60*24 ) {
+				time = timeBeforePost / 3600000;
+				timeBeforePostText = time + "시간 전";
+			} else if( timeBeforePost < 1000*60*60*24*7 ){
+				time = timeBeforePost / 79200000;
+				timeBeforePostText = time + "일 전";
+			} else {
+				timeBeforePostText = new SimpleDateFormat("yyyy-MM-dd").format(post.getDate());
+			}
+			post.setDatetime(timeBeforePostText);
+		}
+		
 		model.addAttribute("posts", posts);
 		
 		String[] url = request.getRequestURI().split("/");
@@ -79,6 +127,29 @@ public class PostController {
 	public String communityBest(Model model) {
 		
 		List<Post> posts = postService.getBestPosts();
+		
+		for(Post post : posts) {
+			long timeBeforePost = System.currentTimeMillis() - post.getDate().getTime();
+			String timeBeforePostText = "";
+			long time;
+			if(timeBeforePost < 1000*60) {
+				time = timeBeforePost / 1000;
+				timeBeforePostText = time + "초 전";
+			} else if( timeBeforePost < 1000*60*60 ) {
+				time = timeBeforePost / 60000;
+				timeBeforePostText = time + "분 전";
+			} else if( timeBeforePost < 1000*60*60*24 ) {
+				time = timeBeforePost / 3600000;
+				timeBeforePostText = time + "시간 전";
+			} else if( timeBeforePost < 1000*60*60*24*7 ){
+				time = timeBeforePost / 79200000;
+				timeBeforePostText = time + "일 전";
+			} else {
+				timeBeforePostText = new SimpleDateFormat("yyyy-MM-dd").format(post.getDate());
+			}
+			post.setDatetime(timeBeforePostText);
+		}
+		
 		model.addAttribute("posts", posts);
 		
 		model.addAttribute("page", 1);
@@ -92,6 +163,29 @@ public class PostController {
 	public String communityBestPosts(Model model, HttpServletRequest request) {
 		
 		List<Post> posts = postService.getBestPosts();
+		
+		for(Post post : posts) {
+			long timeBeforePost = System.currentTimeMillis() - post.getDate().getTime();
+			String timeBeforePostText = "";
+			long time;
+			if(timeBeforePost < 1000*60) {
+				time = timeBeforePost / 1000;
+				timeBeforePostText = time + "초 전";
+			} else if( timeBeforePost < 1000*60*60 ) {
+				time = timeBeforePost / 60000;
+				timeBeforePostText = time + "분 전";
+			} else if( timeBeforePost < 1000*60*60*24 ) {
+				time = timeBeforePost / 3600000;
+				timeBeforePostText = time + "시간 전";
+			} else if( timeBeforePost < 1000*60*60*24*7 ){
+				time = timeBeforePost / 79200000;
+				timeBeforePostText = time + "일 전";
+			} else {
+				timeBeforePostText = new SimpleDateFormat("yyyy-MM-dd").format(post.getDate());
+			}
+			post.setDatetime(timeBeforePostText);
+		}
+		
 		model.addAttribute("posts", posts);
 		
 		String[] url = request.getRequestURI().split("/");
@@ -109,6 +203,26 @@ public class PostController {
 		int postNo = Integer.parseInt(url[3]);
 		
 		Post post = postService.getPost(postNo);
+				
+		long timeBeforePost = System.currentTimeMillis() - post.getDate().getTime();
+		String timeBeforePostText = "";
+		long time;
+		if(timeBeforePost < 1000*60) {
+			time = timeBeforePost / 1000;
+			timeBeforePostText = time + "초 전";
+		} else if( timeBeforePost < 1000*60*60 ) {
+			time = timeBeforePost / 60000;
+			timeBeforePostText = time + "분 전";
+		} else if( timeBeforePost < 1000*60*60*24 ) {
+			time = timeBeforePost / 3600000;
+			timeBeforePostText = time + "시간 전";
+		} else if( timeBeforePost < 1000*60*60*24*7 ){
+			time = timeBeforePost / 79200000;
+			timeBeforePostText = time + "일 전";
+		} else {
+			timeBeforePostText = new SimpleDateFormat("yyyy-MM-dd").format(post.getDate());
+		}
+		post.setDatetime(timeBeforePostText);
 		model.addAttribute("post", post);
 		
 		List<Reply> replies = replyService.getCurrent(postNo);
@@ -132,15 +246,6 @@ public class PostController {
 	@RequestMapping(value = "/do-makepost")
 	public String doMakePost(Model model, @ModelAttribute("post") @Valid Post post, BindingResult result) {
 		
-		// utf-8로 인코딩하여 한글깨짐 문제 해결
-		try {
-			post.setTitle(new String(post.getTitle().getBytes("8859_1"), "utf-8"));
-			post.setAuthor(new String(post.getAuthor().getBytes("8859_1"), "utf-8"));
-			post.setContent(new String(post.getContent().getBytes("8859_1"), "utf-8"));
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		
 		if(result.hasErrors()) {
 			System.out.println("== Form data does not validated ==");
 			
@@ -152,7 +257,7 @@ public class PostController {
 			
 			return "community-post-make";
 		}
-		
+		post.setDate(new Date());
 		postService.insert(post);
 		model.addAttribute("post", post);
 		
@@ -161,68 +266,72 @@ public class PostController {
 		return "redirect:post/" + postService.getCurrentPostNo();
 	}
 	
-	@RequestMapping(value = "/community-post-edit/*", method = RequestMethod.POST)
-	public String editPost(Model model, HttpServletRequest request) {
+	@RequestMapping(value = "/community-post-edit/*", method = RequestMethod.GET)
+	public String editPost(Model model, HttpServletRequest request, Authentication auth) {
 		String[] url = request.getRequestURI().split("/");
 		int postNo = Integer.parseInt(url[3]);
 		
 		Post post = postService.getPost(postNo);
-		model.addAttribute("post", post);
 		
-		return "community-post-edit";
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		if(!post.getUsername().equals(user.getUsername())) {
+			return "redirect:../post/" + postNo;
+		} else {
+			model.addAttribute("post", post);
+			
+			return "community-post-edit";
+		}
 	}
 	
-	@RequestMapping(value = "/do-editpost/*")
-	public String doEditPost(Model model, HttpServletRequest request) {
+	@RequestMapping(value = "/do-editpost/*", method = RequestMethod.POST)
+	public String doEditPost(Model model, HttpServletRequest request, Authentication auth) {
 		String[] url = request.getRequestURI().split("/");
 		int postNo = Integer.parseInt(url[3]);
 		
 		Post post = postService.getPost(postNo);
 		
-		// utf-8로 인코딩하여 한글깨짐 문제 해결
-		try {
-			post.setContent(new String(request.getParameter("content").getBytes("8859_1"), "utf-8"));
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		if(post.getUsername().equals(user.getUsername())) {
+			
+			String editedContent = request.getParameter("content");
+			post.setContent(editedContent);
+			
+			System.out.println("Update Post - Content: " + post.getContent());
+			postService.update(post);
+			model.addAttribute("post", post);
 		}
-		
-		postService.update(post);
-		model.addAttribute("post", post);
-		
 		return "redirect:../post/"+postNo;
 	}
 	
-	@RequestMapping(value = "/check-deletepost/*")
-	public String checkDeletePost(Model model, HttpServletRequest request) {
-		String[] url = request.getRequestURI().split("/");
-		int postNo = Integer.parseInt(url[3]);
-		
-		model.addAttribute("postNo", postNo);
-		String author = postService.getPost(postNo).getAuthor();
-		model.addAttribute("author", author);
-		
-		return "check-delete-post";
-	}
-	
 	@RequestMapping(value = "/do-deletepost/*")
-	public String doDeletePost(Model model, HttpServletRequest request) {
+	public String doDeletePost(Model model, HttpServletRequest request, Authentication auth) {
 		String[] url = request.getRequestURI().split("/");
 		int postNo = Integer.parseInt(url[3]);
+		
 		Post post = postService.getPost(postNo);
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		if(post.getUsername().equals(user.getUsername())) {
+			postService.delete(post);
+		}
 		
-		postService.delete(post);
-		
-		return "redirect:community";
+		return "redirect:../community";
 	}
 	
 	@RequestMapping(value = "/post/*/do-postlike")
-	public String doPostLike(Model model, HttpServletRequest request) {
+	public String doPostLike(Model model, HttpServletRequest request, Authentication auth) {
 		
 		String[] url = request.getRequestURI().split("/");
 		int postNo = Integer.parseInt(url[3]);
 		
 		Post post = postService.getPost(postNo);
-		postService.like(post);
+		
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		if(!postService.isAlreadyLiked(postNo, user.getUserId())) {
+			postService.like(post, user.getUserId());
+		} else {
+			return "already-liked";
+		}
+		
 		model.addAttribute("post", post);
 		
 		List<Reply> replies = replyService.getCurrent(postNo);
@@ -234,13 +343,21 @@ public class PostController {
 	}
 	
 	@RequestMapping(value = "/post/*/do-postunlike")
-	public String doPostUnlike(Model model, HttpServletRequest request) {
+	public String doPostUnlike(Model model, HttpServletRequest request, Authentication auth) {
 		
 		String[] url = request.getRequestURI().split("/");
 		int postNo = Integer.parseInt(url[3]);
 		
 		Post post = postService.getPost(postNo);
-		postService.unlike(post);
+		
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		if(!postService.isAlreadyLiked(postNo, user.getUserId())) {
+			
+			postService.unlike(post, user.getUserId());
+		} else {
+			return "already-liked";
+		}
+		
 		model.addAttribute("post", post);
 		
 		List<Reply> replies = replyService.getCurrent(postNo);
@@ -253,14 +370,6 @@ public class PostController {
 	
 	@RequestMapping(value = "/do-reply", method = RequestMethod.POST)
 	public String doReply(Model model, @ModelAttribute("reply") @Valid Reply reply, BindingResult result) {
-		
-		// utf-8로 인코딩하여 한글깨짐 문제 해결
-		try {
-			reply.setContent(new String(reply.getContent().getBytes("8859_1"), "utf-8"));
-			reply.setAuthor(new String(reply.getAuthor().getBytes("8859_1"), "utf-8"));
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
 		
 		if(result.hasErrors()) {
 			System.out.println("== Form data does not validated ==");
@@ -283,8 +392,12 @@ public class PostController {
 			reply.setOrderNo(1);
 			reply.setGroupNo(1);
 		} else if(reply.getParentId() == 0) {
-			reply.setOrderNo(replyService.getNextOrderNo(reply.getPostNo()));
+			int nextOrderNo = replyService.getNextOrderNo(reply.getPostNo());
+			replyService.updateOrderNums(nextOrderNo);
+			reply.setOrderNo(nextOrderNo);
 			reply.setGroupNo(replyService.getNextGroupNo(reply.getPostNo()));
+			
+			
 		} else {
 			reply.setOrderNo(replyService.getNextOrderNo(reply.getPostNo(), reply.getGroupNo()));
 		}
@@ -300,13 +413,20 @@ public class PostController {
 	}
 	
 	@RequestMapping(value = "/post/*/do-replylike")
-	public String doReplyLike(Model model, HttpServletRequest request) {
+	public String doReplyLike(Model model, HttpServletRequest request, Authentication auth) {
 		
 		String[] url = request.getRequestURI().split("/");
 		int replyId = Integer.parseInt(url[3]);
 		
 		Reply reply = replyService.getReply(replyId);
-		replyService.like(reply);
+		
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		if(!replyService.isAlreadyLiked(reply.getReplyId(), user.getUserId())) {
+
+			replyService.like(reply, user.getUserId());
+		} else {
+			return "already-liked";
+		}
 		
 		int postNo = reply.getPostNo();
 		Post post = postService.getPost(postNo);
@@ -321,13 +441,20 @@ public class PostController {
 	}
 	
 	@RequestMapping(value = "/post/*/do-replyunlike")
-	public String doReplyUnlike(Model model, HttpServletRequest request) {
+	public String doReplyUnlike(Model model, HttpServletRequest request, Authentication auth) {
 		
 		String[] url = request.getRequestURI().split("/");
 		int replyId = Integer.parseInt(url[3]);
 		
 		Reply reply = replyService.getReply(replyId);
-		replyService.unlike(reply);
+		
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		if(!replyService.isAlreadyLiked(reply.getReplyId(), user.getUserId())) {
+
+			replyService.unlike(reply, user.getUserId());
+		} else {
+			return "already-liked";
+		}
 		
 		int postNo = reply.getPostNo();
 		Post post = postService.getPost(postNo);

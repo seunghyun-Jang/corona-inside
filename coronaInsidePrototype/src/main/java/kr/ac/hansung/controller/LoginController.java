@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -34,35 +35,54 @@ public class LoginController { //login & signup
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 	@RequestMapping(value = "/login", method = { RequestMethod.GET, RequestMethod.POST })
-	public String login(@RequestParam(value = "error", required = false) String error, Model model) {
-		if (error != null) {
-			model.addAttribute("errorMsg", "ID또는 PW가 일치하지 않습니다.");
+	public String login(@RequestParam(value = "error", required = false) String error, Model model, Authentication auth) {
+		
+		if(auth == null) {
+			if (error != null) {
+				model.addAttribute("errorMsg", "ID또는 PW가 일치하지 않습니다.");
+			}
+			return "login";
+		} else {
+			return "redirect:home";
 		}
-		return "login";
 	}
 
 	@RequestMapping(value = "/signup", method = { RequestMethod.GET, RequestMethod.POST })
-	public String signUp() {
-		return "signup";
+	public String signUp(Authentication auth) {
+		if(auth == null) {
+			return "signup";
+		} else {
+			return "redirect:home";
+		}
 	}
 
 	@RequestMapping(value = "/insert-user", method = { RequestMethod.GET, RequestMethod.POST })
-	public String insertUser(@RequestParam(value = "user_id",required=false) String user_id,
+	public String insertUser(@RequestParam(value = "username",required=false) String username,
 			@RequestParam(value = "password",required=false) String password, 
-			@RequestParam(value = "username",required=false)String username) throws IOException {
+			@RequestParam(value = "nickname",required=false)String nickname, Authentication auth) throws IOException {
 			
+		if(auth == null) {
 			CustomUserDetails user = new CustomUserDetails();
-			user.setUser_id(user_id);
+			user.setUsername(username);
 			String Bcrypt_pw = passwordEncoder.encode(password);
 			user.setPassword(Bcrypt_pw);
-			user.setUsername(username);
+			user.setNickname(nickname);
+			user.setAUTHORITY("ROLE_USER");
+		    user.setENABLED(true);
+			
 			userdao.signUp(user);
-		return "redirect:/login";
+			return "redirect:/login";
+		} else {
+			
+			return "redirect:home";
+		}
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logout(HttpServletRequest request, HttpServletResponse response) {
-		new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
+	public String logout(HttpServletRequest request, HttpServletResponse response, Authentication auth) {
+		if(auth != null) {
+			new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
+		}
 	    return "redirect:/home";
 	}
 

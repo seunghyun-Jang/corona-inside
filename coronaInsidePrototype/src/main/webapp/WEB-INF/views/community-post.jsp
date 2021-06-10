@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://www.springframework.org/security/tags"
    prefix="sec"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<% pageContext.setAttribute("replaceChar", "\n"); %>
    
 <!DOCTYPE html>
 <html>
@@ -27,14 +28,13 @@
 </head>
 <body id="page-top">
 
-	<!-- Navigation-->
-   <!-- Navigation-->
-   <nav
-      class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top"
+    <!-- Navigation-->
+   	<nav
+   	  class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top"
       id="mainNav">
       <div class="container">
          <a class="navbar-brand js-scroll-trigger" style="padding-left: 10px;"
-            href="home">Corona Inside</a>
+            href="${pageContext.request.contextPath}home">Corona Inside</a>
          <button
             class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-violet text-white rounded"
             type="button" data-toggle="collapse" data-target="#navbarResponsive"
@@ -47,46 +47,49 @@
                <sec:authorize access="isAnonymous()">
                   <li class="nav-item mx-0 mx-lg-1 login-item"><a
                      class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                     href="login">로그인</a></li>
+                     href="${pageContext.request.contextPath}/login">로그인</a></li>
                </sec:authorize>
                <sec:authorize access="isAuthenticated()">
                   <li class="login-item mx-0 mx-lg-1"><a
                   class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger login-displayusername-mobile">
-                  <sec:authentication property="principal.username" /> 님 환영합니다.</a></li> 
+                  <sec:authentication property="principal.nickname" /> 님 환영합니다.</a></li> 
                   <li class="nav-item login-item mx-0 mx-lg-1"><a
                   class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                  href="logout">로그아웃</a></li>
+                  href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
                </sec:authorize>
+              <li class="nav-item mx-0 mx-lg-1"><a
+                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger text-non-selected"
+                  href="${pageContext.request.contextPath}/corona">코로나 현황</a></li>
                <li class="nav-item mx-0 mx-lg-1"><a
-                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                  href="corona">코로나 현황</a></li>
+                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger text-non-selected"
+                  href="${pageContext.request.contextPath}/vaccine">백신현황</a></li>
                <li class="nav-item mx-0 mx-lg-1"><a
-                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                  href="vaccine">백신현황</a></li>
-               <li class="nav-item mx-0 mx-lg-1"><a
-                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                  href="community">커뮤니티</a></li>
+                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger text-selected"
+                  href="${pageContext.request.contextPath}/community">
+                  	<i class="fas fa-chevron-right sel-icons"></i> 커뮤니티 <i class="fas fa-chevron-left sel-icons"></i></a></li>
 
             </ul>
 
          </div>
          <sec:authorize access="isAuthenticated()">
             <p class="login-displayusername">
-               <sec:authentication property="principal.username" />
+               <sec:authentication property="principal.nickname"/>
                님 <br>환영합니다.
             </p>
          </sec:authorize>
          
          <sec:authorize access="isAnonymous()">
             <button class="bg-primary rounded text-white login-btn"
-               id="login-btn" onClick="location.href='login'">로그인</button>
+               id="login-btn" onClick="location.href='${pageContext.request.contextPath}/login'">로그인</button>
          </sec:authorize>
          <sec:authorize access="isAuthenticated()">
             <button class="bg-primary rounded text-white login-btn"
-               id="login-btn" onClick="location.href='logout'">로그아웃</button>
+               id="login-btn" onClick="location.href='${pageContext.request.contextPath}/logout'">로그아웃</button>
          </sec:authorize>
       </div>
    </nav>
+   
+   
 	<!-- Masthead-->
     <header class="masthead bg-violet text-white text-center">
         <div class="container d-flex align-items-center flex-column">
@@ -102,7 +105,8 @@
     </header>
     
     <section class="page-section" id="post">
-    	<div class="container">
+	    
+	    <div class="container">
     		<h2 class="masthead-heading text-secondary text-uppercase mb-4-5"><a class="a-violet" href="${pageContext.request.contextPath}/community">커뮤니티</a></h2>
     		<table class="styled-table">
     			<tbody>
@@ -110,22 +114,25 @@
 				    	<td><br><h3>${post.title}</h3></td>
 				    </tr>
 				    <tr>
-				    	<td>작성자 : ${post.author}  &emsp; 날짜 : ${post.date}</td>
+				    	<td>작성자 : ${post.author}  &emsp; <i class="far fa-clock"></i> ${post.datetime}</td>
 				    </tr>
 				    <tr>
 					    <td>
-						    <br><br>${post.content} <br><br><br><br>
+						    <br><br>${fn:replace(post.content, replaceChar, "<br>")} <br><br><br><br>
 						    <p class="p-like" align="center">
-						    	<button class="btn-like rounded text-white" onClick="doPostLike('like')">추천&nbsp;&nbsp;${post.likeCount}</button>
-						    	&emsp;<button class="btn-unlike rounded text-white" onClick="doPostLike('unlike')">비추&nbsp;&nbsp;-${post.unlikeCount}</button>
+						    	<button type="button" class="btn-like rounded text-white" onClick="doPostLike('like')">추천&nbsp;&nbsp;${post.likeCount}</button>
+						    	&emsp;<button type="button" class="btn-unlike rounded text-white" onClick="doPostLike('unlike')">비추&nbsp;&nbsp;-${post.unlikeCount}</button>
 						    </p>
 						    <p align="right">
-						    	<c:if test="${session.getAttriube('username').equals(post.author) }">
-						    	<button type="submit" class="btn btn-default bg-blue text-white"
-						    		onClick="location.href='${pageContext.request.contextPath}/community-post-edit/${post.postNo}'">글 수정</button>
-						    	<button type="submit" class="btn btn-default bg-gray text-white"
-						    		onClick="location.href='${pageContext.request.contextPath}/community-post-delete/${post.postNo}'">글 삭제</button>
-						    	</c:if> 
+						    	<sec:authorize access="isAuthenticated()">
+						    		<sec:authentication property="principal.username" var="username"/>
+						    		<c:if test="${username.equals(post.username)}">
+								    	<button type="button" class="btn btn-default bg-blue text-white"
+								    		onClick="location.href='${pageContext.request.contextPath}/community-post-edit/${post.postNo}'">글 수정</button>
+								    	<button type="button" class="btn btn-default bg-gray text-white"
+								    		onClick="clickDeleteBtn(${post.postNo})">글 삭제</button>
+							    	</c:if>
+						    	</sec:authorize>
 						    </p>
 						</td>
 				    </tr>
@@ -145,7 +152,7 @@
 									<sf:errors class="error" path="parentId"/>
 									<sf:input class="control" type="hidden" path="postNo" value="${post.postNo}"/>
 									<sf:errors class="error" path="postNo"/>
-									<sf:input class="control" type="hidden" path="author" value="reply 테스트"/>
+									<sf:input class="control" type="hidden" path="author" value="${username}"/>
 									<sf:errors class="error" path="author"/>
 									
 				              		<button type="submit" class="btn btn-default bg-violet">답글달기</button>
@@ -179,7 +186,7 @@
 												<sf:errors class="error" path="groupNo"/>
 												<sf:input class="control" type="hidden" path="postNo" value="${best_reply.postNo}"/>
 												<sf:errors class="error" path="postNo"/>
-												<sf:input class="control" type="hidden" path="author" value="${best_reply.author}-reply"/>
+												<sf:input class="control" type="hidden" path="author" value="${username}"/>
 												<sf:errors class="error" path="author"/>
 												<button type="submit" class="btn btn-default bg-violet">답글달기</button>
 							              		
@@ -223,7 +230,7 @@
 												<sf:errors class="error" path="groupNo"/>
 												<sf:input class="control" type="hidden" path="postNo" value="${reply.postNo}"/>
 												<sf:errors class="error" path="postNo"/>
-												<sf:input class="control" type="hidden" path="author" value="${session.getAttribute('username')}"/>
+												<sf:input class="control" type="hidden" path="author" value="${username}"/>
 												<sf:errors class="error" path="author"/>
 												<button type="submit" class="btn btn-default bg-violet">답글달기</button>
 							              		
@@ -244,7 +251,7 @@
 	</section>
 	<!-- Copyright Section-->
    	<div class="copyright py-4 text-center text-white">
-       	<div class="container"><small>Copyright © Corona-Inside 2021</small></div>
+       	<div class="container"><small>Corona-Inside 2021</small></div>
    	</div>
    	
    	<!-- Bootstrap core JS-->
@@ -256,6 +263,7 @@
     <script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  	
     <script>
 		function replyToggle(id) {
 			obj=document.getElementById(id);
@@ -271,13 +279,19 @@
 			else if(todo == "unlike") {
 				page += "/do-postunlike";
 			}
-			req.open("POST", page);
+			req.open("GET", page);
 			req.onreadystatechange = function() {
 				if (req.readyState == 4 && req.status == 200) {
 					$(".p-like").load(window.location.href + " .p-like");
 				}
 			}
+			req.onload = () => {
+				if(req.response == "alreadyLiked")
+					alert("이미 추천/비추천 한 글입니다.")
+				
+			}
 			req.send();
+			
 		}
 		
 		function doReplyLike(todo, replyId, id) {
@@ -289,14 +303,36 @@
 			else if(todo == "unlike") {
 				page += "/do-replyunlike";
 			}
-			req.open("POST", page);
+			req.open("GET", page);
 			req.onreadystatechange = function() {
 				if (req.readyState == 4 && req.status == 200) {
 					$(id).load(window.location.href + id);
 				}
 			}
+			req.onload = () => {
+				if(req.response == "alreadyLiked")
+					alert("이미 추천/비추천 한 댓글입니다.")
+				
+			}
 			req.send();
+			
 		}
+		
+		function clickDeleteBtn(postNo) {
+			var choice = confirm("삭제하시겠습니까?");
+				
+			if(choice) {
+				doDelete(postNo);
+				alert("삭제되었습니다!");
+			} else {
+				alert("취소되었습니다!");
+			}
+		}
+		
+		function doDelete(postNo) {
+			window.location.href = '${pageContext.request.contextPath}/do-deletepost/' + postNo;
+		}
+		
 	</script>
 </body>
 </html>

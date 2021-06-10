@@ -26,14 +26,13 @@
 </head>
 <body id="page-top">
 
-	<!-- Navigation-->
    <!-- Navigation-->
    <nav
       class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top"
       id="mainNav">
       <div class="container">
          <a class="navbar-brand js-scroll-trigger" style="padding-left: 10px;"
-            href="home">Corona Inside</a>
+            href="${pageContext.request.contextPath}/home">Corona Inside</a>
          <button
             class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-violet text-white rounded"
             type="button" data-toggle="collapse" data-target="#navbarResponsive"
@@ -46,32 +45,33 @@
                <sec:authorize access="isAnonymous()">
                   <li class="nav-item mx-0 mx-lg-1 login-item"><a
                      class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                     href="login">로그인</a></li>
+                     href="${pageContext.request.contextPath}/login">로그인</a></li>
                </sec:authorize>
                <sec:authorize access="isAuthenticated()">
                   <li class="login-item mx-0 mx-lg-1"><a
                   class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger login-displayusername-mobile">
-                  <sec:authentication property="principal.username" /> 님 환영합니다.</a></li> 
+                  <sec:authentication property="principal.nickname" /> 님 환영합니다.</a></li> 
                   <li class="nav-item login-item mx-0 mx-lg-1"><a
                   class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                  href="logout">로그아웃</a></li>
+                  href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
                </sec:authorize>
                <li class="nav-item mx-0 mx-lg-1"><a
-                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                  href="corona">코로나 현황</a></li>
+                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger text-non-selected"
+                  href="${pageContext.request.contextPath}/corona">코로나 현황</a></li>
                <li class="nav-item mx-0 mx-lg-1"><a
-                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                  href="vaccine">백신현황</a></li>
+                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger text-non-selected"
+                  href="${pageContext.request.contextPath}/vaccine">백신현황</a></li>
                <li class="nav-item mx-0 mx-lg-1"><a
-                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                  href="community">커뮤니티</a></li>
+                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger text-selected"
+                  href="${pageContext.request.contextPath}/community">
+                  	<i class="fas fa-chevron-right sel-icons"></i> 커뮤니티 <i class="fas fa-chevron-left sel-icons"></i></a></li>
 
             </ul>
 
          </div>
          <sec:authorize access="isAuthenticated()">
             <p class="login-displayusername">
-               <sec:authentication property="principal.username" />
+               <sec:authentication property="principal.nickname" />
                님 <br>환영합니다.
             </p>
          </sec:authorize>
@@ -129,7 +129,7 @@
 							<td><button onClick="location.href='${pageContext.request.contextPath}/post/${post.postNo}'">${post.title}</button></td>
 		    				<td class="text-center">${post.author}</td>
 		    				<td class="text-center">${post.likeCount}</td>
-		    				<td class="text-center">${post.date}</td>
+		    				<td class="text-center" style="color: #888888">${post.datetime}</td>
 		    			</tr>
 	    			</c:if>
 	    			<c:set var="num" value="${num+1}"/>
@@ -154,11 +154,11 @@
 		    	</select>
 	    	</div>
     	</form>
-    	<div style="float=right;">
-	   		<c:if test="${session.getAttribute('username') != null }" >
-	    		<button type="submit" align="right" class="btn btn-default bg-violet text-white" 
+    	<div style="float: right;">
+	   		<sec:authorize access="isAuthenticated()">
+	   			<button type="submit" class="btn btn-default bg-violet text-white" 
 	    			onClick="location.href='${pageContext.request.contextPath}/community-post-make'">글 작성</button>
-	   		</c:if>
+	   		</sec:authorize>
    		</div>
     	<div style="clear:both; text-align:center;">
     		<c:forEach var="i" begin="1" end="${pages}" step="1">
@@ -172,7 +172,7 @@
     </section>
     <!-- Copyright Section-->
    	<div class="copyright py-4 text-center text-white">
-       	<div class="container"><small>Copyright © Corona-Inside 2021</small></div>
+       	<div class="container"><small>Corona-Inside 2021</small></div>
    	</div>
    	
    	<!-- Bootstrap core JS-->

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.hansung.model.Reply;
+import kr.ac.hansung.model.ReplyLikeUser;
 
 @Repository
 @Transactional
@@ -105,9 +106,10 @@ public class ReplyDao {
 		
 		Query<Integer> query = session.createQuery(hql, Integer.class);
 		query.setParameter("postNo", postNo);
-		int currentPostNo = query.getFirstResult();
+		List<Integer> results = query.getResultList();
+		int currentOrderNo = results.get(0);
 		
-		return currentPostNo;
+		return currentOrderNo;
 	}
 	
 	public int getCurrentOrderNo(int postNo, int groupNo) {
@@ -117,9 +119,10 @@ public class ReplyDao {
 		Query<Integer> query = session.createQuery(hql, Integer.class);
 		query.setParameter("postNo", postNo);
 		query.setParameter("groupNo", groupNo);
-		int currentPostNo = query.getFirstResult();
+		List<Integer> results = query.getResultList();
+		int currentOrderNo = results.get(0);
 		
-		return currentPostNo;
+		return currentOrderNo;
 	}
 	
 	public int getCurrentGroupNo(int postNo) {
@@ -128,9 +131,45 @@ public class ReplyDao {
 		
 		Query<Integer> query = session.createQuery(hql, Integer.class);
 		query.setParameter("postNo", postNo);
-		int currentPostNo = query.getFirstResult();
+		List<Integer> results = query.getResultList();
+		int currentGroupNo = results.get(0);
 		
-		return currentPostNo;
+		return currentGroupNo;
+	}
+
+	public List<Reply> getListAfterOrderNo(int orderNo) {
+		
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "From Reply reply where reply.orderNo>=:orderNo";
+		
+		Query<Reply> query = session.createQuery(hql, Reply.class);
+		query.setParameter("orderNo", orderNo);
+		List<Reply> resultList = query.getResultList();
+		
+		return resultList;
+	}
+
+	public boolean isAlreadyLiked(int replyId, int userId) {
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "select count(*) from ReplyLikeUser rlu where rlu.replyId=:replyId and rlu.userId=:userId";
+		
+		Query<Long> query = session.createQuery(hql, Long.class);
+		query.setParameter("userId", userId);
+		query.setParameter("replyId", replyId);
+		long resultList = query.getSingleResult();
+		
+		if(resultList == 0) return false;
+		else return true;
+	}
+	
+	public void insertReplyLikeUser(int replyId, int userId) {
+		ReplyLikeUser rul = new ReplyLikeUser();
+		rul.setReplyId(replyId);
+		rul.setUserId(userId);
+		
+		Session session = sessionFactory.getCurrentSession();
+        session.saveOrUpdate(rul);
+        session.flush();
 	}
     
 }

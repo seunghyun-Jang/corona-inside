@@ -90,7 +90,7 @@
 								<h1 class="text-center text-violet">회원가입</h1>
 								<div class="form-group">
 									<label for="username" class="text-violet font-weight-bold">아이디</label><br>
-									<input type="text" name="user_id" id="user_id"
+									<input type="text" name="username" id="username"
 										class="form-control">
 										<span>아이디는 4~8자리이어야 합니다.</span>
 								</div>
@@ -102,7 +102,7 @@
 								</div>
 								<div class="form-group">
 									<label for="password" class="text-violet font-weight-bold">닉네임</label><br>
-									<input type="text" name="username" id="username"
+									<input type="text" name="nickname" id="nickname"
 										class="form-control">
 								</div>
 								<div class="form-group">
@@ -122,7 +122,7 @@
 	<!-- Copyright Section-->
 	<div class="copyright py-4 text-center text-white">
 		<div class="container">
-			<small>Copyright © Corona-Inside 2021</small>
+			<small>Corona-Inside 2021</small>
 		</div>
 	</div>
 </body>

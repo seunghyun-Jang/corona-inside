@@ -74,27 +74,28 @@
                <sec:authorize access="isAuthenticated()">
                   <li class="login-item mx-0 mx-lg-1"><a
                   class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger login-displayusername-mobile">
-                  <sec:authentication property="principal.username" /> 님 환영합니다.</a></li> 
+                  <sec:authentication property="principal.nickname" /> 님 환영합니다.</a></li> 
                   <li class="nav-item login-item mx-0 mx-lg-1"><a
                   class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
                   href="logout">로그아웃</a></li>
                </sec:authorize>
                <li class="nav-item mx-0 mx-lg-1"><a
-                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                  href="corona">코로나 현황</a></li>
+                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger text-non-selected"
+                  href="${pageContext.request.contextPath}/corona">코로나 현황</a></li>
                <li class="nav-item mx-0 mx-lg-1"><a
-                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                  href="vaccine">백신현황</a></li>
+                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger text-selected"
+                  href="${pageContext.request.contextPath}/vaccine">
+                  	<i class="fas fa-chevron-right sel-icons"></i> 백신현황 <i class="fas fa-chevron-left sel-icons"></i></a></li>
                <li class="nav-item mx-0 mx-lg-1"><a
-                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                  href="community">커뮤니티</a></li>
+                  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger text-non-selected"
+                  href="${pageContext.request.contextPath}/community">커뮤니티</a></li>
 
             </ul>
 
          </div>
          <sec:authorize access="isAuthenticated()">
             <p class="login-displayusername">
-               <sec:authentication property="principal.username" />
+               <sec:authentication property="principal.nickname" />
                님 <br>환영합니다.
             </p>
          </sec:authorize>
@@ -561,7 +562,7 @@
 					<!-- Copyright Section-->
 					<div class="copyright py-4 text-center text-white">
 						<div class="container">
-							<small>Copyright © Corona-Inside 2021</small>
+							<small>Corona-Inside 2021</small>
 						</div>
 					</div>
 				</div>
