@@ -89,21 +89,24 @@
 								method="post">
 								<h1 class="text-center text-violet">회원가입</h1>
 								<div class="form-group">
+									<c:if test="${usernameAlreadyExist == 1 }">
+										<h3 style="color:#FF0000">이미 존재하는 아이디입니다.</h3>
+									</c:if>
 									<label for="username" class="text-violet font-weight-bold">아이디</label><br>
 									<input type="text" name="username" id="username"
-										class="form-control">
+										class="form-control" min=4, max=8 required />
 										<span>아이디는 4~8자리이어야 합니다.</span>
 								</div>
 								<div class="form-group">
 									<label for="password" class="text-violet font-weight-bold">비밀번호</label><br>
 									<input type="password" name="password" id="password"
-										class="form-control">
+										class="form-control" pattern="^.*(?=.{6,12})(?=.*[0-9])(?=.*[a-zA-Z]).*$" required />
 										<span>비밀번호는 6~12자리 영문 숫자 조합이어야 합니다.</span>
 								</div>
 								<div class="form-group">
 									<label for="password" class="text-violet font-weight-bold">닉네임</label><br>
 									<input type="text" name="nickname" id="nickname"
-										class="form-control">
+										class="form-control" min=2, max=12 required />
 								</div>
 								<div class="form-group">
 									<input type="submit" name="submit"
