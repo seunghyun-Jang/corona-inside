@@ -294,11 +294,18 @@ public class PostController {
 		if(post.getUsername().equals(user.getUsername())) {
 			
 			String editedContent = request.getParameter("content");
+			
+			if(editedContent.length() >= 500) {
+				model.addAttribute("contentOver500", 1);
+				model.addAttribute("post", post);
+				return "community-post-edit";
+			}
+			
 			post.setContent(editedContent);
 			
-			System.out.println("Update Post - Content: " + post.getContent());
 			postService.update(post);
 			model.addAttribute("post", post);
+			
 		}
 		return "redirect:../post/"+postNo;
 	}

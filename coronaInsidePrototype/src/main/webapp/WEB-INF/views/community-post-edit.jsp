@@ -106,6 +106,9 @@
 				    </tr>
 				    <tr>
 				    	<sec:csrfInput />
+				    	<c:if test="${contentOver500 == 1 }">
+				    		<h3 style="color: #ff0000">글자 수는 500자 이내여야 합니다</h3>
+				    	</c:if>
 					    <td><br><textarea rows="20" style="width:100%;" name="content">${post.content}</textarea><br><br>
 					    <p align="center"> <button type="submit" class="btn btn-default bg-violet text-white">완료</button> </p></td>
 				    </tr>
