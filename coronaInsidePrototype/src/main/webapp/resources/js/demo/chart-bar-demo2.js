@@ -47,9 +47,9 @@ var myBarChart = new Chart(ctx, {
 		maintainAspectRatio: false,
 		layout: {
 			padding: {
-				left: 10,
-				right: 25,
-				top: 25,
+				left: 0,
+				right: 0,
+				top: 0,
 				bottom: 0
 			}
 		},
@@ -149,9 +149,9 @@ function updateChartType1() {
 		maintainAspectRatio: false,
 		layout: {
 			padding: {
-				left: 10,
-				right: 25,
-				top: 25,
+				left: 0,
+				right: 0,
+				top: 0,
 				bottom: 0
 			}
 		},
@@ -250,9 +250,9 @@ function updateChartType2() {
 		maintainAspectRatio: false,
 		layout: {
 			padding: {
-				left: 10,
-				right: 25,
-				top: 25,
+				left: 0,
+				right: 0,
+				top: 0,
 				bottom: 0
 			}
 		},
@@ -355,9 +355,9 @@ function updateChartType3() {
 		maintainAspectRatio: false,
 		layout: {
 			padding: {
-				left: 10,
-				right: 25,
-				top: 25,
+				left: 0,
+				right: 0,
+				top: 0,
 				bottom: 0
 			}
 		},
@@ -371,7 +371,7 @@ function updateChartType3() {
 					drawBorder: false
 				},
 				ticks: {
-					maxTicksLimit: 10,
+					maxTicksLimit: 3,
 					interval: 50,
 					autoSkip: true,		
 					minRotation: 0,		

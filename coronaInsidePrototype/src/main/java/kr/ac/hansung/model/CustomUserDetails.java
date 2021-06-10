@@ -53,7 +53,7 @@ public class CustomUserDetails implements UserDetails {
 	@Column(name="user_id")
 	private int userId;
 	
-	@Column(name="enabled",columnDefinition = "boolean default false")
+	@Column(name="enabled",columnDefinition = "boolean default true")
 	private boolean ENABLED;
 	
 	@Override

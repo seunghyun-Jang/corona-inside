@@ -43,6 +43,37 @@
 	.table {
 		font-size: 12px;
 	}
+	
+	.small-font {
+    	font-size: 0.5em;
+	}
+}
+
+@media screen and (max-width: 465px) {
+  			.table {
+    			font-size: 8px;
+  			}
+  			
+  			.small-font {
+    			font-size: 0.5em;
+			}
+		}
+		
+@media screen and (max-width: 425px) {
+  			.table {
+    			font-size: 7px;
+  			}
+  			
+  			.small-font {
+    			font-size: 0.3em;
+			}
+		}
+		
+.canvas-container {
+  width: 500px;
+  background-color: #ffffff;
+  height: 200px;
+  margin-left: -5px;
 }
 </style>
 
@@ -141,7 +172,7 @@
 						<!-- Content Row -->
 						<div class="row">
 							<!-- Content Column -->
-							<div class="col-xs-6 col-lg-12 mb-3">
+							<div class="col-xs-6 col-lg-12 mb-3 no-right-padding no-right-margin">
 								<!-- Color System -->
 
 								<div class="card shadow mb-4">
@@ -295,9 +326,9 @@
 
 											</tbody>
 										</table>
-										<br> <span class="badge badge-secondary">백신접종현황은
+										<br> <span class="badge badge-secondary small-font">백신접종현황은
 											질병관리청의 '예방접종실적 총 현황'을 기준으로 제공.</span><br> <span
-											class="badge badge-secondary">국내현황 ${beforeDate} 24:00
+											class="badge badge-secondary small-font">국내현황 ${beforeDate} 24:00
 											집계 기준.</span>
 									</div>
 								</div>
@@ -308,7 +339,7 @@
 
 						</div>
 						<div class="row">
-							<div class="col-xs-6 col-xl-12 col-lg-12">
+							<div class="col-xs-6 col-xl-12 col-lg-12 no-right-padding no-right-margin">
 								<div class="card shadow mb-4">
 									<div class="card-header py-3">
 										<h6 class="m-0 font-weight-bold text-violet">
@@ -329,16 +360,16 @@
 												<canvas id="myBarChart3"></canvas>
 											</div>
 										</div>
-										<br> <span class="badge badge-secondary">접종률은 전국 및
+										<br> <span class="badge badge-secondary small-font">접종률은 전국 및
 											시도별 인구 대비 접종자 비율을 제공.</span><br> <span
-											class="badge badge-secondary">국내현황 ${beforeDate} 24:00
+											class="badge badge-secondary small-font">국내현황 ${beforeDate} 24:00
 											집계 기준.</span>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-xs-6 col-lg-12 mb-3">
+							<div class="col-xs-6 col-lg-12 mb-3 no-right-padding no-right-margin">
 								<div class="card shadow mb-4">
 									<div class="card-header py-3">
 										<h6 class="m-0 font-weight-bold text-violet"
@@ -451,9 +482,9 @@
 												</tbody>
 											</table>
 										</div>
-										<br> <span class="badge badge-secondary">현재
+										<br> <span class="badge badge-secondary small-font">현재
 											우리나라에서는 아스트라제네카, 화이자, 얀센 코로나19 백신이 허가됨.</span><br> <span
-											class="badge badge-secondary">출처: 질병관리청 2021.06.01.
+											class="badge badge-secondary small-font">출처: 질병관리청 2021.06.01.
 											기준.</span>
 									</div>
 								</div>
@@ -461,7 +492,7 @@
 						</div>
 
 						<div class="row">
-							<div class="col-xs-12 col-lg-12 mb-3">
+							<div class="col-xs-12 col-lg-12 mb-3 no-right-padding no-right-margin">
 								<div class="card shadow mb-4">
 									<div class="card-header py-3">
 										<h6 class="m-0 font-weight-bold text-violet"
@@ -546,8 +577,8 @@
 												</tr>
 											</tbody>
 										</table>
-										<br> <span class="badge badge-secondary">모더나 백신은 아직 국내허가 전으로, 해외 제품 정보이며 향후 변경 가능.</span><br> <span
-											class="badge badge-secondary">출처: 질병관리청 2021.04.21.
+										<br> <span class="badge badge-secondary small-font">모더나 백신은 아직 국내허가 전으로, 해외 제품 정보이며 향후 변경 가능.</span><br> <span
+											class="badge badge-secondary small-font">출처: 질병관리청 2021.04.21.
 											기준.</span>
 
 									</div>
@@ -560,17 +591,19 @@
 					<!-- End of Main Content -->
 
 					<!-- Copyright Section-->
-					<div class="copyright py-4 text-center text-white">
-						<div class="container">
-							<small>Corona-Inside 2021</small>
-						</div>
-					</div>
+					
 				</div>
 				<!-- End of Content Wrapper -->
 
 			</div>
 		</div>
 	</div>
+	<div class="copyright py-4 text-center text-white">
+						<div class="container">
+							<small>Corona-Inside 2021</small>
+						</div>
+
+					</div>
 	<!-- Page level plugins -->
 	<script src="resources/vendor/chart.js/Chart.min.js"></script>
 
