@@ -189,7 +189,7 @@ public class PostController {
 		model.addAttribute("posts", posts);
 		
 		String[] url = request.getRequestURI().split("/");
-		int page = Integer.parseInt(url[3]);
+		int page = Integer.parseInt(url[2]);
 		model.addAttribute("page", page);
 		
 		model.addAttribute("isbest", 1);
@@ -200,7 +200,7 @@ public class PostController {
 	@RequestMapping(value = "/post/*", method = RequestMethod.GET)
 	public String communityPost(Model model, HttpServletRequest request) {
 		String[] url = request.getRequestURI().split("/");
-		int postNo = Integer.parseInt(url[3]);
+		int postNo = Integer.parseInt(url[2]);
 		
 		Post post = postService.getPost(postNo);
 				
@@ -269,7 +269,7 @@ public class PostController {
 	@RequestMapping(value = "/community-post-edit/*", method = RequestMethod.GET)
 	public String editPost(Model model, HttpServletRequest request, Authentication auth) {
 		String[] url = request.getRequestURI().split("/");
-		int postNo = Integer.parseInt(url[3]);
+		int postNo = Integer.parseInt(url[2]);
 		
 		Post post = postService.getPost(postNo);
 		
@@ -286,7 +286,7 @@ public class PostController {
 	@RequestMapping(value = "/do-editpost/*", method = RequestMethod.POST)
 	public String doEditPost(Model model, HttpServletRequest request, Authentication auth) {
 		String[] url = request.getRequestURI().split("/");
-		int postNo = Integer.parseInt(url[3]);
+		int postNo = Integer.parseInt(url[2]);
 		
 		Post post = postService.getPost(postNo);
 		
@@ -306,7 +306,7 @@ public class PostController {
 	@RequestMapping(value = "/do-deletepost/*")
 	public String doDeletePost(Model model, HttpServletRequest request, Authentication auth) {
 		String[] url = request.getRequestURI().split("/");
-		int postNo = Integer.parseInt(url[3]);
+		int postNo = Integer.parseInt(url[2]);
 		
 		Post post = postService.getPost(postNo);
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
@@ -321,7 +321,7 @@ public class PostController {
 	public String doPostLike(Model model, HttpServletRequest request, Authentication auth) {
 		
 		String[] url = request.getRequestURI().split("/");
-		int postNo = Integer.parseInt(url[3]);
+		int postNo = Integer.parseInt(url[2]);
 		
 		Post post = postService.getPost(postNo);
 		
@@ -346,7 +346,7 @@ public class PostController {
 	public String doPostUnlike(Model model, HttpServletRequest request, Authentication auth) {
 		
 		String[] url = request.getRequestURI().split("/");
-		int postNo = Integer.parseInt(url[3]);
+		int postNo = Integer.parseInt(url[2]);
 		
 		Post post = postService.getPost(postNo);
 		
@@ -416,7 +416,7 @@ public class PostController {
 	public String doReplyLike(Model model, HttpServletRequest request, Authentication auth) {
 		
 		String[] url = request.getRequestURI().split("/");
-		int replyId = Integer.parseInt(url[3]);
+		int replyId = Integer.parseInt(url[2]);
 		
 		Reply reply = replyService.getReply(replyId);
 		
@@ -444,7 +444,7 @@ public class PostController {
 	public String doReplyUnlike(Model model, HttpServletRequest request, Authentication auth) {
 		
 		String[] url = request.getRequestURI().split("/");
-		int replyId = Integer.parseInt(url[3]);
+		int replyId = Integer.parseInt(url[2]);
 		
 		Reply reply = replyService.getReply(replyId);
 		
